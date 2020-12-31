@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from rest_framework.authtoken import views as authviews
 from app import views
 
 urlpatterns = [
@@ -23,6 +23,8 @@ urlpatterns = [
     path('ws/developer',views.get_dev),
     path('ws/developers',views.get_devs),
     path('ws/developerscre',views.create_dev),
+    path('ws-token-auth/',authviews.obtain_auth_token,name='api-token-auth'),
+    path('ws/register',views.register)
     #path('ws/developerupd'),
     #path('ws/developedel/<int:id>')
 ]
