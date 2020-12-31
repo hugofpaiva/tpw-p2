@@ -20,7 +20,10 @@ def register(request):
     if "email" not in request.data or "username" not in request.data or "password1" not in request.data or "password2" not in request.data:
         return Response({"state": "Error", "message": "Missing parameters"}, status=status.HTTP_400_BAD_REQUEST)
     user = User.objects.create(username=request.data['username'], email=request.data['email'])
+
     user.refresh_from_db()
+    user.save()
+    user.set_password(request.data['password1'])
     user.save()
     request.data['user'] = user.id
     serializer = ClientSerializer(data=request.data)

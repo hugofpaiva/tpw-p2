@@ -16,6 +16,8 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ('name', 'icon', 'description',
                   'category', 'created_at','update_at', 'price')
 
+
+
 class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
