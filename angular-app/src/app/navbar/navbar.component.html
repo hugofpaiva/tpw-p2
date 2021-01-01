@@ -1,0 +1,39 @@
+<!-- Header Section Begin -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-3 d-flex justify-content-end">
+            <div class="header__logo">
+                <a href="{% url 'index' %}"
+                    ><img src="assets/img/logo.png" height="45px" alt=""
+                /></a>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <nav class="header__menu mobile-menu">
+                <ul>
+                    <li id="home">
+                        <a href="{% url 'index'  %}">Home</a>
+                    </li>
+
+                    <li id="shop"><a href="{% url 'shop'  %}">Shop</a></li>
+
+                    <li><a href="{% url 'aboutus'  %}">About Us</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-lg-3 col-md-3">
+            <div class="header__nav__option" style="display: flex;">
+                
+                {% include "loginpartial.html" %}
+            </div>
+        </div>
+
+                
+
+        
+        
+    </div>
+    <div class="canvas__open"><i class="fa fa-bars"></i></div>
+</div>
+</header>
+<!-- Header Section End -->
