@@ -11,12 +11,38 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 
 from app.models import Developer
-from app.serializers import DeveloperSerializer, ClientSerializer
+from app.serializers import DeveloperSerializer, ClientSerializer, UserSerializer
 
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register(request):
+    serializer=UserSerializer(data=request.data)
+    data = {}
+    st=None
+    if serializer.is_valid():
+        user = serializer.save()
+        st =st=status.HTTP_201_CREATED
+        request.data['user'] = user.id
+        client = ClientSerializer(data=request.data)
+        if client.is_valid():
+            client.save()
+            print(client)
+            Token.objects.create(user=user)
+            data['response'] = 'succesfully  registered a new user'
+            data['token'] = Token.objects.get(user=user).key
+            st = status.HTTP_201_CREATED
+        else:
+            data=serializer.errors
+            st=status.HTTP_400_BAD_REQUEST
+    else:
+        data = serializer.errors
+        st = status.HTTP_400_BAD_REQUEST
+
+    return Response(data,status=st)
+
+'''
+
     if "email" not in request.data or "username" not in request.data or "password1" not in request.data or "password2" not in request.data:
         return Response({"state": "Error", "message": "Missing parameters"}, status=status.HTTP_400_BAD_REQUEST)
     user = User.objects.create(username=request.data['username'], email=request.data['email'])
@@ -38,9 +64,7 @@ def register(request):
     else:
         data = serializer.errors
         st= status.HTTP_400_BAD_REQUEST
-    return Response(data,status=st)
-
-
+'''
 
 
 @csrf_exempt
