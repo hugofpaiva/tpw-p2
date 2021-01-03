@@ -1,0 +1,285 @@
+<!-- Shop Section Begin -->
+<section class="shop spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="shop__sidebar">
+          <div class="shop__sidebar__search">
+            <!--
+            <form onsubmit="(e) => e.preventDefault();return insertParam({'name':document.getElementById('search').value})">
+              <input type="text" id="search" placeholder="Search..."  />
+              <button type="submit">
+                <span class="icon_search"></span>
+              </button>
+            </form>
+            -->
+
+          </div>
+          <div class="shop__sidebar__accordion">
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-heading">
+                  <a
+                    data-toggle="collapse"
+                    data-target="#collapseOne"
+                  >Categories</a
+                  >
+                </div>
+                <div
+                  id="collapseOne"
+                  class="collapse show"
+                  data-parent="#accordionExample"
+                >
+                  <div class="card-body">
+                    <div
+                      class="shop__sidebar__categories"
+                    >
+                      <ul class="nice-scroll">
+
+
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-heading">
+                  <a
+                    data-toggle="collapse"
+                    data-target="#collapseTwo"
+                  >Developer</a
+                  >
+                </div>
+                <div
+                  id="collapseTwo"
+                  class="collapse show"
+                  data-parent="#accordionExample"
+                >
+                  <div class="card-body">
+                    <div class="shop__sidebar__brand">
+                      <ul>
+
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-heading">
+                  <a
+                    data-toggle="collapse"
+                    data-target="#collapseThree"
+                  >Filter Price</a
+                  >
+                </div>
+                <div
+                  id="collapseThree"
+                  class="collapse show"
+                  data-parent="#accordionExample"
+                >
+                  <div class="card-body">
+                    <div class="shop__sidebar__price">
+                      <ul>
+                        <li>
+                          <a href="javascript:removeAndInsertParam('min_price',{'max_price':10})"
+                          >0€ - 10€</a
+                          >
+                        </li>
+                        <li>
+                          <a style="color: #111111;" {% endif %}  href="javascript:insertParam({'min_price':10,'max_price':25})"
+                          >10€ - 25€</a
+                          >
+                        </li>
+                        <li>
+                          <a href="javascript:insertParam({'min_price':25,'max_price':50})"
+                          >25€ -
+                          50€</a
+                          >
+                        </li>
+                        <li>
+                          <a href="javascript:insertParam({'min_price':50,'max_price':100})"
+                          >50€ -
+                          100€</a
+                          >
+                        </li>
+                        <li>
+                          <a href="javascript:insertParam({'min_price':100,'max_price':200})"
+                          >100€ -
+                          200€</a
+                          >
+                        </li>
+                        <li>
+                          <a href="javascript:removeAndInsertParam('max_price', {'min_price':250})">250€ +</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-heading">
+                  <a
+                    data-toggle="collapse"
+                    data-target="#collapseFour"
+                  >Rating</a
+                  >
+                </div>
+                <div
+                  id="collapseFour"
+                  class="collapse show"
+                  data-parent="#accordionExample"
+                >
+                  <div class="card-body">
+                    <div class="shop__sidebar__size">
+                      <label class="active" for="xs"
+                      onclick="insertParam({'rate':1})">⭐️
+                      <input
+                        type="radio"
+                        id="1*"
+                      />
+                      </label>
+                      <label class="active" for="sm"
+                      onclick="insertParam({'rate':2})">⭐️⭐️
+                      <input
+                        type="radio"
+                        id="2*"
+                      />
+                      </label>
+                      <label class="active" for="md"
+                      onclick="insertParam({'rate':3})">⭐️⭐️⭐️
+                      <input
+                        type="radio"
+                        id="3*"
+                      />
+                      </label>
+                      <label class="active" for="xl"
+                      onclick="insertParam({'rate':4})">⭐️⭐️⭐️⭐️
+                      <input
+                        type="radio"
+                        id="4*"
+                      />
+                      </label>
+                      <label  class="active"  for="2xl"
+                      onclick="insertParam({'rate':5})">⭐️⭐️⭐️⭐️⭐️
+                      <input
+                        type="radio"
+                        id="5*"
+                      />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-9">
+        <div class="shop__product__option">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="shop__product__option__left">
+                <p>Showing x–xx of xxx results</p>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="shop__product__option__right">
+                <p>Sort by:</p>
+                <select>
+
+                  <option selected value="0">Price Low To High</option>
+
+
+                  <option value="1">Price High to Low</option>
+
+
+                  <option value="2">Rating Low To High</option>
+
+
+                  <option value="3">Rating High to Low</option>
+
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+
+          <div class="col-lg-4 col-md-6 col-sm-6 product" onclick="document.location.href='xxxxTODO'">
+
+            <div class="product__item sale">
+              <!--
+              {% else %}
+              <div class="product__item">
+                {% endif %}
+                -->
+
+                <div
+                  class="product__item__pic set-bg"
+                  data-setbg=""
+                >
+
+                </div>
+
+                <div class="product__item__text">
+                  <h6>name</h6>
+                  <a class="add-cart">description</a>
+                  <div class="rating">
+
+                    <!--{% for _ in product.nStars %}-->
+                    <i class="fa fa-star"></i>
+
+
+
+
+
+
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+
+
+
+                  </div>
+                  <h5>2 €</h5>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="product__pagination">
+                <!--
+                {% if page.has_previous %}
+                <a href="javascript:insertParam({'page':{{ page.previous_page_number }}})">{{ page.previous_page_number }}</a>
+                {% endif %}
+                <a class="active" href="">{{ page.number }}</a>
+                {% if page.has_next %}
+                <a href="javascript:insertParam({'page':{{ page.next_page_number }} })">{{ page.next_page_number }}</a>
+                {% endif %}
+                -->
+
+              </div>
+            </div>
+          </div>
+        </div>
+      <!--
+
+        <div class="col-lg-9">
+          <div class="product__details__text">
+            <h3>There are no products</h3>
+          </div>
+        </div>
+
+        -->
+      </div>
+    </div>
+</section>
+<!-- Shop Section End -->
+
+
