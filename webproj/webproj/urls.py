@@ -23,6 +23,7 @@ urlpatterns = [
     #login!
     path('ws-token-auth/', authviews.obtain_auth_token, name='api-token-auth'),
     path('ws/register', views.register),
+    path('ws/clients',views.get_clients),
     path('ws/developer',views.get_dev),
     path('ws/developers',views.get_devs),
     path('ws/developerscre',views.create_dev),
