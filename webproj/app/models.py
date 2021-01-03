@@ -59,12 +59,6 @@ class Purchase(models.Model):
 
 
 
-class Prod_Benefits(models.Model):
-    title = models.CharField(max_length=50)
-    description = models.CharField(max_length=500)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-
-
 class Reviews(models.Model):
     author = models.ForeignKey(Client, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

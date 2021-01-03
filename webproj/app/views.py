@@ -10,8 +10,9 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 
-from app.models import Developer, Product, Client
-from app.serializers import DeveloperSerializer, ClientSerializer, UserSerializer, ProductSerializer
+from app.models import Developer, Product, Client, Reviews
+from app.serializers import DeveloperSerializer, ClientSerializer, UserSerializer, ProductSerializer, ReviewsSerializer
+
 
 #TODO: Função que veja que tipo de utilizador está a efetuar determinada operação, exemplo:
 #      apenas super users podem editar/adicionar/remover produtos
@@ -69,13 +70,14 @@ def get_clients(request):
 
 @api_view(['GET'])
 def get_client(request):
-    client = int(request.GET['id'])
+    id = int(request.GET['id'])
     try:
         client = Client.objects.get(id=id)
     except Client.DoesNotExist:
         return  Response(status=status.HTTP_404_NOT_FOUND)
     serializer = ClientSerializer(client)
     return  Response(serializer.data)
+
 
 
 @api_view(['GET'])
@@ -210,6 +212,56 @@ def delete_product(request):
 
     return Response({'error_message': "You're not allowed to do this Request!"}, status=status.HTTP_403_FORBIDDEN)
 
+@api_view(['GET'])
+def get_reviews(request):
+    revs = Reviews.objects.all()
+    if 'num' in request.GET:
+        num = int(request.GET(['num']))
+        revs = revs[:num]
+    serializer = ReviewsSerializer(revs,many=True)
+    return Response(serializer.data)
 
 
+@api_view(['GET'])
+def get_review(request):
+    id = int(request.GET['id'])
+    try:
+        rev = Reviews.objects.get(id=id)
+    except Reviews.DoesNotExist:
+        return  Response(status=status.HTTP_404_NOT_FOUND)
+    serializer = ReviewsSerializer(rev)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def create_review(request):
+    serializer=ReviewsSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data,status=status.HTTP_201_CREATED)
+    return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['PUT'])
+def update_review(request):
+    id = request.data['id']
+    try:
+        prod = Reviews.objects.get(id=id)
+    except Reviews.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    serializer = ReviewsSerializer(prod,data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+def delete_review(request):
+    id = request.data['id']
+
+    try:
+        rev=Reviews.objects.get(id=id)
+    except Reviews.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    rev.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
