@@ -11,17 +11,22 @@ class DeveloperSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    created_at = serializers.DateTimeField(read_only=True)
+    updated_at = serializers.DateTimeField(read_only=True)
     class Meta:
         model = Product
         fields = ('name', 'icon', 'description',
-                  'category', 'created_at','update_at', 'price')
+                  'category', 'created_at', 'update_at', 'price')
+
 
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
     class Meta:
         model = User
-        fields = ('email', 'username','password')
+        fields = ('email', 'username', 'password')
+
     def save(self):
-        user = User(email=self.validated_data['email'],username=self.validated_data['username'])
+        user = User(email=self.validated_data['email'], username=self.validated_data['username'])
         password = self.validated_data['password']
         user.set_password(password)
         user.save()
@@ -33,12 +38,17 @@ class ClientSerializer(serializers.ModelSerializer):
         model = Client
         fields = ('user', 'favorites', 'created_at',
                   'balance')
+
+
 class PurchaseSerializer(serializers.ModelSerializer):
+    created_at = serializers.DateTimeField(read_only=True)
     class Meta:
         model = Purchase
         fields = ('client', 'product', 'created_at')
 
+
 class ReviewsSerializer(serializers.ModelSerializer):
+    updated_at = serializers.DateTimeField(read_only=True)
     class Meta:
         model = Reviews
-        fields = ('author', 'product', 'rating','date','update_at','body')
+        fields = ('author', 'product', 'rating', 'date', 'update_at', 'body')

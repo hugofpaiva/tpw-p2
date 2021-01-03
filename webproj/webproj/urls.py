@@ -23,6 +23,8 @@ urlpatterns = [
     #login!
     path('ws-token-auth/', authviews.obtain_auth_token, name='api-token-auth'),
     path('ws/register', views.register),
+    path('ws/clients',views.get_clients),
+    path('ws/client',views.get_client),
     path('ws/developer',views.get_dev),
     path('ws/developers',views.get_devs),
     path('ws/developerscre',views.create_dev),
@@ -33,4 +35,8 @@ urlpatterns = [
     path('ws/productcre',views.create_product),
     path('ws/productupd',views.update_product),
     path('ws/productdel/<int:id>',views.delete_product),
+    path('ws/reviews',views.get_reviews),
+    path('ws/reviews',views.get_review),
+    path('ws/reviewscre',views.create_review),
+    path('ws/reviewsupd',views.update_review),
 ]
