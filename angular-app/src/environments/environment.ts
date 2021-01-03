@@ -2,7 +2,13 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import {HttpHeaders} from '@angular/common/http';
+
 export const environment = {
+  httpOptions: {
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
+  },
+  baseURL: 'http://localhost:8000/ws/',
   production: false
 };
 

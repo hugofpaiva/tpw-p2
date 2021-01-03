@@ -1,3 +1,3 @@
 export class Developer {
-  name: string;
+  name: string | undefined;
 }

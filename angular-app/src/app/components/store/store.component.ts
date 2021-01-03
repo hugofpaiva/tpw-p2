@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Product} from '../../models/product';
+import {Developer} from '../../models/developer';
+import {Category} from '../../models/category';
 
 @Component({
   selector: 'app-store',
@@ -6,6 +9,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./store.component.css']
 })
 export class StoreComponent implements OnInit {
+  products: Product[];
+  developers: Developer[];
+  categories: Category[];
 
   constructor() { }
 
