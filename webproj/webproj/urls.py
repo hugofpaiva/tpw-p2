@@ -20,11 +20,17 @@ from app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #login!
+    path('ws-token-auth/', authviews.obtain_auth_token, name='api-token-auth'),
+    path('ws/register', views.register),
     path('ws/developer',views.get_dev),
     path('ws/developers',views.get_devs),
     path('ws/developerscre',views.create_dev),
-    path('ws-token-auth/',authviews.obtain_auth_token,name='api-token-auth'),
-    path('ws/register',views.register)
-    #path('ws/developerupd'),
-    #path('ws/developedel/<int:id>')
+    path('ws/developerupd',views.update_dev),
+    path('ws/developedel/<int:id>',views.delete_dev),
+    path('ws/product',views.get_product),
+    path('ws/products',views.get_products),
+    path('ws/productcre',views.create_product),
+    path('ws/productupd',views.update_product),
+    path('ws/productdel/<int:id>',views.delete_product),
 ]
