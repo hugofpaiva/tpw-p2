@@ -4,6 +4,11 @@ from rest_framework import serializers
 
 # TODO: ver atributos nao necessários
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields =('title',)
+
 class DeveloperSerializer(serializers.ModelSerializer):
     class Meta:
         model = Developer

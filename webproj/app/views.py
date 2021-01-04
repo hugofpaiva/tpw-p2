@@ -10,9 +10,9 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 
-from app.models import Developer, Product, Client, Reviews, Purchase
+from app.models import Developer, Product, Client, Reviews, Purchase, Category
 from app.serializers import DeveloperSerializer, ClientSerializer, UserSerializer, ProductSerializer, ReviewsSerializer, \
-    PurchaseSerializer
+    PurchaseSerializer, CategorySerializer
 
 
 #TODO: Função que veja que tipo de utilizador está a efetuar determinada operação, exemplo:
@@ -150,23 +150,36 @@ def delete_dev(request,id):
 @api_view(['GET'])
 def get_product(request):
     id = int(request.GET['id'])
+    res = {}
     try:
         prod = Product.objects.get(id=id)
     except Product.DoesNotExist:
         return  Response(status=status.HTTP_404_NOT_FOUND)
     serializer = ProductSerializer(prod)
-    return Response(serializer.data)
+    res.update(serializer.data)
+    dev=Developer.objects.get(id=prod.developer.id)
+    res['developer']=DeveloperSerializer(dev).data
+    res['category']=[CategorySerializer(catg).data for catg in prod.category.all()]
+    return Response(res)
 
 
 
 @api_view(['GET'])
 def get_products(request):
+    res=[]
     prods = Product.objects.all()
     if 'num' in request.GET:
         num = int(request.GET(['num']))
         prods = prods[:num]
-    serializer = ProductSerializer(prods,many=True)
-    return Response(serializer.data)
+    for prod in prods:
+        serializer=ProductSerializer(prod)
+        json_prod={}
+        json_prod.update(serializer.data)
+        dev = Developer.objects.get(id=prod.developer.id)
+        json_prod['developer']=DeveloperSerializer(dev).data
+        json_prod['category']= [CategorySerializer(catg).data for catg in prod.category.all()]
+        res.append(json_prod)
+    return Response(res)
 
 
 @api_view(['POST'])
