@@ -31,14 +31,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
     price = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-    'The default plan of a Product will be its plan with the lowest price'
-    #TODO: esta funcao probbly tem de passar pro serializer
-    @property
-    def stars(self):
-        stars = Reviews.objects.filter(product=self).aggregate(rating__avg=Ceil(Avg('rating')))['rating__avg']
-        if stars is None:
-            stars = 0
-        return int(stars)
+
 
 
 class Client(models.Model):
