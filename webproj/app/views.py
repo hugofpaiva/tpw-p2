@@ -22,7 +22,7 @@ from app.serializers import DeveloperSerializer, ClientSerializer, UserSerialize
 
 def check_request_user(request):
     user = request.user
-    if request.user.username is None:
+    if request.user.is_anonymous:
         return None
     elif request.user.is_superuser:
         return "Admin"
@@ -44,6 +44,8 @@ def check_client_permission(request, entity):
         return request_username == entity.client.user.username
     elif isinstance(entity, Client):
         return request_username == entity.user.username
+    elif isinstance(entity, Reviews):
+        return request_username == entity.author.user.username
     return None
 
 
@@ -245,6 +247,7 @@ def delete_product(request, id):
 def get_reviews(request):
     revs = Reviews.objects.all()
     if 'num' in request.GET:
+        print("fds")
         num = int(request.GET(['num']))
         revs = revs[:num]
     serializer = ReviewsSerializer(revs, many=True)
@@ -275,6 +278,25 @@ def get_purchases(request):
         return Response(serializer.data)
     return Response({'error_message': "You're not allowed to do this Request!"}, status=status.HTTP_403_FORBIDDEN)
 
+@api_view(['POST'])
+def create_purchases(request):
+    serializer = PurchaseSerializer(data=request.data)
+    if serializer.is_valid():
+        client=serializer.validated_data['client']
+        product = serializer.validated_data['product']
+        print(client.balance)
+        if Purchase.objects.filter(client=client.id).exists():
+            return Response({'error_message': "Client already has this product!"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        if client.balance < product.price:
+            return Response({'error_message': "Client does not have enough balance!"},
+                            status=status.HTTP_400_BAD_REQUEST)
+        serializer.save()
+        return Response(serializer.data,status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 @api_view(['GET'])
 def get_purchase(request, id):
@@ -296,6 +318,11 @@ def get_purchase(request, id):
 def create_review(request):
     serializer = ReviewsSerializer(data=request.data)
     if serializer.is_valid():
+        author = serializer.validated_data['author']
+        product = serializer.validated_data['product']
+        if Reviews.objects.filter(author=author.id,product=product.id).exists():
+            return Response({'error_message': "Cannot Add more than one Review to a Product by more than one client"},
+                            status=status.HTTP_400_BAD_REQUEST)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -303,11 +330,16 @@ def create_review(request):
 
 @api_view(['PUT'])
 def update_review(request, id):
+    user = check_request_user(request)
     try:
-        prod = Reviews.objects.get(id=id)
+        rev = Reviews.objects.get(id=id)
+        if user == "Client" and not check_client_permission(request,rev):
+            return Response({'error_message': "You're not allowed to do this Request! Can only Update Your Reviews"},
+                     status=status.HTTP_403_FORBIDDEN)
     except Reviews.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    serializer = ReviewsSerializer(prod, data=request.data)
+
+    serializer = ReviewsSerializer(rev, data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
@@ -316,8 +348,12 @@ def update_review(request, id):
 
 @api_view(['DELETE'])
 def delete_review(request, id):
+    user = check_request_user(request)
     try:
         rev = Reviews.objects.get(id=id)
+        if user == "Client" and not check_client_permission(request, rev):
+            return Response({'error_message': "You're not allowed to do this Request! Can only Delete Your Reviews"},
+                            status=status.HTTP_403_FORBIDDEN)
     except Reviews.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     rev.delete()

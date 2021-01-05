@@ -84,14 +84,11 @@ class PurchaseSerializer(serializers.ModelSerializer):
 
 class ReviewsSerializer(serializers.ModelSerializer):
     update_at = serializers.DateTimeField(read_only=True)
-    author = serializers.SerializerMethodField()
 
     class Meta:
         model = Reviews
-        fields = ('author', 'product', 'rating', 'date', 'update_at', 'body')
+        fields = ('id', 'author', 'product', 'rating', 'date', 'update_at', 'body')
 
-    def get_author(self, obj):
-        return ClientSerializer(obj.author).data
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
