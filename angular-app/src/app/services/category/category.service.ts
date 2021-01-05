@@ -13,7 +13,7 @@ export class CategoryService {
   constructor(private http: HttpClient) { }
 
   getCategory(id: number): Observable<Category>{
-    const url = environment.baseURL + 'category?id=' + id;
+    const url = environment.baseURL + 'category/' + id;
     return this.http.get<Category>(url);
   }
 

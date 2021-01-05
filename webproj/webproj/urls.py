@@ -52,19 +52,23 @@ urlpatterns = [
     path('ws-token-auth/', authviews.obtain_auth_token, name='api-token-auth'),
     path('ws/register', views.register),
     path('ws/clients', views.get_clients),
-    path('ws/client', views.get_client),
-    path('ws/developer', views.get_dev),
+    path('ws/client/<int:id>', views.get_client),
+
+    path('ws/developer/<int:id>', views.get_dev),
     path('ws/developers', views.get_devs),
-    path('ws/developerscre', views.create_dev),
-    path('ws/developerupd', views.update_dev),
-    path('ws/developedel/<int:id>', views.delete_dev),
-    path('ws/product', views.get_product),
+    path('ws/developercre', views.create_dev),
+    path('ws/developerupd/<int:id>', views.update_dev),
+    path('ws/developerdel/<int:id>', views.delete_dev),
+
+    path('ws/product/<int:id>', views.get_product),
     path('ws/products', views.get_products),
     path('ws/productcre', views.create_product),
-    path('ws/productupd', views.update_product),
+    path('ws/productupd/<int:id>', views.update_product),
     path('ws/productdel/<int:id>', views.delete_product),
+
     path('ws/reviews', views.get_reviews),
-    path('ws/review', views.get_review),
-    path('ws/reviewscre', views.create_review),
-    path('ws/reviewsupd', views.update_review),
+    path('ws/review/<int:id>', views.get_review),
+    path('ws/reviewcre', views.create_review),
+    path('ws/reviewupd/<int:id>', views.update_review),
+    path('ws/reviewdel/<int:id>',views.delete_review)
 ]

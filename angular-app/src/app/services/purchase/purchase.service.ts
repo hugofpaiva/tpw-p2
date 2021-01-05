@@ -14,7 +14,7 @@ export class PurchaseService {
   }
 
   getPurchase(id: number): Observable<Purchase> {
-    const url = environment.baseURL + 'purchase?id=' + id;
+    const url = environment.baseURL + 'purchase/' + id;
     return this.http.get<Purchase>(url);
   }
 
@@ -27,7 +27,7 @@ export class PurchaseService {
     return this.http.post(url, purch, environment.httpOptions);
   }
   updatePurchase(purch: Purchase): Observable<any> {
-    const url = environment.baseURL + 'purchaseupd';
+    const url = environment.baseURL + 'purchaseupd/' + purch.id ;
     return this.http.put(url, purch, environment.httpOptions);
   }
   // @ts-ignore

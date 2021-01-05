@@ -71,8 +71,7 @@ def get_clients(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
-def get_client(request):
-    id = int(request.GET['id'])
+def get_client(request,id):
     try:
         client = Client.objects.get(id=id)
     except Client.DoesNotExist:
@@ -84,17 +83,6 @@ def get_client(request):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def get_dev(request):
-    id = int(request.GET['id'])
-    try:
-        dev = Developer.objects.get(id=id)
-    except Developer.DoesNotExist:
-        return  Response(status=status.HTTP_404_NOT_FOUND)
-    serializer = DeveloperSerializer(dev)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-@permission_classes([AllowAny])
 def get_devs(request):
     devs = Developer.objects.all()
     if 'num' in request.GET:
@@ -102,6 +90,20 @@ def get_devs(request):
         devs = devs[:num]
     serializer = DeveloperSerializer(devs,many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_dev(request,id):
+    try:
+        dev = Developer.objects.get(id=id)
+    except Developer.DoesNotExist:
+        return  Response(status=status.HTTP_404_NOT_FOUND)
+    serializer = DeveloperSerializer(dev)
+    return Response(serializer.data)
+
+
+
 
 @api_view(['POST'])
 def create_dev(request):
@@ -116,10 +118,9 @@ def create_dev(request):
     return Response({'error_message':"You're not allowed to do this Request!"},status=status.HTTP_403_FORBIDDEN)
 
 @api_view(['PUT'])
-def update_dev(request):
+def update_dev(request,id):
     user=check_request_user(request)
     if user=="Admin":
-        id = request.data['id']
         try:
             dev = Developer.objects.get(id=id)
         except Developer.DoesNotExist:
@@ -149,8 +150,7 @@ def delete_dev(request,id):
 
 
 @api_view(['GET'])
-def get_product(request):
-    id = int(request.GET['id'])
+def get_product(request,id):
     res = {}
     try:
         prod = Product.objects.get(id=id)
@@ -193,8 +193,7 @@ def create_product(request):
     return Response({'error_message': "You're not allowed to do this Request!"}, status=status.HTTP_403_FORBIDDEN)
 
 @api_view(['PUT'])
-def update_product(request):
-    id = request.data['id']
+def update_product(request,id):
     user = check_request_user(request)
     if user == "Admin":
         try:
@@ -211,8 +210,7 @@ def update_product(request):
 
 
 @api_view(['DELETE'])
-def delete_product(request):
-    id = request.data['id']
+def delete_product(request,id):
     user = check_request_user(request)
     if user == "Admin":
         try:
@@ -235,8 +233,7 @@ def get_reviews(request):
 
 
 @api_view(['GET'])
-def get_review(request):
-    id = int(request.GET['id'])
+def get_review(request,id):
     res ={}
     try:
         rev = Reviews.objects.get(id=id)
@@ -260,9 +257,8 @@ def get_purchases(request):
     return Response({'error_message': "You're not allowed to do this Request!"}, status=status.HTTP_403_FORBIDDEN)
 
 @api_view(['GET'])
-def get_purchase(request):
+def get_purchase(request,id):
     res={}
-    id = int(request.GET['id'])
     try:
         purch = Purchase.objects.get(id=id)
     except Purchase.DoesNotExist:
@@ -280,8 +276,7 @@ def create_review(request):
     return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PUT'])
-def update_review(request):
-    id = request.data['id']
+def update_review(request,id):
     try:
         prod = Reviews.objects.get(id=id)
     except Reviews.DoesNotExist:
@@ -293,9 +288,7 @@ def update_review(request):
     return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['DELETE'])
-def delete_review(request):
-    id = request.data['id']
-
+def delete_review(request,id):
     try:
         rev=Reviews.objects.get(id=id)
     except Reviews.DoesNotExist:

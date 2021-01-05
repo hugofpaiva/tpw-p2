@@ -14,7 +14,7 @@ export class ReviewService {
   }
 
   getReview(id: number): Observable<Review>{
-    const url = environment.baseURL + 'review?id=' + id;
+    const url = environment.baseURL + 'review/' + id;
     return this.http.get<Review>(url);
   }
 

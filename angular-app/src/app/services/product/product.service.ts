@@ -12,7 +12,7 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   getProduct(id: number): Observable<Product>{
-    const url = environment.baseURL + 'product?id=' + id;
+    const url = environment.baseURL + 'product/' + id;
     return this.http.get<Product>(url);
   }
 
