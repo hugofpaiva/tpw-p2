@@ -16,16 +16,14 @@ from app.serializers import DeveloperSerializer, ClientSerializer, UserSerialize
     PurchaseSerializer, CategorySerializer
 
 
-#TODO: Função que veja que tipo de utilizador está a efetuar determinada operação, exemplo:
+# TODO: Função que veja que tipo de utilizador está a efetuar determinada operação, exemplo:
 #      apenas super users podem editar/adicionar/remover produtos
 
 
-
-
 def check_request_user(request):
-    user=request.user
+    user = request.user
     if request.user.username is None:
-        return  None
+        return None
     elif request.user.is_superuser:
         return "Admin"
     elif Client.objects.get(user=user) is not None:
@@ -33,15 +31,31 @@ def check_request_user(request):
     else:
         return "Some Error Ocurred"
 
+
+def check_client_permission(request, entity):
+    """
+    Function used to verify whether a authenticated client can perform a request or not
+    For example, a client should only be able to view his purchases,or it's personal information
+    @:parameter request : the request received
+    @:parameter entity: the object of the class that the client wants to access
+    """
+    request_username = request.user.username
+    if isinstance(entity, Purchase):
+        return request_username == entity.client.user.username
+    elif isinstance(entity, Client):
+        return request_username == entity.user.username
+    return None
+
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register(request):
-    serializer=UserSerializer(data=request.data)
+    serializer = UserSerializer(data=request.data)
     data = {}
-    st=None
+    st = None
     if serializer.is_valid():
         user = serializer.save()
-        st=status.HTTP_201_CREATED
+        st = status.HTTP_201_CREATED
         request.data['user'] = user.id
         client = ClientSerializer(data=request.data)
         if client.is_valid():
@@ -52,13 +66,13 @@ def register(request):
             data['token'] = Token.objects.get(user=user).key
             st = status.HTTP_201_CREATED
         else:
-            data=serializer.errors
-            st=status.HTTP_400_BAD_REQUEST
+            data = serializer.errors
+            st = status.HTTP_400_BAD_REQUEST
     else:
         data = serializer.errors
         st = status.HTTP_400_BAD_REQUEST
 
-    return Response(data,status=st)
+    return Response(data, status=st)
 
 
 @api_view(['GET'])
@@ -70,15 +84,20 @@ def get_clients(request):
     serializer = ClientSerializer(clients, many=True)
     return Response(serializer.data)
 
+
 @api_view(['GET'])
-def get_client(request,id):
+def get_client(request, id):
+    user = check_request_user(request)
     try:
         client = Client.objects.get(id=id)
-    except Client.DoesNotExist:
-        return  Response(status=status.HTTP_404_NOT_FOUND)
-    serializer = ClientSerializer(client)
-    return  Response(serializer.data)
+        if user == 'Client' and not check_client_permission(request,client):
+            return Response({'error_message': "You're not allowed to do this Request!"},
+                            status=status.HTTP_403_FORBIDDEN)
 
+    except Client.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    serializer = ClientSerializer(client)
+    return Response(serializer.data)
 
 
 @api_view(['GET'])
@@ -88,58 +107,57 @@ def get_devs(request):
     if 'num' in request.GET:
         num = int(request.GET(['num']))
         devs = devs[:num]
-    serializer = DeveloperSerializer(devs,many=True)
+    serializer = DeveloperSerializer(devs, many=True)
     return Response(serializer.data)
 
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def get_dev(request,id):
+def get_dev(request, id):
     try:
         dev = Developer.objects.get(id=id)
     except Developer.DoesNotExist:
-        return  Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_404_NOT_FOUND)
     serializer = DeveloperSerializer(dev)
     return Response(serializer.data)
 
 
-
-
 @api_view(['POST'])
 def create_dev(request):
-    user=check_request_user(request)
-    if user=="Admin":
-        serializer=DeveloperSerializer(data=request.data)
+    user = check_request_user(request)
+    if user == "Admin":
+        serializer = DeveloperSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return  Response(serializer.data,status=status.HTTP_201_CREATED)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-    return Response({'error_message':"You're not allowed to do this Request!"},status=status.HTTP_403_FORBIDDEN)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'error_message': "You're not allowed to do this Request!"}, status=status.HTTP_403_FORBIDDEN)
+
 
 @api_view(['PUT'])
-def update_dev(request,id):
-    user=check_request_user(request)
-    if user=="Admin":
+def update_dev(request, id):
+    user = check_request_user(request)
+    if user == "Admin":
         try:
             dev = Developer.objects.get(id=id)
         except Developer.DoesNotExist:
-            return  Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = DeveloperSerializer(dev,data=request.data)
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = DeveloperSerializer(dev, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    return Response({'error_message':"You're not allowed to do this Request!"},status=status.HTTP_403_FORBIDDEN)
+    return Response({'error_message': "You're not allowed to do this Request!"}, status=status.HTTP_403_FORBIDDEN)
 
 
 @api_view(['DELETE'])
-def delete_dev(request,id):
-    user=check_request_user(request)
+def delete_dev(request, id):
+    user = check_request_user(request)
     if user == "Admin":
         try:
-            dev=Developer.objects.get(id=id)
+            dev = Developer.objects.get(id=id)
         except Developer.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -150,32 +168,31 @@ def delete_dev(request,id):
 
 
 @api_view(['GET'])
-def get_product(request,id):
+def get_product(request, id):
     res = {}
     try:
         prod = Product.objects.get(id=id)
     except Product.DoesNotExist:
-        return  Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_404_NOT_FOUND)
     serializer = ProductSerializer(prod)
     res.update(serializer.data)
     return Response(res)
 
 
-
 @api_view(['GET'])
 def get_products(request):
-    res=[]
+    res = []
     prods = Product.objects.all()
     if 'num' in request.GET:
         num = int(request.GET(['num']))
         prods = prods[:num]
     for prod in prods:
-        serializer=ProductSerializer(prod)
-        json_prod={}
+        serializer = ProductSerializer(prod)
+        json_prod = {}
         json_prod.update(serializer.data)
         dev = Developer.objects.get(id=prod.developer.id)
-        json_prod['developer']=DeveloperSerializer(dev).data
-        json_prod['category']= [CategorySerializer(catg).data for catg in prod.category.all()]
+        json_prod['developer'] = DeveloperSerializer(dev).data
+        json_prod['category'] = [CategorySerializer(catg).data for catg in prod.category.all()]
         res.append(json_prod)
     return Response(res)
 
@@ -184,37 +201,38 @@ def get_products(request):
 def create_product(request):
     user = check_request_user(request)
     if user == "Admin":
-        serializer=ProductSerializer(data=request.data)
+        serializer = ProductSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data,status=status.HTTP_201_CREATED)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     return Response({'error_message': "You're not allowed to do this Request!"}, status=status.HTTP_403_FORBIDDEN)
 
+
 @api_view(['PUT'])
-def update_product(request,id):
+def update_product(request, id):
     user = check_request_user(request)
     if user == "Admin":
         try:
             prod = Product.objects.get(id=id)
         except Product.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = ProductSerializer(prod,data=request.data)
+        serializer = ProductSerializer(prod, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     return Response({'error_message': "You're not allowed to do this Request!"}, status=status.HTTP_403_FORBIDDEN)
 
 
 @api_view(['DELETE'])
-def delete_product(request,id):
+def delete_product(request, id):
     user = check_request_user(request)
     if user == "Admin":
         try:
-            prod=Product.objects.get(id=id)
+            prod = Product.objects.get(id=id)
         except Product.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         prod.delete()
@@ -222,23 +240,24 @@ def delete_product(request,id):
 
     return Response({'error_message': "You're not allowed to do this Request!"}, status=status.HTTP_403_FORBIDDEN)
 
+
 @api_view(['GET'])
 def get_reviews(request):
     revs = Reviews.objects.all()
     if 'num' in request.GET:
         num = int(request.GET(['num']))
         revs = revs[:num]
-    serializer = ReviewsSerializer(revs,many=True)
+    serializer = ReviewsSerializer(revs, many=True)
     return Response(serializer.data)
 
 
 @api_view(['GET'])
-def get_review(request,id):
-    res ={}
+def get_review(request, id):
+    res = {}
     try:
         rev = Reviews.objects.get(id=id)
     except Reviews.DoesNotExist:
-        return  Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_404_NOT_FOUND)
     serializer = ReviewsSerializer(rev)
     res.update(serializer.data)
     return Response(res)
@@ -256,46 +275,50 @@ def get_purchases(request):
         return Response(serializer.data)
     return Response({'error_message': "You're not allowed to do this Request!"}, status=status.HTTP_403_FORBIDDEN)
 
+
 @api_view(['GET'])
-def get_purchase(request,id):
-    res={}
+def get_purchase(request, id):
+    res = {}
+    user = check_request_user(request)
     try:
         purch = Purchase.objects.get(id=id)
+        if user == 'Client' and not check_client_permission(request, purch):
+            return Response({'error_message': "You're not allowed to do this Request! Can only Check Your Purchases"},
+                            status=status.HTTP_403_FORBIDDEN)
     except Purchase.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     serializer = PurchaseSerializer(purch)
     res.update(serializer.data)
     return Response(serializer.data)
 
+
 @api_view(['POST'])
 def create_review(request):
-    serializer=ReviewsSerializer(data=request.data)
+    serializer = ReviewsSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-        return Response(serializer.data,status=status.HTTP_201_CREATED)
-    return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['PUT'])
-def update_review(request,id):
+def update_review(request, id):
     try:
         prod = Reviews.objects.get(id=id)
     except Reviews.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    serializer = ReviewsSerializer(prod,data=request.data)
+    serializer = ReviewsSerializer(prod, data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
-    return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['DELETE'])
-def delete_review(request,id):
+def delete_review(request, id):
     try:
-        rev=Reviews.objects.get(id=id)
+        rev = Reviews.objects.get(id=id)
     except Reviews.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     rev.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-
-
