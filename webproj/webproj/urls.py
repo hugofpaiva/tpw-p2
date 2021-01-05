@@ -36,7 +36,7 @@ urlpatterns = [
     path('ws/productupd',views.update_product),
     path('ws/productdel/<int:id>',views.delete_product),
     path('ws/reviews',views.get_reviews),
-    path('ws/reviews',views.get_review),
+    path('ws/review',views.get_review),
     path('ws/reviewscre',views.create_review),
     path('ws/reviewsupd',views.update_review),
 ]

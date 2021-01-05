@@ -1,3 +1,5 @@
+from django.db.models import ForeignKey
+
 from app.models import *
 from rest_framework import serializers
 
@@ -7,32 +9,41 @@ from rest_framework import serializers
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields =('title',)
+        fields = ('title',)
+
 
 class DeveloperSerializer(serializers.ModelSerializer):
     class Meta:
         model = Developer
-        fields = ('id','name', 'created_at')
+        fields = ('id', 'name', 'created_at')
+
 
 class ProductSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(read_only=True)
     update_at = serializers.DateTimeField(read_only=True)
     stars = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Product
         fields = ('name', 'icon', 'description',
-                  'category', 'developer', 'created_at', 'update_at', 'price','stars')
+                  'category', 'developer', 'created_at', 'update_at', 'price', 'stars')
 
-
-    def get_stars(self,obj):
+    def get_stars(self, obj):
         stars = Reviews.objects.filter(product=obj).aggregate(rating__avg=Ceil(Avg('rating')))['rating__avg']
         if stars is None:
             stars = 0
         return int(stars)
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['developer'] = DeveloperSerializer(Developer.objects.get(pk=data['developer'])).data
+        data['category'] = [CategorySerializer(catg).data for catg in instance.category.all()]
+        return data
+
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
+
     class Meta:
         model = User
         fields = ('email', 'username', 'password')
@@ -46,13 +57,15 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ClientSerializer(serializers.ModelSerializer):
-    user = serializers.SerializerMethodField()
-
     class Meta:
         model = Client
         fields = ('id', 'user', 'favorites', 'created_at',
                   'balance')
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['user'] = UserSerializer(User.objects.get(pk=data['user'])).data
+        return data
 
 
 class PurchaseSerializer(serializers.ModelSerializer):
@@ -62,10 +75,26 @@ class PurchaseSerializer(serializers.ModelSerializer):
         model = Purchase
         fields = ('client', 'product', 'created_at')
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['client'] = ClientSerializer(Client.objects.get(pk=data['client'])).data
+        data['product'] = ProductSerializer(Product.objects.get(pk=data['product'])).data
+        return data
+
 
 class ReviewsSerializer(serializers.ModelSerializer):
     update_at = serializers.DateTimeField(read_only=True)
+    author = serializers.SerializerMethodField()
+
     class Meta:
         model = Reviews
         fields = ('author', 'product', 'rating', 'date', 'update_at', 'body')
 
+    def get_author(self, obj):
+        return ClientSerializer(obj.author).data
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['product'] = ProductSerializer(Product.objects.get(pk=data['product'])).data
+        data['author'] = ClientSerializer(Client.objects.get(pk=data['author'])).data
+        return data

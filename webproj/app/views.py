@@ -157,9 +157,6 @@ def get_product(request):
         return  Response(status=status.HTTP_404_NOT_FOUND)
     serializer = ProductSerializer(prod)
     res.update(serializer.data)
-    dev=Developer.objects.get(id=prod.developer.id)
-    res['developer']=DeveloperSerializer(dev).data
-    res['category']=[CategorySerializer(catg).data for catg in prod.category.all()]
     return Response(res)
 
 
@@ -239,12 +236,14 @@ def get_reviews(request):
 @api_view(['GET'])
 def get_review(request):
     id = int(request.GET['id'])
+    res ={}
     try:
         rev = Reviews.objects.get(id=id)
     except Reviews.DoesNotExist:
         return  Response(status=status.HTTP_404_NOT_FOUND)
     serializer = ReviewsSerializer(rev)
-    return Response(serializer.data)
+    res.update(serializer.data)
+    return Response(res)
 
 
 @api_view(['GET'])
@@ -261,12 +260,14 @@ def get_purchases(request):
 
 @api_view(['GET'])
 def get_purchase(request):
+    res={}
     id = int(request.GET['id'])
     try:
         purch = Purchase.objects.get(id=id)
     except Purchase.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     serializer = PurchaseSerializer(purch)
+    res.update(serializer.data)
     return Response(serializer.data)
 
 @api_view(['POST'])
