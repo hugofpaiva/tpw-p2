@@ -13,30 +13,58 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
 from rest_framework.authtoken import views as authviews
+
 from app import views
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="AppStore API",
+        default_version='v1',
+        description="REST API for AppStore",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="contact@snippets.local"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,), )
 
 urlpatterns = [
+
+    # This exposes 4 endpoints:
+    # A JSON view of your API specification at /swagger.json
+    # A YAML view of your API specification at /swagger.yaml
+    # A swagger-ui view of your API specification at /swagger/
+    # A ReDoc view of your API specification at /redoc/
+
+    url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+
     path('admin/', admin.site.urls),
-    #login!
+    # login!
     path('ws-token-auth/', authviews.obtain_auth_token, name='api-token-auth'),
     path('ws/register', views.register),
-    path('ws/clients',views.get_clients),
-    path('ws/client',views.get_client),
-    path('ws/developer',views.get_dev),
-    path('ws/developers',views.get_devs),
-    path('ws/developerscre',views.create_dev),
-    path('ws/developerupd',views.update_dev),
-    path('ws/developedel/<int:id>',views.delete_dev),
-    path('ws/product',views.get_product),
-    path('ws/products',views.get_products),
-    path('ws/productcre',views.create_product),
-    path('ws/productupd',views.update_product),
-    path('ws/productdel/<int:id>',views.delete_product),
-    path('ws/reviews',views.get_reviews),
-    path('ws/review',views.get_review),
-    path('ws/reviewscre',views.create_review),
-    path('ws/reviewsupd',views.update_review),
+    path('ws/clients', views.get_clients),
+    path('ws/client', views.get_client),
+    path('ws/developer', views.get_dev),
+    path('ws/developers', views.get_devs),
+    path('ws/developerscre', views.create_dev),
+    path('ws/developerupd', views.update_dev),
+    path('ws/developedel/<int:id>', views.delete_dev),
+    path('ws/product', views.get_product),
+    path('ws/products', views.get_products),
+    path('ws/productcre', views.create_product),
+    path('ws/productupd', views.update_product),
+    path('ws/productdel/<int:id>', views.delete_product),
+    path('ws/reviews', views.get_reviews),
+    path('ws/review', views.get_review),
+    path('ws/reviewscre', views.create_review),
+    path('ws/reviewsupd', views.update_review),
 ]
