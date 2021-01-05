@@ -9,6 +9,7 @@ import {Purchase} from '../../models/purchase';
 })
 export class PurchaseService {
 
+
   constructor(private http: HttpClient) {
   }
 
@@ -22,7 +23,7 @@ export class PurchaseService {
     return this.http.get<Purchase[]>(url);
   }
   createPurchase(purch: Purchase): Observable<any> {
-    const url = environment.baseURL + 'authorcre';
+    const url = environment.baseURL + 'purchasecre';
     return this.http.post(url, purch, environment.httpOptions);
   }
   updatePurchase(purch: Purchase): Observable<any> {
