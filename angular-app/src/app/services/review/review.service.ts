@@ -9,7 +9,9 @@ import {Review} from '../../models/review';
 })
 export class ReviewService {
 
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient) {
+  }
 
   getReview(id: number): Observable<Review>{
     const url = environment.baseURL + 'review?id=' + id;
@@ -21,8 +23,10 @@ export class ReviewService {
     return this.http.get<Review[]>(url);
   }
 
+
   getReviewP(page: number): Observable<Review[]>{
     const url = environment.baseURL + 'reviews?page=';
     return this.http.get<Review[]>(url);
   }
+
 }

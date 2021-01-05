@@ -4,19 +4,31 @@ from rest_framework import serializers
 
 # TODO: ver atributos nao necessários
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields =('title',)
+
 class DeveloperSerializer(serializers.ModelSerializer):
     class Meta:
         model = Developer
-        fields = ('name', 'created_at')
-
+        fields = ('id','name', 'created_at')
 
 class ProductSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(read_only=True)
-    updated_at = serializers.DateTimeField(read_only=True)
+    update_at = serializers.DateTimeField(read_only=True)
+    stars = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Product
         fields = ('name', 'icon', 'description',
-                  'category', 'created_at', 'update_at', 'price')
+                  'category', 'developer', 'created_at', 'update_at', 'price','stars')
+
+
+    def get_stars(self,obj):
+        stars = Reviews.objects.filter(product=obj).aggregate(rating__avg=Ceil(Avg('rating')))['rating__avg']
+        if stars is None:
+            stars = 0
+        return int(stars)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -34,21 +46,26 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ClientSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+
     class Meta:
         model = Client
-        fields = ('user', 'favorites', 'created_at',
+        fields = ('id', 'user', 'favorites', 'created_at',
                   'balance')
+
 
 
 class PurchaseSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(read_only=True)
+
     class Meta:
         model = Purchase
         fields = ('client', 'product', 'created_at')
 
 
 class ReviewsSerializer(serializers.ModelSerializer):
-    updated_at = serializers.DateTimeField(read_only=True)
+    update_at = serializers.DateTimeField(read_only=True)
     class Meta:
         model = Reviews
         fields = ('author', 'product', 'rating', 'date', 'update_at', 'body')
+

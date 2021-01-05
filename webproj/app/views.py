@@ -10,8 +10,9 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 
-from app.models import Developer, Product, Client, Reviews
-from app.serializers import DeveloperSerializer, ClientSerializer, UserSerializer, ProductSerializer, ReviewsSerializer
+from app.models import Developer, Product, Client, Reviews, Purchase, Category
+from app.serializers import DeveloperSerializer, ClientSerializer, UserSerializer, ProductSerializer, ReviewsSerializer, \
+    PurchaseSerializer, CategorySerializer
 
 
 #TODO: Função que veja que tipo de utilizador está a efetuar determinada operação, exemplo:
@@ -39,7 +40,7 @@ def register(request):
     st=None
     if serializer.is_valid():
         user = serializer.save()
-        st =st=status.HTTP_201_CREATED
+        st=status.HTTP_201_CREATED
         request.data['user'] = user.id
         client = ClientSerializer(data=request.data)
         if client.is_valid():
@@ -149,23 +150,36 @@ def delete_dev(request,id):
 @api_view(['GET'])
 def get_product(request):
     id = int(request.GET['id'])
+    res = {}
     try:
         prod = Product.objects.get(id=id)
     except Product.DoesNotExist:
         return  Response(status=status.HTTP_404_NOT_FOUND)
     serializer = ProductSerializer(prod)
-    return Response(serializer.data)
+    res.update(serializer.data)
+    dev=Developer.objects.get(id=prod.developer.id)
+    res['developer']=DeveloperSerializer(dev).data
+    res['category']=[CategorySerializer(catg).data for catg in prod.category.all()]
+    return Response(res)
 
 
 
 @api_view(['GET'])
 def get_products(request):
+    res=[]
     prods = Product.objects.all()
     if 'num' in request.GET:
         num = int(request.GET(['num']))
         prods = prods[:num]
-    serializer = ProductSerializer(prods,many=True)
-    return Response(serializer.data)
+    for prod in prods:
+        serializer=ProductSerializer(prod)
+        json_prod={}
+        json_prod.update(serializer.data)
+        dev = Developer.objects.get(id=prod.developer.id)
+        json_prod['developer']=DeveloperSerializer(dev).data
+        json_prod['category']= [CategorySerializer(catg).data for catg in prod.category.all()]
+        res.append(json_prod)
+    return Response(res)
 
 
 @api_view(['POST'])
@@ -233,6 +247,28 @@ def get_review(request):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+def get_purchases(request):
+    user = check_request_user(request)
+    if user == "Admin":
+        purchs = Purchase.objects.all()
+        if 'num' in request.GET:
+            num = int(request.GET(['num']))
+            purchs = purchs[:num]
+        serializer = PurchaseSerializer(purchs, many=True)
+        return Response(serializer.data)
+    return Response({'error_message': "You're not allowed to do this Request!"}, status=status.HTTP_403_FORBIDDEN)
+
+@api_view(['GET'])
+def get_purchase(request):
+    id = int(request.GET['id'])
+    try:
+        purch = Purchase.objects.get(id=id)
+    except Purchase.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    serializer = PurchaseSerializer(purch)
+    return Response(serializer.data)
+
 @api_view(['POST'])
 def create_review(request):
     serializer=ReviewsSerializer(data=request.data)
@@ -264,4 +300,7 @@ def delete_review(request):
         return Response(status=status.HTTP_404_NOT_FOUND)
     rev.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
 
