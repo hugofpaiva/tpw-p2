@@ -12,6 +12,8 @@ import { AboutusComponent } from './core/components/aboutus/aboutus.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { LoginComponent } from './core/components/login/login.component';
 import { RegisterComponent } from './core/components/register/register.component';
+import { NotfoundComponent } from './core/components/notfound/notfound.component';
+import { BasepageComponent } from './shared/components/basepage/basepage.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { RegisterComponent } from './core/components/register/register.component
     AboutusComponent,
     FooterComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    NotfoundComponent,
+    BasepageComponent
   ],
   imports: [
     BrowserModule,

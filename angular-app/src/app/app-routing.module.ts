@@ -5,15 +5,24 @@ import {InitialpageComponent} from './core/components/initialpage/initialpage.co
 import {AboutusComponent} from './core/components/aboutus/aboutus.component';
 import {LoginComponent} from './core/components/login/login.component';
 import {RegisterComponent} from './core/components/register/register.component';
+import {NotfoundComponent} from './core/components/notfound/notfound.component';
+import {BasepageComponent} from './shared/components/basepage/basepage.component';
 
 const routes: Routes = [
-  {path: '', component: InitialpageComponent},
-  {path: 'shop', component: StoreComponent},
-  {path: 'about_us', component: AboutusComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'sign_up', component: RegisterComponent},
+  {
+    path: '',
+    component: BasepageComponent, // this is the component with the <router-outlet> in the template
+    children: [
+      {path: '', component: InitialpageComponent},
+      {path: 'shop', component: StoreComponent},
+      {path: 'about_us', component: AboutusComponent},
+      {path: 'login', component: LoginComponent},
+      {path: 'sign_up', component: RegisterComponent},
+    ],
+  },
+  {path: 'not_found', component: NotfoundComponent},
 
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: 'not_found' }
 ];
 
 @NgModule({
