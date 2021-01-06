@@ -10,7 +10,9 @@ from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, authentication_classes, permission_classes, renderer_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
+from django_filters import rest_framework as filters
 
+from app.filters import ProductFilter
 from app.models import Developer, Product, Client, Reviews, Purchase, Category
 from app.serializers import DeveloperSerializer, ClientSerializer, UserSerializer, ProductSerializer, ReviewsSerializer, \
     PurchaseSerializer, CategorySerializer
@@ -184,7 +186,7 @@ def get_product(request, id):
 @api_view(['GET'])
 def get_products(request):
     res = []
-    prods = Product.objects.all()
+    prods = ProductFilter(request.GET,queryset=Product.objects.all()).qs
     if 'num' in request.GET:
         num = int(request.GET(['num']))
         prods = prods[:num]
