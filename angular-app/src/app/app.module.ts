@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { StoreComponent } from './components/store/store.component';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { StoreComponent } from './core/components/store/store.component';
 import {FormsModule} from '@angular/forms';
-import { InitialpageComponent } from './components/initialpage/initialpage.component';
+import { InitialpageComponent } from './core/components/initialpage/initialpage.component';
 import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({

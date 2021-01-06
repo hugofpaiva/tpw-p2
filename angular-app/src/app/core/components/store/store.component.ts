@@ -9,11 +9,12 @@ import {Category} from '../../models/category';
   styleUrls: ['./store.component.css']
 })
 export class StoreComponent implements OnInit {
-  products: Product[];
-  developers: Developer[];
-  categories: Category[];
+  products: Product[] = [];
+  developers: Developer[] = [];
+  categories: Category[] = [];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

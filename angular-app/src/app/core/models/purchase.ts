@@ -6,4 +6,11 @@ export class Purchase {
   client: User;
   product: Product;
   created_at: Date;
+
+  constructor(id: number, client: User, product: Product, created_at: Date) {
+    this.id = id;
+    this.client = client;
+    this.product = product;
+    this.created_at = created_at;
+  }
 }
