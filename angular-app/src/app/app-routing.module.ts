@@ -11,7 +11,6 @@ import {BasepageComponent} from './shared/components/basepage/basepage.component
 const routes: Routes = [
   {
     path: '',
-    component: BasepageComponent, // this is the component with the <router-outlet> in the template
     children: [
       {path: '', component: InitialpageComponent},
       {path: 'shop', component: StoreComponent},
