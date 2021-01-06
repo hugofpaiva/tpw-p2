@@ -49,7 +49,7 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     # login!
-    path('ws-token-auth/', authviews.obtain_auth_token, name='api-token-auth'),
+    path('ws/token-auth/', authviews.obtain_auth_token, name='api-token-auth'),
     path('ws/register', views.register),
     path('ws/clients', views.get_clients),
     path('ws/client/<int:id>', views.get_client),
