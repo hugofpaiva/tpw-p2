@@ -13,13 +13,13 @@
           <div class="col-lg-6 col-md-6">
               <nav class="header__menu mobile-menu">
                   <ul>
-                      <li id="home">
-                          <a routerLink="">Home</a>
+                      <li id="home" [ngClass]="{'active': rlh.isActive}">
+                          <a routerLink="/" routerLinkActive="active" #rlh="routerLinkActive" [routerLinkActiveOptions]="{exact: true}">Home</a>
                       </li>
 
-                      <li id="shop"><a routerLink="/shop">Shop</a></li>
+                      <li id="shop" [ngClass]="{'active': rls.isActive}"><a routerLink="/shop" routerLinkActive="active" #rls="routerLinkActive">Shop</a></li>
 
-                      <li><a routerLink="/about_us">About Us</a></li>
+                      <li [ngClass]="{'active': rla.isActive}"><a routerLink="/about_us" routerLinkActive="active" #rla="routerLinkActive">About Us</a></li>
                   </ul>
               </nav>
           </div>

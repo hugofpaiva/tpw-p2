@@ -10,6 +10,8 @@ import { InitialpageComponent } from './core/components/initialpage/initialpage.
 import {HttpClientModule} from '@angular/common/http';
 import { AboutusComponent } from './core/components/aboutus/aboutus.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
+import { LoginComponent } from './core/components/login/login.component';
+import { RegisterComponent } from './core/components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { FooterComponent } from './shared/components/footer/footer.component';
     StoreComponent,
     InitialpageComponent,
     AboutusComponent,
-    FooterComponent
+    FooterComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
