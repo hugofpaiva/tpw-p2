@@ -8,13 +8,17 @@ import { StoreComponent } from './core/components/store/store.component';
 import {FormsModule} from '@angular/forms';
 import { InitialpageComponent } from './core/components/initialpage/initialpage.component';
 import {HttpClientModule} from '@angular/common/http';
+import { AboutusComponent } from './core/components/aboutus/aboutus.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     StoreComponent,
-    InitialpageComponent
+    InitialpageComponent,
+    AboutusComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
