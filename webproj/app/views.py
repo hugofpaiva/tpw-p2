@@ -188,6 +188,62 @@ def get_cats(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
+def get_cat(request, id):
+    try:
+        cat = Category.objects.get(id=id)
+    except Category.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    serializer = CategorySerializer(cat)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def create_cat(request):
+    user = check_request_user(request)
+    if user == "Admin":
+        serializer = CategorySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'error_message': "You're not allowed to do this Request!"}, status=status.HTTP_403_FORBIDDEN)
+
+
+@api_view(['PUT'])
+def update_cat(request, id):
+    user = check_request_user(request)
+    if user == "Admin":
+        try:
+            cat = Category.objects.get(id=id)
+        except Category.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = CategorySerializer(cat, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    return Response({'error_message': "You're not allowed to do this Request!"}, status=status.HTTP_403_FORBIDDEN)
+
+
+@api_view(['DELETE'])
+def delete_cat(request, id):
+    user = check_request_user(request)
+    if user == "Admin":
+        try:
+            cat = Category.objects.get(id=id)
+        except Category.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        cat.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    return Response({'error_message': "You're not allowed to do this Request!"}, status=status.HTTP_403_FORBIDDEN)
+
+
+@api_view(['GET'])
 def get_product(request, id):
     res = {}
     try:
