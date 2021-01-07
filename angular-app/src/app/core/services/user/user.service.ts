@@ -25,10 +25,4 @@ export class UserService {
     const url = environment.baseURL + 'users?page=';
     return this.http.get<User[]>(url);
   }
-
-  userAuthentication(userName: string, pw: string): Observable<any>{
-    const url = environment.baseURL + 'token-auth/';
-    return this.http.post(url, {username: userName, password: pw}, environment.httpOptions);
-
-  }
 }

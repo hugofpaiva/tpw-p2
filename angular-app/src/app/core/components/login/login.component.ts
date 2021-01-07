@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from '../../services/user/user.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {AuthService} from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,13 +11,13 @@ import {Router} from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginError = false;
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   onSubmit(userName: string, password: string): void{
-    this.userService.userAuthentication(userName, password).subscribe((data: any) => {
+    this.authService.AuthenticateUser(userName, password).subscribe((data: any) => {
       localStorage.setItem('userToken', data.token);
       this.router.navigate(['/']);
     }, (err: HttpErrorResponse) => {

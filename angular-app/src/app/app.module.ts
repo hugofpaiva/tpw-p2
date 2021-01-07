@@ -7,13 +7,14 @@ import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { StoreComponent } from './core/components/store/store.component';
 import {FormsModule} from '@angular/forms';
 import { InitialpageComponent } from './core/components/initialpage/initialpage.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { AboutusComponent } from './core/components/aboutus/aboutus.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { LoginComponent } from './core/components/login/login.component';
 import { RegisterComponent } from './core/components/register/register.component';
 import { NotfoundComponent } from './core/components/notfound/notfound.component';
 import { BasepageComponent } from './shared/components/basepage/basepage.component';
+import {AuthHeaderInterceptor} from "./core/interceptor/auth-header-interceptor";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,13 @@ import { BasepageComponent } from './shared/components/basepage/basepage.compone
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthHeaderInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
