@@ -6,6 +6,13 @@
         <div class="shop__sidebar">
           <div class="shop__sidebar__search">
 
+          <!--<a *ngFor="let product of products" class="col-1-4">
+            <div class="module product">
+              <h4>{{ product.name }}</h4>
+            </div>
+          </a>
+          -->
+
             <form onsubmit="(e) => e.preventDefault();return insertParam({'name':document.getElementById('search').value})">
               <input type="text" id="search" placeholder="Search..."  />
               <button type="submit">
@@ -35,6 +42,12 @@
                       class="shop__sidebar__categories"
                     >
                       <ul class="nice-scroll">
+                        <!-- <a *ngFor="let categorie of categories" >
+                        <li>
+                          <a>{{ categorie.title }}</a> -->
+                          <!--<a {% if getParams.category == category.id|stringformat:'s' %} style="color: #111111;" {% endif %} href="javascript:insertParam({'category':{{ category.id }}})">{{ category.title }} ({{ category.numProd }})</a> -->
+                        <!-- </li>
+                      </a> -->
 
 
                       </ul>
@@ -58,7 +71,12 @@
                   <div class="card-body">
                     <div class="shop__sidebar__brand">
                       <ul>
-
+                        <a *ngFor="let developer of developers">
+                        <li>
+                          <a>{{ developer.name }}</a>
+                          <!--<a {% if getParams.developer == dev.id|stringformat:'s' %} style="color: #111111;" {% endif %}  href="javascript:insertParam({'developer':{{ dev.id }}})" >{{ dev.name }}</a> -->
+                        </li>
+                        </a>
                       </ul>
                     </div>
                   </div>
@@ -175,6 +193,8 @@
         </div>
       </div>
 
+      <ng-template [ngIf]="products">
+
       <div class="col-lg-9">
         <div class="shop__product__option">
           <div class="row">
@@ -204,49 +224,59 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class=" groups row">
+
+          <div>
 
 
-          <div class="col-lg-4 col-md-6 col-sm-6 product">
+          <div class="col-lg-4 col-md-6 col-sm-6 product" style="display:inline-block;" *ngFor="let product of products">
 
-                        <div class="product__item sale">
+            <!--<ng-container
+              *ngIf="product.stars > 0; then sale; else not">
+            </ng-container>
+            -->
+
+            <!--<ng-template #sale>
+              <div class="product__item sale">
+            </ng-template>
+            <ng-template #not>
+              <div class="product__item">
+            </ng-template> -->
 
 
-                          <!--
-                         <div class="product__item">
-                         -->
 
 
 
-                <div
-                  class="product__item__pic set-bg"
-                  data-setbg=""
-                >
+                         <div class="product__item sale">
 
+
+
+                <div class="product__item__pic set-bg">
+                  <img src="{{ product.icon }}">
                 </div>
 
                 <div class="product__item__text">
-                  <h6>name</h6>
-                  <a class="add-cart">description</a>
+                  <h6>{{ product.name}}</h6>
+                  <a class="add-cart">{{product.description | slice:0:3}}</a>
                   <div class="rating">
+                    <div style="display: flex; flex-wrap: wrap;">
+                      <i *ngFor="let x of [].constructor(product.stars)" class="fa fa-star"></i>
+                      <i *ngFor="let x of [].constructor(5 - product.stars)" class="fa fa-star-o"></i>
+                    </div>
 
                     <!--{% for _ in product.nStars %}-->
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
 
 
 
                   </div>
-                  <h5>2 €</h5>
+                  <h5>{{ product.price }} €</h5>
                 </div>
 
               </div>
-
-            </div>
           </div>
+
+
+        </div>
           <div class="row">
             <div class="col-lg-12">
               <div class="product__pagination">
@@ -264,6 +294,7 @@
             </div>
           </div>
         </div>
+
       <!--
 
         <div class="col-lg-9">
@@ -274,8 +305,8 @@
 
         -->
       </div>
-    </div>
-</section>
+
+
 <!-- Shop Section End -->
 
 
