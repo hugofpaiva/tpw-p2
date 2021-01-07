@@ -194,15 +194,10 @@ def get_products(request):
     if 'num' in request.GET:
         num = int(request.GET(['num']))
         prods = prods[:num]
-    for prod in prods:
-        serializer = ProductSerializer(prod)
-        json_prod = {}
-        json_prod.update(serializer.data)
-        dev = Developer.objects.get(id=prod.developer.id)
-        json_prod['developer'] = DeveloperSerializer(dev).data
-        json_prod['category'] = [CategorySerializer(catg).data for catg in prod.category.all()]
-        res.append(json_prod)
-    return Response(res)
+
+    serializer = ProductSerializer(prods,many=True)
+
+    return Response(serializer.data)
 
 
 @api_view(['POST'])
