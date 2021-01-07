@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Product} from '../../models/product';
 import {Developer} from '../../models/developer';
 import {Category} from '../../models/category';
+import {ProductService} from "../../services/product/product.service";
 
 @Component({
   selector: 'app-store',
@@ -13,10 +14,15 @@ export class StoreComponent implements OnInit {
   developers: Developer[] = [];
   categories: Category[] = [];
 
-  constructor() {
+  constructor(private productService: ProductService) {
   }
 
   ngOnInit(): void {
+    this.getProducts();
+  }
+
+  getProducts(): void {
+    this.productService.getProducts().subscribe(products => this.products = products);
   }
 
 }

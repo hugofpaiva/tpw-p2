@@ -6,6 +6,12 @@
         <div class="shop__sidebar">
           <div class="shop__sidebar__search">
 
+          <a *ngFor="let product of products" class="col-1-4">
+            <div class="module product">
+              <h4>{{ product.name }}</h4>
+            </div>
+          </a>
+
             <form onsubmit="(e) => e.preventDefault();return insertParam({'name':document.getElementById('search').value})">
               <input type="text" id="search" placeholder="Search..."  />
               <button type="submit">
