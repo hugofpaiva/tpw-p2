@@ -287,7 +287,7 @@ def create_purchases(request):
         client=serializer.validated_data['client']
         product = serializer.validated_data['product']
         print(client.balance)
-        if Purchase.objects.filter(client=client.id).exists():
+        if Purchase.objects.filter(client=client.id,product=product.id).exists():
             return Response({'error_message': "Client already has this product!"},
                             status=status.HTTP_400_BAD_REQUEST)
 
