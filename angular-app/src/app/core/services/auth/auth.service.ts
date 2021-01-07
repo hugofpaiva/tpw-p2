@@ -17,9 +17,12 @@ export class AuthService {
   }
 
   loggedIn(): boolean {
-    return  localStorage.hasOwnProperty('token') && !!localStorage.getItem('userToken');
+    return  localStorage.hasOwnProperty('userToken') && !!localStorage.getItem('userToken');
   }
   getToken(): string {
     return localStorage.getItem('userToken') as string;
+  }
+  logout(): void {
+    localStorage.clear();
   }
 }
