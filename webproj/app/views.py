@@ -176,6 +176,17 @@ def delete_dev(request, id):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
+def get_cats(request):
+    cats = Category.objects.all()
+    if 'num' in request.GET:
+        num = int(request.GET(['num']))
+        devs = cats[:num]
+    serializer = CategorySerializer(cats, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
 def get_product(request, id):
     res = {}
     try:

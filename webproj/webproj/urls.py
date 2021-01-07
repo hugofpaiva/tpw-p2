@@ -60,6 +60,8 @@ urlpatterns = [
     path('ws/developerupd/<int:id>', views.update_dev),
     path('ws/developerdel/<int:id>', views.delete_dev),
 
+    path('ws/categories', views.get_cats),
+
     path('ws/product/<int:id>', views.get_product),
     path('ws/products', views.get_products),
     path('ws/productcre', views.create_product),

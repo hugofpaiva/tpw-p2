@@ -16,12 +16,12 @@ export class StoreComponent implements OnInit {
   developers: Developer[] = [];
   categories: Category[] = [];
 
-  constructor(private productService: ProductService, private developerService: DeveloperService) {
+  constructor(private productService: ProductService, private categoryService: CategoryService, private developerService: DeveloperService) {
   }
 
   ngOnInit(): void {
     this.getProducts();
-    // this.getCategories();
+    this.getCategories();
     this.getDevelopers();
   }
 
@@ -29,9 +29,9 @@ export class StoreComponent implements OnInit {
     this.productService.getProducts().subscribe(products => this.products = products);
   }
 
-  // getCategories(): void {
-  //  this.categoryService.getCategories().subscribe(categories => this.categories = categories);
-  // }
+  getCategories(): void {
+    this.categoryService.getCategories().subscribe(categories => this.categories = categories);
+  }
 
   getDevelopers(): void {
     this.developerService.getDevelopers().subscribe(developers => this.developers = developers);
