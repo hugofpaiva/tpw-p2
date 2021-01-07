@@ -1,5 +1,6 @@
 from coreschema import schemas
 from django.contrib.auth.models import User
+from django.db.models import Count
 from django.shortcuts import render
 
 # Create your views here.
@@ -202,6 +203,32 @@ def get_product(request, id):
 def get_products(request):
     res = []
     prods = ProductFilter(request.GET,queryset=Product.objects.all()).qs
+    if 'num' in request.GET:
+        num = int(request.GET(['num']))
+        prods = prods[:num]
+
+    serializer = ProductSerializer(prods,many=True)
+
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_top_products(request):
+    res = []
+    purchs = Purchase.objects.values('product').annotate(c=Count('product')).order_by('-c')
+    if 'num' in request.GET:
+        num = int(request.GET(['num']))
+        purchs = purchs[:num]
+
+    for p in purchs:
+        res.append(Product.objects.get(pk=p.get('product')))
+
+    serializer = ProductSerializer(res,many=True)
+
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_new_products(request):
+    prods = Product.objects.all().order_by('-id')
     if 'num' in request.GET:
         num = int(request.GET(['num']))
         prods = prods[:num]

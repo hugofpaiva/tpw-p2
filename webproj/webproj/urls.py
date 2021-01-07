@@ -67,6 +67,8 @@ urlpatterns = [
     path('ws/productcre', views.create_product),
     path('ws/productupd/<int:id>', views.update_product),
     path('ws/productdel/<int:id>', views.delete_product),
+    path('ws/top_products', views.get_top_products),
+    path('ws/new_products', views.get_new_products),
 
     path('ws/reviews', views.get_reviews),
     path('ws/review/<int:id>', views.get_review),
