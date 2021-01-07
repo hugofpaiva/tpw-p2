@@ -259,10 +259,8 @@
                   <h6>{{ product.name}}</h6>
                   <a class="add-cart">{{product.description | slice:0:3}}</a>
                   <div class="rating">
-                    <div>
+                    <div style="display: flex; flex-wrap: wrap;">
                       <i *ngFor="let x of [].constructor(product.stars)" class="fa fa-star"></i>
-                    </div>
-                    <div  >
                       <i *ngFor="let x of [].constructor(5 - product.stars)" class="fa fa-star-o"></i>
                     </div>
 
@@ -271,7 +269,7 @@
 
 
                   </div>
-                  <h5>2 €</h5>
+                  <h5>{{ product.price }} €</h5>
                 </div>
 
               </div>
