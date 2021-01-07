@@ -60,7 +60,11 @@ urlpatterns = [
     path('ws/developerupd/<int:id>', views.update_dev),
     path('ws/developerdel/<int:id>', views.delete_dev),
 
+    path('ws/category/<int:id>', views.get_cat),
     path('ws/categories', views.get_cats),
+    path('ws/categorycre', views.create_cat),
+    path('ws/categoryupd/<int:id>', views.update_cat),
+    path('ws/categorydel/<int:id>', views.delete_cat),
 
     path('ws/product/<int:id>', views.get_product),
     path('ws/products', views.get_products),
