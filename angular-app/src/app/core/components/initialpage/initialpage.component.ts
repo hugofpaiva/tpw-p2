@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Product} from '../../models/product';
 
 @Component({
   selector: 'app-initialpage',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./initialpage.component.css']
 })
 export class InitialpageComponent implements OnInit {
+
+  products: Product[] = [];
 
   constructor() { }
 
