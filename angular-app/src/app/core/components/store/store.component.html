@@ -224,12 +224,12 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class=" groups row">
 
-          <a *ngFor="let product of products">
+          <div>
 
 
-          <div class="col-lg-4 col-md-6 col-sm-6 product">
+          <div class="col-lg-4 col-md-6 col-sm-6 product" style="display:inline-block;" *ngFor="let product of products">
 
             <!--<ng-container
               *ngIf="product.stars > 0; then sale; else not">
@@ -256,16 +256,17 @@
                 </div>
 
                 <div class="product__item__text">
-                  <h6>name</h6>
-                  <a class="add-cart">description</a>
+                  <h6>{{ product.name}}</h6>
+                  <a class="add-cart">{{product.description | slice:0:3}}</a>
                   <div class="rating">
+                    <div>
+                      <i *ngFor="let x of [].constructor(product.stars)" class="fa fa-star"></i>
+                    </div>
+                    <div  >
+                      <i *ngFor="let x of [].constructor(5 - product.stars)" class="fa fa-star-o"></i>
+                    </div>
 
                     <!--{% for _ in product.nStars %}-->
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
-                    <i class="fa fa-star-o"></i>
 
 
 
@@ -277,7 +278,7 @@
           </div>
 
 
-        </a>
+        </div>
           <div class="row">
             <div class="col-lg-12">
               <div class="product__pagination">
