@@ -1,13 +1,13 @@
-import {User} from './user';
+import {Client} from './client';
 import {Product} from './product';
 
 export class Purchase {
   id: number;
-  client: User;
+    client: Client;
   product: Product;
   created_at: Date;
 
-  constructor(id: number, client: User, product: Product, created_at: Date) {
+  constructor(id: number, client: Client, product: Product, created_at: Date) {
     this.id = id;
     this.client = client;
     this.product = product;
