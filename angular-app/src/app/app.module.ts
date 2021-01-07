@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { StoreComponent } from './core/components/store/store.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { InitialpageComponent } from './core/components/initialpage/initialpage.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { AboutusComponent } from './core/components/aboutus/aboutus.component';
@@ -33,7 +33,8 @@ import {AuthHeaderInterceptor} from "./core/interceptor/auth-header-interceptor"
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     {

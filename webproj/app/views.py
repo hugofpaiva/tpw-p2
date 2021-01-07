@@ -61,13 +61,17 @@ def register(request):
         user = serializer.save()
         st = status.HTTP_201_CREATED
         request.data['user'] = user.id
+        print(request.data)
         client = ClientSerializer(data=request.data)
+
         if client.is_valid():
+
+
             client.save()
             print(client)
-            Token.objects.create(user=user)
+            #Token.objects.create(user=user)
             data['response'] = 'succesfully  registered a new user'
-            data['token'] = Token.objects.get(user=user).key
+            #data['token'] = Token.objects.get(user=user).key
             st = status.HTTP_201_CREATED
         else:
             data = serializer.errors
