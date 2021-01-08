@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
@@ -14,7 +13,9 @@ import { LoginComponent } from './core/components/login/login.component';
 import { RegisterComponent } from './core/components/register/register.component';
 import { NotfoundComponent } from './core/components/notfound/notfound.component';
 import { BasepageComponent } from './shared/components/basepage/basepage.component';
-import {AuthHeaderInterceptor} from "./core/interceptor/auth-header-interceptor";
+import {AuthHeaderInterceptor} from './core/interceptor/auth-header-interceptor';
+import {DynamicScriptLoaderService} from './core/services/scripts/dynamic-script-loader-service.service';
+
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import {AuthHeaderInterceptor} from "./core/interceptor/auth-header-interceptor"
     LoginComponent,
     RegisterComponent,
     NotfoundComponent,
-    BasepageComponent
+    BasepageComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +42,8 @@ import {AuthHeaderInterceptor} from "./core/interceptor/auth-header-interceptor"
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHeaderInterceptor,
       multi: true
-    }
+    },
+    DynamicScriptLoaderService
   ],
   bootstrap: [AppComponent]
 })

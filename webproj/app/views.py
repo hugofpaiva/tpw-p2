@@ -260,7 +260,7 @@ def get_products(request):
     res = []
     prods = ProductFilter(request.GET,queryset=Product.objects.all()).qs
     if 'num' in request.GET:
-        num = int(request.GET(['num']))
+        num = int(request.GET['num'])
         prods = prods[:num]
 
     serializer = ProductSerializer(prods,many=True)
@@ -272,7 +272,7 @@ def get_top_products(request):
     res = []
     purchs = Purchase.objects.values('product').annotate(c=Count('product')).order_by('-c')
     if 'num' in request.GET:
-        num = int(request.GET(['num']))
+        num = int(request.GET['num'])
         purchs = purchs[:num]
 
     for p in purchs:
@@ -286,7 +286,7 @@ def get_top_products(request):
 def get_new_products(request):
     prods = Product.objects.all().order_by('-id')
     if 'num' in request.GET:
-        num = int(request.GET(['num']))
+        num = int(request.GET['num'])
         prods = prods[:num]
 
     serializer = ProductSerializer(prods,many=True)

@@ -10,7 +10,7 @@ export class AuthHeaderInterceptor implements HttpInterceptor{
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       const authService = this.injector.get(AuthService);
       if (authService.loggedIn()){
-        let tokenizedReq = req.clone({
+        const tokenizedReq = req.clone({
           setHeaders: {
             Authorization: `Token ${authService.getToken()}`
           }

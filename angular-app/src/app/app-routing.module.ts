@@ -6,17 +6,22 @@ import {AboutusComponent} from './core/components/aboutus/aboutus.component';
 import {LoginComponent} from './core/components/login/login.component';
 import {RegisterComponent} from './core/components/register/register.component';
 import {NotfoundComponent} from './core/components/notfound/notfound.component';
-import {BasepageComponent} from './shared/components/basepage/basepage.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       {path: '', component: InitialpageComponent},
-      {path: 'shop', component: StoreComponent},
+      {path: 'shop',
+        children: [
+          {path: '', component: StoreComponent},
+          {path: 'product/:id', component: AboutusComponent}// Change later
+          ]
+      },
       {path: 'about_us', component: AboutusComponent},
       {path: 'login', component: LoginComponent},
       {path: 'sign_up', component: RegisterComponent},
+
     ],
   },
   {path: 'not_found', component: NotfoundComponent},

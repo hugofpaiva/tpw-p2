@@ -25,7 +25,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('name', 'icon', 'description',
+        fields = ('id', 'name', 'icon', 'description',
                   'category', 'developer', 'created_at', 'update_at', 'price', 'stars')
 
     def get_stars(self, obj):
