@@ -47,6 +47,8 @@ def check_client_permission(request, entity):
         return request_username == entity.client.user.username
     elif isinstance(entity, Client):
         return request_username == entity.user.username
+    elif isinstance(entity,User):
+        return request_username == entity.username
     elif isinstance(entity, Reviews):
         return request_username == entity.author.user.username
     return None
@@ -107,6 +109,57 @@ def get_client(request, id):
         return Response(status=status.HTTP_404_NOT_FOUND)
     serializer = ClientSerializer(client)
     return Response(serializer.data)
+
+
+@api_view(['PUT'])
+def update_userInfo(request, id):
+    req_user = check_request_user(request)
+    try:
+        user = User.objects.get(id=id)
+        if req_user == 'Client' and  not check_client_permission(request, user):
+                return Response({'error_message': "You're not allowed to do this Request!"},
+                                status=status.HTTP_403_FORBIDDEN)
+        serializer = UserSerializer(user, request.data)
+        if serializer.is_valid():
+            if 'email' not in serializer.validated_data:
+                return Response({'error_message': "Email is Required"},
+                                status=status.HTTP_400_BAD_REQUEST)
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+
+@api_view(['PUT'])
+def update_client(request,id):
+    """
+    The main Goal of this endpoint it to edit client's favorite applications.
+    To Edit personal data like email or name it is used the User endpoint
+    @:parameter id : the id of the client
+    """
+    user = check_request_user(request)
+    try:
+        client = Client.objects.get(id=id)
+        if user == 'Client':
+            if not check_client_permission(request,client):
+                return Response({'error_message': "You're not allowed to do this Request!"},
+                                status=status.HTTP_403_FORBIDDEN)
+
+        serializer = ClientSerializer(client,request.data)
+
+        #Only Admins can Edit the Clients balance,
+        #therefore if a client tries to edit it's own balance, this request will not be Allowed
+        if serializer.is_valid():
+            if user == 'Client' and  'balance' in serializer.validated_data:
+                return Response({'error_message': "You're not allowed to edit your own Balance!."},
+                                status=status.HTTP_403_FORBIDDEN)
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except Client.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(['GET'])
