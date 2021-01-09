@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Product} from '../../models/product';
 import {Developer} from '../../models/developer';
 import {Category} from '../../models/category';
@@ -12,7 +12,7 @@ import {DynamicScriptLoaderService} from '../../services/scripts/dynamic-script-
   templateUrl: './store.component.html',
   styleUrls: ['./store.component.css']
 })
-export class StoreComponent implements OnInit {
+export class StoreComponent implements OnInit, AfterViewInit {
   products: Product[] = [];
   developers: Developer[] = [];
   categories: Category[] = [];
@@ -24,6 +24,10 @@ export class StoreComponent implements OnInit {
     this.getProducts();
     this.getCategories();
     this.getDevelopers();
+    this.loadScripts();
+  }
+
+  ngAfterViewInit(): void {
     this.loadScripts();
   }
 
