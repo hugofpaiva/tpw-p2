@@ -7,10 +7,10 @@ from app.models import Product
 
 
 class ListFilter(filters.Filter):
-    def filter(self, qs, value):
-        if value not in (None, ''):
+    def filter(self,qs,value):
+        if value not in (None,''):
             strings = [int(v) for v in value.split(',')]
-            return qs.filter(**{'%s__%s' % (self.field_name, self.lookup_expr): strings})
+            return qs.filter(**{'%s__%s'%(self.field_name, self.lookup_expr):strings})
         return qs
 
 
@@ -19,7 +19,7 @@ class ProductFilter(filters.FilterSet):
     min_price = filters.NumberFilter(field_name="price", lookup_expr='gte')
     max_price = filters.NumberFilter(field_name="price", lookup_expr='lte')
     category = ListFilter(field_name='category__id', lookup_expr='in')
-    developer = ListFilter(field_name='developer__id', lookup_expr='in')
+    developer = ListFilter(field_name='developer__id',lookup_expr='in')
 
     class Meta:
         model = Product
