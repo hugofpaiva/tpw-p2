@@ -13,7 +13,7 @@ import {ReviewService} from "../../services/review/review.service";
 })
 export class ProductComponent implements OnInit {
   product: Product  ;
-  review: Review;
+  reviews: Review [] = [];
   constructor(
     private productService: ProductService,
     private reviewService: ReviewService,
@@ -22,7 +22,7 @@ export class ProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProduct();
-    this.getReview(); //data will be passed to the child component show-review
+    this.getReview(); // data will be passed to the child component show-review
   }
   getProduct(): void {
     const id = this.activeroute.snapshot.paramMap.get('id');
@@ -33,12 +33,26 @@ export class ProductComponent implements OnInit {
           console.log(this.product.stars);
         }
         , (err: HttpErrorResponse) => {
+          console.log(
+            err
+          );
               // this.router
         });
   }
   getReview(): void {
     const id = this.activeroute.snapshot.paramMap.get('id');
-    // this.reviewService.getReviews()
+    this.reviewService.getReviews(Number(id))
+      .subscribe(
+        reviews => {
+          this.reviews = reviews;
+          console.log('-->' + this.reviews);
+        }
+        , (err: HttpErrorResponse) => {
+          console.log(
+            err
+          );
+        }
+      );
   }
 
 }

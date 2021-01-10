@@ -109,7 +109,7 @@
               </div>
             </div>
             <div class="tab-pane " id="tabs-6" role="tabpanel">
-              <app-display-reviews></app-display-reviews>
+              <app-display-reviews *ngIf="reviews && reviews != []" [reviews]="reviews"></app-display-reviews>
             </div>
           </div>
           <br>

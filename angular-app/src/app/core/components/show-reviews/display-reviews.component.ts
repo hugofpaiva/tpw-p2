@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, OnChanges} from '@angular/core';
 import {Product} from '../../models/product';
 import {Review} from '../../models/review';
 
@@ -8,15 +8,15 @@ import {Review} from '../../models/review';
   styleUrls: ['./display-reviews.component.css']
 })
 export class DisplayReviewsComponent implements OnInit {
-  @Input() review: Review ;
-  @Input() product: Product;
+  @Input() reviews: Review [] = [];
   /*
    Child Component used in the Product Page to show it's Reviews
    */
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.review);
+    console.log('child' + this.reviews);
+    console.log(this.reviews);
   }
 
 }

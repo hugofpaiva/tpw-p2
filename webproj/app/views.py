@@ -408,7 +408,7 @@ def delete_product(request, id):
 @api_view(['GET'])
 def get_reviews(request):
     if 'product' in request.GET:
-        prod_id = int(request.GET['num'])
+        prod_id = int(request.GET['product'])
         revs = Reviews.objects.filter(product=prod_id)
     else:
         revs = Reviews.objects.all()
