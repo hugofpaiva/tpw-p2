@@ -17,7 +17,7 @@ import { BasepageComponent } from './shared/components/basepage/basepage.compone
 import {AuthHeaderInterceptor} from './core/interceptor/auth-header-interceptor';
 import {DynamicScriptLoaderService} from './core/services/scripts/dynamic-script-loader-service.service';
 import { ProductComponent } from './core/components/product/product.component';
-import { AccountComponent } from './core/components/account/account.component';
+import { AccountadminComponent } from './core/components/accountadmin/accountadmin.component';
 import { DisplayReviewsComponent } from './core/components/show-reviews/display-reviews.component';
 
 
@@ -34,7 +34,7 @@ import { DisplayReviewsComponent } from './core/components/show-reviews/display-
     NotfoundComponent,
     BasepageComponent,
     ProductComponent,
-    AccountComponent,
+    AccountadminComponent,
     DisplayReviewsComponent,
   ],
   imports: [
