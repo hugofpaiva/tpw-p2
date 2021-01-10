@@ -134,12 +134,11 @@ def update_userInfo(request, id):
                 return Response({'error_message': "You're not allowed to do this Request!"},
                                 status=status.HTTP_403_FORBIDDEN)
         serializer = UserProfileSerializer(user, request.data)
-        print(serializer.initial_data)
         if serializer.is_valid():
             if 'email' not in serializer.validated_data:
                 return Response({'error_message': "Email is Required"},
                                 status=status.HTTP_400_BAD_REQUEST)
-            serializer.save()
+            serializer.save(user)
             return Response(serializer.data)
         print("no valid")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

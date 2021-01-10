@@ -68,15 +68,17 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = ('id','email', 'username', 'first_name','last_name', 'is_superuser')
         read_only_fields = ('id', 'is_superuser')
 
-    def save(self):
+    def save(self, user):
         print(self.validated_data)
-        user = User(email=self.validated_data['email'],
-                    username=self.validated_data['username'],
-                    first_name=self.validated_data['first_name'],
-                    last_name=self.validated_data['last_name']
-                    )
-        user.save()
-        return user
+        instance = User.objects.get(username=user.username)
+        instance.username = self.validated_data['username']
+        instance.email = self.validated_data['email']
+        instance.first_name = self.validated_data['first_name']
+        instance.last_name = self.validated_data['last_name']
+
+        instance.save()
+
+        return instance
 
 
 class ClientSerializer(serializers.ModelSerializer):
