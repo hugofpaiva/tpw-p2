@@ -17,6 +17,11 @@ export class ReviewService {
     const url = environment.baseURL + 'review/' + id;
     return this.http.get<Review>(url);
   }
+  getMyReviews( productId?: number): Observable<Review[]>{
+    let url = environment.baseURL + 'myreviews';
+    if (productId) { url += '?product=' + productId; }
+    return this.http.get<Review[]>(url);
+  }
 
   getReviews(productId?: number): Observable<Review[]>{
     let url = environment.baseURL + 'reviews';
@@ -25,11 +30,17 @@ export class ReviewService {
     }
     return this.http.get<Review[]>(url);
   }
-
-
   getReviewP(page: number): Observable<Review[]>{
     const url = environment.baseURL + 'reviews?page=';
     return this.http.get<Review[]>(url);
+  }
+  registerReview(rev: {}): Observable<any>  {
+    const url = environment.baseURL + 'reviewcre';
+    return this.http.post<any>(url, rev, environment.httpOptions);
+  }
+  updateReview(rev: {}): Observable<any>  {
+    const url = environment.baseURL + 'reviewupd';
+    return this.http.put<any>(url, rev, environment.httpOptions);
   }
 
 }

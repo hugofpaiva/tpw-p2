@@ -1,1 +1,13 @@
-<p>addreview works!</p>
+<div *ngIf="reviewForm">
+  <h2 class="text-center">  Review for Product {{ reviewForm.product.name }}</h2>
+  <div>
+    <label> Rating:
+      <input [(ngModel)]="reviewForm.rating">
+    </label>
+    <label>
+      <input [(ngModel)]="reviewForm.body">
+    </label>
+  </div>
+
+
+</div>

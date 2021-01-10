@@ -421,7 +421,8 @@ def get_reviews(request):
 
 
 @api_view(['GET'])
-def get_review(request, id):
+@permission_classes([AllowAny])
+def get_review(request):
     res = {}
     try:
         rev = Reviews.objects.get(id=id)
@@ -430,6 +431,24 @@ def get_review(request, id):
     serializer = ReviewsSerializer(rev)
     res.update(serializer.data)
     return Response(res)
+
+@api_view(['GET'])
+def my_reviews(request):
+    """
+    This function goal is to allow to get the Reviews of a Client,
+    to identify the client it is used the authentication token.
+    Only authenticated Users will be able to see this endpoint.
+    """
+    user =check_request_user(request)
+    if user:
+        if 'product' in request.GET:
+            prod_id = int(request.GET['product'])
+            revs = Reviews.objects.filter(author__user__username=request.user.username,product=prod_id)
+        else:
+            revs = Reviews.objects.filter(author__user__username=request.user.username)
+        serializer = ReviewsSerializer(revs, many=True)
+        return Response(serializer.data)
+    return Response({'error_message': "You're not allowed to do this Request!"}, status=status.HTTP_403_FORBIDDEN)
 
 
 @api_view(['GET'])
