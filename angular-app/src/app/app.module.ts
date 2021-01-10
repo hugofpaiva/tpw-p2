@@ -19,6 +19,7 @@ import {DynamicScriptLoaderService} from './core/services/scripts/dynamic-script
 import { ProductComponent } from './core/components/product/product.component';
 import { AccountadminComponent } from './core/components/accountadmin/accountadmin.component';
 import { DisplayReviewsComponent } from './core/components/show-reviews/display-reviews.component';
+import { AddreviewComponent } from './core/components/add-review/addreview/addreview.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { DisplayReviewsComponent } from './core/components/show-reviews/display-
     ProductComponent,
     AccountadminComponent,
     DisplayReviewsComponent,
+    AddreviewComponent,
   ],
   imports: [
     BrowserModule,

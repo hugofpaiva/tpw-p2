@@ -41,7 +41,7 @@
 </div>
   <div class=" container text-right mt-3" style=" padding-bottom: 20px">
 
-    <a href="" type="button" class="site-btn">Add Review</a>
+    <a *ngIf="has_review; else noreview"  href="" type="button" class="site-btn">Edit Review</a>
 
   </div>
 
@@ -53,9 +53,11 @@
 <ng-container  *ngSwitchCase="false">
 <h4 style="padding-top: 50px" class="text-center">There are no Reviews for this Product! Be the first to Review it! </h4>
 <div class=" container text-center mt-3" style=" padding-bottom: 20px">
-
-
   <a href="" type="button" class="site-btn">Add Review</a>
 </div>
 </ng-container>
 </ng-container>
+
+<ng-template #noreview>
+  <a href="" type="button" class="site-btn">Add Review</a>
+</ng-template>
