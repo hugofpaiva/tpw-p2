@@ -26,7 +26,32 @@
           <div class="col-lg-3 col-md-3">
               <div class="header__nav__option" style="display: flex;">
 
-                 <!-- {% include "loginpartial.html" %} -->
+                <ng-container *ngIf="client;else notLoggedIn">
+
+                  <a style="font-size: 18px; color: #111111; font-weight: 600" routerLink="account">{{ client.user.username }} <ng-container *ngIf="!client.user.is_superuser">({{ client.balance }}€)</ng-container></a>
+
+                  <a
+                    style="font-size: 18px; color: #111111; font-weight: 600"
+                  (click)="logout()"
+                  >Logout</a
+                  >
+
+
+                </ng-container>
+
+                <ng-template #notLoggedIn>
+
+                <a
+                  style="font-size: 18px; color: #111111; font-weight: 600"
+                  routerLink="login"
+                >Login</a
+                >
+                <a
+                  style="font-size: 18px; color: #111111; font-weight: 600"
+                 routerLink="sign_up"
+                >Sign Up</a
+                >
+                </ng-template>
               </div>
           </div>
 

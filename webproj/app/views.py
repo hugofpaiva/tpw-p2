@@ -110,6 +110,18 @@ def get_client(request, id):
     serializer = ClientSerializer(client)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def get_actual_client(request):
+    try:
+        if request.user.is_superuser:
+            client = Client(user=request.user)
+        else:
+            client = Client.objects.get(id=request.user.id)
+    except Client.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    serializer = ClientSerializer(client)
+    return Response(serializer.data)
+
 
 @api_view(['PUT'])
 def update_userInfo(request, id):

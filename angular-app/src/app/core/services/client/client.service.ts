@@ -18,6 +18,11 @@ export class ClientService {
     return this.http.get<Client>(url);
   }
 
+  getActualUser(): Observable<Client>{
+    const url = environment.baseURL + 'client/';
+    return this.http.get<Client>(url);
+  }
+
   getUsers(): Observable<Client[]>{
     const url = environment.baseURL + 'clients';
     return this.http.get<Client[]>(url);

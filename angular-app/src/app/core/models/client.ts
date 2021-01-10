@@ -1,18 +1,16 @@
+import {User} from './user';
+import {Product} from './product';
+
 export class Client {
-  username: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  is_superuser: boolean;
+  user: User;
+  created_at: Date;
   balance: number;
+  favorites: Product[];
 
-  constructor(username: string, first_name: string, last_name: string, email: string, balance: number) {
-    this.username = username;
-    this.first_name = first_name;
-    this.last_name = last_name;
-    this.email = email;
-    this.is_superuser = false;
+  constructor(user: User, created_at: Date, balance: number, favorites: Product[]) {
+    this.user = user;
+    this.created_at = created_at;
     this.balance = balance;
+    this.favorites = favorites;
   }
-
 }

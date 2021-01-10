@@ -19,10 +19,7 @@ export class AuthService {
     return this.http.post<any>(url, client, environment.httpOptions);
   }
 
-
-
-
-  AuthenticateUser(userName: string, pw: string): Observable < any > {
+  authenticateUser(userName: string, pw: string): Observable < any > {
     const url = environment.baseURL + 'token-auth/';
     return this.http.post(url, {username: userName, password: pw}, environment.httpOptions);
   }

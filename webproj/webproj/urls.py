@@ -52,6 +52,7 @@ urlpatterns = [
     path('ws/token-auth/', authviews.obtain_auth_token, name='api-token-auth'),
     path('ws/register', views.register),
     path('ws/clients', views.get_clients),
+    path('ws/client/', views.get_actual_client),
     path('ws/client/<int:id>', views.get_client),
     path('ws/userupd/<int:id>',views.update_userInfo),
     path('ws/clientupd/<int:id>',views.update_client),

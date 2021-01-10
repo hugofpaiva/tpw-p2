@@ -42,9 +42,7 @@ export class StoreComponent implements OnInit, AfterViewInit {
 
   getProducts(): void {
     this.productService.getProductsParams(this.categoryId, this.developerId, this.rating, this.search,
-      this.minPrice, this.maxPrice).subscribe(products => {this.products = products;
-                                                           console.log(products);
-      });
+      this.minPrice, this.maxPrice).subscribe(products => {this.products = products;});
   }
 
   selectCategory(cat: Category): void{
@@ -75,8 +73,6 @@ export class StoreComponent implements OnInit, AfterViewInit {
   }
 
   selectPrices(minPrice: number, maxPrice?: number): void{
-    console.log(minPrice);
-    console.log(maxPrice);
     if (minPrice !==  null) {
       if (minPrice === this.minPrice) {
         this.minPrice = undefined;
