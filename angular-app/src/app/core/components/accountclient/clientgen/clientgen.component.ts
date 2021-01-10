@@ -42,13 +42,13 @@ export class ClientgenComponent implements OnInit {
   // convenience getter for easy access to form fields
   get f(): any { return this.updateForm.controls; }
   // Submit Method
-  onSubmit(): void {
+  onSubmit(username: string, email: string, first_name: string, last_name: string): void {
     this.submitted = true;
     if (this.updateForm.invalid) {
       return;
     }
     this.loading = true;
-    this.authService.updateClient(this.updateForm.value, this.client.user.id)
+    this.authService.updateClient(username, email, first_name, last_name, this.client.user.id)
       .subscribe(res => {
           alert(res);
           this.router.navigate(['/']);

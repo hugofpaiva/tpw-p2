@@ -62,6 +62,22 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id','email', 'username', 'first_name','last_name', 'is_superuser')
+        read_only_fields = ('id', 'is_superuser')
+
+    def save(self):
+        print(self.validated_data)
+        user = User(email=self.validated_data['email'],
+                    username=self.validated_data['username'],
+                    first_name=self.validated_data['first_name'],
+                    last_name=self.validated_data['last_name']
+                    )
+        user.save()
+        return user
+
 
 class ClientSerializer(serializers.ModelSerializer):
     class Meta:

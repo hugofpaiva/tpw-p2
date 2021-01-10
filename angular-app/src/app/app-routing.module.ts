@@ -9,7 +9,7 @@ import {NotfoundComponent} from './core/components/notfound/notfound.component';
 import {ProductComponent} from './core/components/product/product.component';
 import {AccountadminComponent} from './core/components/accountadmin/accountadmin.component';
 import {AccountclientComponent} from './core/components/accountclient/accountclient.component';
-import {AddreviewComponent} from "./core/components/add-review/addreview/addreview.component";
+import {AddreviewComponent} from './core/components/add-review/addreview/addreview.component';
 
 const routes: Routes = [
   {
