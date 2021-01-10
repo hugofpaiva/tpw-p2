@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
     this.authService.authenticateUser(userName, password).subscribe((data: any) => {
       localStorage.setItem('userToken', data.token);
       this.router.navigate(['/']);
-      this.sharedService.sendLogoutEvent();
+      this.sharedService.sendUserEvent();
     }, (err: HttpErrorResponse) => {
       this.loginError = true;
     });

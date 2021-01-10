@@ -1,0 +1,216 @@
+
+<head>
+  <link rel="stylesheet" href="assets/css/clientdetails.css">
+</head>
+
+<div class="container light-style flex-grow-1 container-p-y" style="max-width: 1500px">
+
+  <h4 class="font-weight-bold py-3 mb-4">
+    Account settings
+  </h4>
+
+  //Acho melhor dividir isto em 3-4 componentes (O de mudar as informações, ver os favs e ver as purchases). Dps digam algo. Hugo
+
+  <!-- TODO Guardar erros ou whatever em variaveis no Angular
+  {% if  error is not None %}
+  <div class="alert alert-danger" role="alert">
+    {{ error }}
+  </div>
+  {% endif %}
+  {% if  success is not None %}
+  <div class="alert alert-success" role="alert">
+    {{ success }}
+  </div>
+  {% endif %}
+  -->
+
+
+  <div class="card overflow-hidden" style="margin-bottom: 50px">
+    <div class="row no-gutters row-bordered row-border-light">
+      <div class="col-md-3 pt-0">
+        <div class="list-group list-group-flush account-settings-links">
+          <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">General</a>
+          <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Change password</a>
+          <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-favourites">Favourites</a>
+          <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-avail_purchases">My Apps</a>
+
+          <a *ngIf="client.user.is_superuser" class="list-group-item list-group-item-action" routerLink="admin/purchases">Admin</a>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="tab-content">
+          <div class="tab-pane fade active show" id="account-general">
+
+
+            <hr class="border-light m-0">
+            <div class="card-body">
+              <form method="post">
+                {% csrf_token %}
+                <p>
+                  {{ form.username.label_tag }}
+                  <br>
+                <div class="form-group">{{ form.username }}</div>
+                <p style="color: red">{{ form.username.errors}}</p>
+                </p>
+                <p>
+                  {{ form.first_name.label_tag }}
+                  <br>
+                <div class="form-group">{{ form.first_name }}</div>
+                <p style="color: red">{{ form.first_name.errors}}</p>
+                </p>
+                <p>
+                  {{ form.last_name.label_tag }}
+                  <br>
+                <div class="form-group">{{ form.last_name }}</div>
+                <p style="color: red">{{ form.last_name.errors}}</p>
+                </p>
+                <p>
+                  {{ form.email.label_tag }}
+                  <br>
+                <div class="form-group">{{ form.email }}</div>
+                <p style="color: red">{{ form.email.errors}}</p>
+                </p>
+                <div class="text-right mt-3" style="margin-bottom: 25px">
+                  <button type="submit" class="site-btn">Save changes</button>&nbsp;
+
+                </div>
+
+              </form>
+            </div>
+
+          </div>
+          <div class="tab-pane fade" id="account-change-password">
+            <div class="card-body pb-2">
+
+              <form method="post">
+                {% csrf_token %}
+                <p>
+                  {{ form_pw.old_password.label_tag }}
+                  <br>
+                <div class="form-group">{{ form_pw.old_password }}</div>
+                <p style="color: red">{{ form_pw.old_password.errors}}</p>
+                </p>
+                <p>
+                  New Password:
+                  <br>
+                <div class="form-group">{{ form_pw.new_password1 }}</div>
+                <p style="color: red">{{ form_pw.new_password1.errors}}</p>
+                </p>
+                <p>
+                  Repeat New Password:
+                  <br>
+                <div class="form-group">{{ form_pw.new_password2 }}</div>
+                <p style="color: red">{{ form_pw.new_password2.errors}}</p>
+                </p>
+                <div class="text-right mt-3" style="margin-bottom: 25px">
+                  <button type="submit" class="site-btn">Save changes</button>&nbsp;
+
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+          <div class="tab-pane fade" id="account-favourites">
+            <div class="card-body pb-2">
+              <ng-container *ngIf="client.favorites; else noFavorites">
+              <table class="table" width="100%" align="center">
+
+                <thead  style="background-color: black; border: 0; color: white;">
+                <tr>
+                  <th scope="col">Icon</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Category</th><th scope="col">Developer</th>
+                  <th scope="col" >Info</th>
+                </tr>
+                </thead>
+                <tbody>
+                <ng-container *ngFor="let fav in client.favorites">
+                <tr>
+                  <td scope="row"><div class="product__item__pic set-bg" style="width:50px; height:50px;"  [ngStyle]="{ 'background-image': 'url(' + fav.icon + ')' }"></div></td>
+                  <td>{{ fav.name }}</td>
+                  <td>
+                    <ng-container *ngFor="let p in client.favorites">
+                      {{p}}
+                    </ng-container>
+
+
+
+                  </td>
+                  <td>{{ fav.developer }}</td>
+                  <td align="center"><a routerLink="shop/product/{{fav.id}}"><button style="width: 100px;" class="site-btn">View</button></a></td>
+                </tr>
+                </ng-container>
+                </tbody>
+              </table>
+                <!-- //TODO Paginação
+              <div class="col-lg-12" style="margin-bottom: 25px">
+                <div class="product__pagination">
+                  {% if page_fav.has_previous %}
+                  <a href="javascript:insertParam({'page_fav':{{ page_fav.previous_page_number }} })">{{ page_fav.previous_page_number }}</a>
+                  {% endif %}
+                  <a class="active" href="">{{ page_fav.number }}</a>
+                  {% if page_fav.has_next %}
+                  <a href="javascript:insertParam({'page_fav':{{ page_fav.next_page_number }} })">{{ page_fav.next_page_number }}</a>
+                  {% endif %}
+
+                </div>
+              </div>
+              -->
+              </ng-container>
+              <ng-template #noFavorites>
+              <h4 class="text-center"> You have no Favorites! </h4>
+              </ng-template>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="account-avail_purchases">
+            <div class="card-body pb-2">
+              {% if client_purch %}
+              <table class="table" width="100%" align="center">
+                <thead  style="background-color: black; border: 0; color: white;">
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Price </th>
+                  <th scope="col">Date Acquisition</th>
+                  <th scope="col">Next Payment Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for purch in client_purch %}
+                <tr>
+                  <td scope="row">{{ purch.product_plan.product.name }}</td>
+                  <td>{{ purch.product_plan.price }}</td>
+                  <td> {{ purch.created_at }}
+                    {% if purch.available_until == None %}
+                  <td> Not Applicable</td>
+                  {% else %}
+                  <td>{{ purch.available_until }}</td>
+                  {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+              <div class="col-lg-12" style="margin-bottom: 25px">
+                <div class="product__pagination">
+                  {% if page_purch.has_previous %}
+                  <a href="javascript:insertParam({'page_purch':{{ page_purch.previous_page_number }} })">{{ page_purch.previous_page_number }}</a>
+                  {% endif %}
+                  <a class="active" href="">{{ page_purch.number }}</a>
+                  {% if page_purch.has_next %}
+                  <a href="javascript:insertParam({'page_purch':{{ page_purch.next_page_number }} })">{{ page_purch.next_page_number }}</a>
+                  {% endif %}
+
+                </div>
+              </div>
+              {% else %}
+              <h4 class="text-center"> You have no Apps! </h4>
+              {% endif %}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

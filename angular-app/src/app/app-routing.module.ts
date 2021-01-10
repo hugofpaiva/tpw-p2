@@ -7,6 +7,7 @@ import {LoginComponent} from './core/components/login/login.component';
 import {RegisterComponent} from './core/components/register/register.component';
 import {NotfoundComponent} from './core/components/notfound/notfound.component';
 import {ProductComponent} from './core/components/product/product.component';
+import {AccountComponent} from './core/components/account/account.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,21 @@ const routes: Routes = [
           {path: '', component: StoreComponent},
           {path: 'product/:id', component: ProductComponent}
           ]
+      },
+      {path: 'account', component: AccountComponent},
+      {path: 'admin',
+        children: [
+          {path: 'purchases', component: StoreComponent},//TODO AdminPurchasesComponent
+          {path: 'users', component: ProductComponent},//TODO AdminUsersComponent
+          {path: 'apps',
+            children: [
+              {path: '', component: StoreComponent},//TODO AdminAppsComponent
+              {path: 'add', component: StoreComponent},//TODO AdminAddAppComponent
+            ]
+          },
+          {path: 'developers', component: ProductComponent},//TODO AdminDeveloperComponent
+          {path: 'categories', component: ProductComponent},//TODO AdminCategoriesComponent
+        ]
       },
       {path: 'about_us', component: AboutusComponent},
       {path: 'login', component: LoginComponent},

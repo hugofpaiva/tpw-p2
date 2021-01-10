@@ -13,10 +13,10 @@ import {Subscription} from 'rxjs';
 export class NavbarComponent implements OnInit, AfterViewInit {
 
   client?: Client = undefined;
-  logoutEventSubscription: Subscription;
+  logoutInEventSubscription: Subscription;
 
   constructor(private clientService: ClientService, private authService: AuthService, private sharedService: SharedService) {
-    this.logoutEventSubscription = this.sharedService.getLogoutEvent().subscribe(() => {
+    this.logoutInEventSubscription = this.sharedService.getUserEvent().subscribe(() => {
       this.getUserInfo();
     });
   }
@@ -35,6 +35,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   logout(): void {
     this.authService.logout();
     this.client = undefined;
+    this.sharedService.sendUserEvent();
   }
 
 

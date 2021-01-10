@@ -9,10 +9,10 @@ export class SharedService {
 
   constructor() { }
 
-  sendLogoutEvent(): void {
+  sendUserEvent(): void {
     this.subject.next();
   }
-  getLogoutEvent(): Observable<any>{
+  getUserEvent(): Observable<any>{
     return this.subject.asObservable();
   }
 
