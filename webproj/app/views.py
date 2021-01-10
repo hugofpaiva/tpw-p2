@@ -321,6 +321,7 @@ def get_products(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def get_top_products(request):
     res = []
     purchs = Purchase.objects.values('product').annotate(c=Count('product')).order_by('-c')
@@ -336,6 +337,7 @@ def get_top_products(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def get_new_products(request):
     prods = Product.objects.all().order_by('-id')
     if 'num' in request.GET:

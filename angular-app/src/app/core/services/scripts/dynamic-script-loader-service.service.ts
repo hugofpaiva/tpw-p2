@@ -6,13 +6,8 @@ interface Scripts {
 }
 // Based on: https://medium.com/better-programming/angular-load-external-javascript-file-dynamically-3d14dde815cb
 export const ScriptStore: Scripts[] = [
-  { name: 'jquery', src: '../../../assets/js/jquery-3.3.1.min.js' },
-  { name: 'bootstrap', src: '../../../assets/js/bootstrap.min.js' },
   { name: 'jquery-nice-select', src: '../../../assets/js/jquery.nice-select.min.js' },
-  { name: 'jquery-nice-scroll', src: '../../../assets/js/jquery.nicescroll.min.js' },
   { name: 'jquery-magnific-popup', src: '../../../assets/js/jquery.magnific-popup.min.js' },
-  { name: 'jquery-countdown', src: '../../../assets/js/jquery.countdown.min.js' },
-  { name: 'jquery-slicknav', src: '../../../assets/js/jquery.slicknav.js' },
   { name: 'mixitup', src: '../../../assets/js/mixitup.min.js' },
   { name: 'owl-carousel', src: '../../../assets/js/owl.carousel.min.js' },
   { name: 'main', src: '../../../assets/js/main.js' },
@@ -48,7 +43,6 @@ export class DynamicScriptLoaderService {
 
   loadScript(name: string) {
     return new Promise((resolve, reject) => {
-      if (!this.scripts[name].loaded) {
         // load script
         const script = document.createElement('script');
         script.type = 'text/javascript';
@@ -69,9 +63,6 @@ export class DynamicScriptLoaderService {
         }
         script.onerror = (error: any) => resolve({script: name, loaded: false, status: 'Loaded'});
         document.getElementsByTagName('head')[0].appendChild(script);
-      } else {
-        resolve({ script: name, loaded: true, status: 'Already Loaded' });
-      }
     });
   }
 

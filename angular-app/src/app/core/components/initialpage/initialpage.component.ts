@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import {Product} from '../../models/product';
 import {ProductService} from '../../services/product/product.service';
 import {DynamicScriptLoaderService} from '../../services/scripts/dynamic-script-loader-service.service';
@@ -6,9 +6,9 @@ import {DynamicScriptLoaderService} from '../../services/scripts/dynamic-script-
 @Component({
   selector: 'app-initialpage',
   templateUrl: './initialpage.component.html',
-  styleUrls: ['./initialpage.component.css']
+  styleUrls: ['./initialpage.component.css'],
 })
-export class InitialpageComponent implements OnInit {
+export class InitialpageComponent implements OnInit, AfterViewInit {
 
   topProducts: Product[] = [];
   newProducts: Product[] = [];
@@ -19,8 +19,12 @@ export class InitialpageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProducts();
+  }
+
+  ngAfterViewInit(): void {
     this.loadScripts();
   }
+
 
   getProducts(): void {
     this.productService.getTopProducts().subscribe(products => { this.topProducts = products; console.log(this.topProducts);});
