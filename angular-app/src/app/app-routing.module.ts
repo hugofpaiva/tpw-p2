@@ -19,13 +19,14 @@ const routes: Routes = [
       {path: 'shop',
         children: [
           {path: '', component: StoreComponent},
-          {path: 'product/:id', component: ProductComponent,
+          {path: 'product/:id',
             children: [
+              {path: '', component: ProductComponent},
               // component used to add/Edit Review
               {path: 'review', component: AddreviewComponent}
             ]
           },
-          ]
+        ]
       },
       {path: 'accountclient', component: AccountclientComponent},
       {path: 'accountadmin', component: AccountadminComponent},
