@@ -2,6 +2,8 @@ from django.db.models import ForeignKey
 
 from app.models import *
 from rest_framework import serializers
+from django.db.models import Avg
+from django.db.models.functions import Ceil
 
 
 # TODO: ver atributos nao necessários

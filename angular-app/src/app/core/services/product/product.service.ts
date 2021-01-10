@@ -16,6 +16,32 @@ export class ProductService {
     return this.http.get<Product>(url);
   }
 
+  getProductsParams(categoryId: number|undefined, developerId: number|undefined, rating: number|undefined, search: string,
+              minPrice: number|undefined, maxPrice: number|undefined): Observable<Product[]>{
+    const url = environment.baseURL + 'products';
+    const params = new HttpParams();
+    if (categoryId !== undefined) {
+      params.set('category', String(categoryId));
+    }
+    if (developerId !== undefined) {
+      params.set('developer', String(developerId));
+    }
+    if (rating !== undefined) {
+      params.set('rating', String(developerId));
+    }
+    if (search !== '') {
+      params.set('name', String(search));
+    }
+    if (minPrice !== undefined) {
+      params.set('min_price', String(minPrice));
+    }
+    if (maxPrice !== undefined) {
+      params.set('max_price', String(maxPrice));
+    }
+
+    return this.http.get<Product[]>(url, {params});
+  }
+
   getProducts(): Observable<Product[]>{
     const url = environment.baseURL + 'products';
     return this.http.get<Product[]>(url);

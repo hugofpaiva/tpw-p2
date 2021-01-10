@@ -6,18 +6,18 @@ export class Product {
   name: string;
   icon: string;
   description: string;
-  categories: Category[];
+  category: Category[];
   developer: Developer;
   price: number;
   stars: number;
 
-  constructor(id: number, name: string, icon: string, description: string, categories: Category[],
+  constructor(id: number, name: string, icon: string, description: string, category: Category[],
               developer: Developer, price: number, stars: number) {
     this.id = id;
     this.name = name;
     this.icon = icon;
     this.description = description;
-    this.categories = categories;
+    this.category = category;
     this.developer = developer;
     this.price = price;
     this.stars = stars;

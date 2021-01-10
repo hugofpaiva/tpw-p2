@@ -309,15 +309,15 @@ def get_product(request, id):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def get_products(request):
-    res = []
-    prods = ProductFilter(request.GET,queryset=Product.objects.all()).qs
-    if 'num' in request.GET:
-        num = int(request.GET['num'])
-        prods = prods[:num]
+    print(request.GET)
+    prods = ProductFilter(request.GET, queryset=Product.objects.all()).qs
+    if 'page' in request.GET:
+        page = int(request.GET['page'])
+        prods = prods[12*page:12*(page+1)]
 
-    serializer = ProductSerializer(prods,many=True)
-
+    serializer = ProductSerializer(prods, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
@@ -332,7 +332,7 @@ def get_top_products(request):
     for p in purchs:
         res.append(Product.objects.get(pk=p.get('product')))
 
-    serializer = ProductSerializer(res,many=True)
+    serializer = ProductSerializer(res, many=True)
 
     return Response(serializer.data)
 

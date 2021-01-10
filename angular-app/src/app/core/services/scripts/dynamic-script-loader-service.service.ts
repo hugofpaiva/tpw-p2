@@ -9,7 +9,6 @@ export const ScriptStore: Scripts[] = [
   { name: 'jquery-nice-select', src: '../../../assets/js/jquery.nice-select.min.js' },
   { name: 'jquery-magnific-popup', src: '../../../assets/js/jquery.magnific-popup.min.js' },
   { name: 'mixitup', src: '../../../assets/js/mixitup.min.js' },
-  { name: 'owl-carousel', src: '../../../assets/js/owl.carousel.min.js' },
   { name: 'main', src: '../../../assets/js/main.js' },
 ];
 

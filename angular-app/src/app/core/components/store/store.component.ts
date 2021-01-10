@@ -16,8 +16,16 @@ export class StoreComponent implements OnInit, AfterViewInit {
   products: Product[] = [];
   developers: Developer[] = [];
   categories: Category[] = [];
+  categoryId?: number = undefined;
+  developerId?: number = undefined;
+  rating?: number = undefined;
+  search: string = String();
+  minPrice?: number = undefined;
+  maxPrice?: number = undefined;
 
-  constructor(private productService: ProductService, private categoryService: CategoryService, private developerService: DeveloperService, private dynamicScriptLoader: DynamicScriptLoaderService) {
+
+  constructor(private productService: ProductService, private categoryService: CategoryService,
+              private developerService: DeveloperService, private dynamicScriptLoader: DynamicScriptLoaderService) {
   }
 
   ngOnInit(): void {
@@ -32,7 +40,8 @@ export class StoreComponent implements OnInit, AfterViewInit {
   }
 
   getProducts(): void {
-    this.productService.getProducts().subscribe(products => this.products = products);
+    this.productService.getProductsParams(this.categoryId, this.developerId, this.rating, this.search,
+      this.minPrice, this.maxPrice).subscribe(products => this.products = products);
   }
 
   getCategories(): void {
