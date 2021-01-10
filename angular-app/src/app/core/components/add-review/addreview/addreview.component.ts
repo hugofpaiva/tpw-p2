@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Route} from '@angular/router';
 import {ReviewService} from '../../../services/review/review.service';
 import {Review} from '../../../models/review';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-addreview',
@@ -14,6 +15,7 @@ export class AddreviewComponent implements OnInit {
   @Input() reviewForm: Review ;
   productid : number;
   constructor(
+    private  location: Location,
     private activerouter: ActivatedRoute,
     private reviewService: ReviewService) {
     this.new_review = true;
@@ -44,11 +46,17 @@ export class AddreviewComponent implements OnInit {
     const dict = JSON.parse(serialized);
     dict.product = this.productid;
     if (this.new_review) {
-      this.reviewService.registerReview(dict).subscribe(data => console.log(data));
+      this.reviewService.registerReview(dict).subscribe(data => {
+        console.log(data);
+        this.location.back();
+      }, error => console.log(error));
     }
     else{
       dict.author = this.reviewForm.author.id;
-      this.reviewService.updateReview(dict, this.reviewForm.id).subscribe( data  => console.log(data));
+      this.reviewService.updateReview(dict, this.reviewForm.id).subscribe( data  => {
+        console.log(data);
+        this.location.back();
+      }, error => console.log(error));
     }
 
   }
