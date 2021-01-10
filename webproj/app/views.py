@@ -504,6 +504,11 @@ def get_purchase(request, id):
 
 @api_view(['POST'])
 def create_review(request):
+    #in order to make things easier on FrontEnd side
+    user = check_request_user(request)
+    if user == 'Client' and 'author' not in request.GET:
+        client = Client.objects.get(user=request.user.id)
+        request.data.update({'author': client.id})
     serializer = ReviewsSerializer(data=request.data)
     if serializer.is_valid():
         author = serializer.validated_data['author']
