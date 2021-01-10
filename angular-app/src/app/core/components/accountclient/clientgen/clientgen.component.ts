@@ -25,10 +25,10 @@ export class ClientgenComponent implements OnInit {
     private router: Router
   ) {
     this.updateForm = this.formBuilder.group({
-      username: ['', Validators.required, Validators.minLength(6)],
-      email : ['', Validators.required, Validators.email],
-      first_name: ['', Validators.required],
-      last_name: ['', Validators.required]
+      username: ['', [Validators.required, Validators.minLength(6)]],
+      email : ['', [Validators.required, Validators.email]],
+      first_name: ['', [Validators.required]],
+      last_name: ['', [Validators.required]]
     });
     this.clientService.getActualUser().subscribe(client => this.client = client);
   }
