@@ -8,6 +8,7 @@ import {RegisterComponent} from './core/components/register/register.component';
 import {NotfoundComponent} from './core/components/notfound/notfound.component';
 import {ProductComponent} from './core/components/product/product.component';
 import {AccountadminComponent} from './core/components/accountadmin/accountadmin.component';
+import {AccountclientComponent} from './core/components/accountclient/accountclient.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
           {path: 'product/:id', component: ProductComponent}
           ]
       },
+      {path: 'accountclient', component: AccountclientComponent},
       {path: 'accountadmin', component: AccountadminComponent},
       {path: 'admin',
         children: [

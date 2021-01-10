@@ -19,6 +19,8 @@ import {DynamicScriptLoaderService} from './core/services/scripts/dynamic-script
 import { ProductComponent } from './core/components/product/product.component';
 import { AccountadminComponent } from './core/components/accountadmin/accountadmin.component';
 import { DisplayReviewsComponent } from './core/components/show-reviews/display-reviews.component';
+import { AccountclientComponent } from './core/components/accountclient/accountclient.component';
+import { ClientgenComponent } from './core/components/accountclient/clientgen/clientgen.component';
 
 
 @NgModule({
@@ -36,6 +38,8 @@ import { DisplayReviewsComponent } from './core/components/show-reviews/display-
     ProductComponent,
     AccountadminComponent,
     DisplayReviewsComponent,
+    AccountclientComponent,
+    ClientgenComponent,
   ],
   imports: [
     BrowserModule,

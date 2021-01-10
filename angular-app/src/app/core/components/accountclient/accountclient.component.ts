@@ -7,11 +7,11 @@ import {Subscription} from 'rxjs';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-account',
-  templateUrl: './accountadmin.component.html',
-  styleUrls: ['./accountadmin.component.css']
+  selector: 'app-accountclient',
+  templateUrl: './accountclient.component.html',
+  styleUrls: ['./accountclient.component.css']
 })
-export class AccountadminComponent implements OnInit {
+export class AccountclientComponent implements OnInit {
 
   client?: Client = undefined;
   logoutInEventSubscription: Subscription;
