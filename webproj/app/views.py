@@ -116,7 +116,7 @@ def get_actual_client(request):
         if request.user.is_superuser:
             client = Client(user=request.user)
         else:
-            client = Client.objects.get(id=request.user.id)
+            client = Client.objects.get(user_id=request.user.id)
     except Client.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     serializer = ClientSerializer(client)
