@@ -31,8 +31,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   getUserInfo(fromEvent: boolean): void {
     this.clientService.getActualUser().subscribe(client => {
       this.client = client;
-      console.log(client);
-      console.log(this.client);
     }, error => {
       this.client = undefined;
       if (!fromEvent){
