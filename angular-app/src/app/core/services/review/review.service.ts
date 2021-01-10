@@ -38,8 +38,8 @@ export class ReviewService {
     const url = environment.baseURL + 'reviewcre';
     return this.http.post<any>(url, rev, environment.httpOptions);
   }
-  updateReview(rev: {}): Observable<any>  {
-    const url = environment.baseURL + 'reviewupd';
+  updateReview(rev: {}, id: number): Observable<any>  {
+    const url = environment.baseURL + 'reviewupd/' + id;
     return this.http.put<any>(url, rev, environment.httpOptions);
   }
 

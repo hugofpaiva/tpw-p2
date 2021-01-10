@@ -29,7 +29,7 @@ export class AddreviewComponent implements OnInit {
       this.reviewService.getMyReviews(Number(product_id )).subscribe( reviews => {
         if (reviews.length !== 0){
           this.reviewForm = reviews[0];
-          this.new_review=false;
+          this.new_review = false;
         }
         else {
           this.reviewForm = new Review();
@@ -40,14 +40,17 @@ export class AddreviewComponent implements OnInit {
   }
 
   submitReview(): void {
+    console.log('cucu');
     const serialized = JSON.stringify(this.reviewForm);
     const dict = JSON.parse(serialized);
     dict.product = this.reviewForm.product.id;
     if (this.new_review) {
-      this.reviewService.registerReview();
+      //this.reviewService.registerReview();
     }
     else{
+      console.log("entrei");
       dict.author = this.reviewForm.author.id;
+      this.reviewService.updateReview(dict, this.reviewForm.id).subscribe( data  => console.log(data));
     }
 
   }

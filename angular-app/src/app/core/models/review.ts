@@ -2,6 +2,7 @@ import {Client} from './client';
 import {Product} from './product';
 
 export class Review {
+  id: number;
   author: Client;
   product: Product;
   rating: number;
