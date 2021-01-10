@@ -23,6 +23,9 @@ export class StoreComponent implements OnInit, AfterViewInit {
   search = '';
   minPrice?: number = undefined;
   maxPrice?: number = undefined;
+  order = 'cost';
+  p: number = Number(1);
+  math: Math = Math;
 
 
   constructor(private productService: ProductService, private categoryService: CategoryService,
@@ -42,7 +45,7 @@ export class StoreComponent implements OnInit, AfterViewInit {
 
   getProducts(): void {
     this.productService.getProductsParams(this.categoryId, this.developerId, this.rating, this.search,
-      this.minPrice, this.maxPrice).subscribe(products => {this.products = products;});
+      this.minPrice, this.maxPrice, this.order).subscribe(products => this.products = products);
   }
 
   selectCategory(cat: Category): void{

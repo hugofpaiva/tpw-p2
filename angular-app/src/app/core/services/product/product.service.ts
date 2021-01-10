@@ -17,7 +17,7 @@ export class ProductService {
   }
 
   getProductsParams(categoryId: number|undefined, developerId: number|undefined, rating: number|undefined, search: string,
-                    minPrice: number|undefined, maxPrice: number|undefined): Observable<Product[]>{
+                    minPrice: number|undefined, maxPrice: number|undefined, order: string): Observable<Product[]>{
     const url = environment.baseURL + 'products';
     const paramsDict: { [name: string]: string} = {};
     if (categoryId !== undefined) {
@@ -35,6 +35,9 @@ export class ProductService {
     if (minPrice !== undefined) {
       paramsDict.min_price = String(minPrice);
     }
+
+    paramsDict.order = String(order);
+
     if (maxPrice !== undefined) {
       paramsDict.max_price = String(maxPrice);
     }
