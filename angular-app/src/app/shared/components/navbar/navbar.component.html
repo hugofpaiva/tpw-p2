@@ -28,7 +28,7 @@
 
                 <ng-container *ngIf="client;else notLoggedIn">
 
-                  <a style="font-size: 18px; color: #111111; font-weight: 600" routerLink="account">{{ client.user.username }} <ng-container *ngIf="!client.user.is_superuser">({{ client.balance }}€)</ng-container></a>
+                  <a style="font-size: 18px; color: #111111; font-weight: 600" routerLink="accountadmin">{{ client.user.username }} <ng-container *ngIf="!client.user.is_superuser">({{ client.balance }}€)</ng-container></a>
 
                   <a
                     style="font-size: 18px; color: #111111; font-weight: 600"

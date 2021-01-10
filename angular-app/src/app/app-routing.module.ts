@@ -7,7 +7,7 @@ import {LoginComponent} from './core/components/login/login.component';
 import {RegisterComponent} from './core/components/register/register.component';
 import {NotfoundComponent} from './core/components/notfound/notfound.component';
 import {ProductComponent} from './core/components/product/product.component';
-import {AccountComponent} from './core/components/account/account.component';
+import {AccountadminComponent} from './core/components/accountadmin/accountadmin.component';
 
 const routes: Routes = [
   {
@@ -20,7 +20,7 @@ const routes: Routes = [
           {path: 'product/:id', component: ProductComponent}
           ]
       },
-      {path: 'account', component: AccountComponent},
+      {path: 'accountadmin', component: AccountadminComponent},
       {path: 'admin',
         children: [
           {path: 'purchases', component: StoreComponent},//TODO AdminPurchasesComponent

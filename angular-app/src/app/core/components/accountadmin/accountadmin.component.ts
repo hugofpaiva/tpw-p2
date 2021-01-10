@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
-export class AccountComponent implements OnInit {
+export class AccountadminComponent implements OnInit {
 
   client?: Client = undefined;
   logoutInEventSubscription: Subscription;
