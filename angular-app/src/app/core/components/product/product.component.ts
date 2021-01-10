@@ -38,7 +38,7 @@ export class ProductComponent implements OnInit {
   }
   getReview(): void {
     const id = this.activeroute.snapshot.paramMap.get('id');
-    this.reviewService.getReviews()
+    // this.reviewService.getReviews()
   }
 
 }
