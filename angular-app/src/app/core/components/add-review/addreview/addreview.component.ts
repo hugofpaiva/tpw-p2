@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
+import {ActivatedRoute, Route} from '@angular/router';
 import {ReviewService} from '../../../services/review/review.service';
 import {Review} from '../../../models/review';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-addreview',
@@ -11,8 +12,10 @@ import {Review} from '../../../models/review';
 export class AddreviewComponent implements OnInit {
   // tslint:disable-next-line:variable-name
   new_review: boolean;
-  reviewForm: Review ;
+  @Input() reviewForm: Review ;
+  productid : number;
   constructor(
+    private  location: Location,
     private activerouter: ActivatedRoute,
     private reviewService: ReviewService) {
     this.new_review = true;
@@ -24,33 +27,36 @@ export class AddreviewComponent implements OnInit {
 
   getMyReview(): void {
     // tslint:disable-next-line:variable-name
-    const product_id = this.activerouter.snapshot.paramMap.get('id');
-    if (product_id  ){
-      this.reviewService.getMyReviews(Number(product_id )).subscribe( reviews => {
+    this.productid = Number(this.activerouter.snapshot.paramMap.get('id'));
+    if (this.productid  ){
+      this.reviewService.getMyReviews(this.productid).subscribe( reviews => {
         if (reviews.length !== 0){
           this.reviewForm = reviews[0];
           this.new_review = false;
         }
         else {
           this.reviewForm = new Review();
-          this.reviewForm.product.id = Number(product_id);
         }
       });
     }
   }
 
   submitReview(): void {
-    console.log('cucu');
     const serialized = JSON.stringify(this.reviewForm);
     const dict = JSON.parse(serialized);
-    dict.product = this.reviewForm.product.id;
+    dict.product = this.productid;
     if (this.new_review) {
-      //this.reviewService.registerReview();
+      this.reviewService.registerReview(dict).subscribe(data => {
+        console.log(data);
+        this.location.back();
+      }, error => console.log(error));
     }
     else{
-      console.log("entrei");
       dict.author = this.reviewForm.author.id;
-      this.reviewService.updateReview(dict, this.reviewForm.id).subscribe( data  => console.log(data));
+      this.reviewService.updateReview(dict, this.reviewForm.id).subscribe( data  => {
+        console.log(data);
+        this.location.back();
+      }, error => console.log(error));
     }
 
   }
