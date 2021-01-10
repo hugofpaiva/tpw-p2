@@ -15,6 +15,7 @@ export class AccountclientComponent implements OnInit {
 
   client?: Client = undefined;
   logoutInEventSubscription: Subscription;
+  card = 'general';
 
 
   constructor(private clientService: ClientService, private authService: AuthService, private sharedService: SharedService,
@@ -38,6 +39,10 @@ export class AccountclientComponent implements OnInit {
       }
       this.router.navigate(['/']);
     });
+  }
+
+  showCard(card: string): void {
+    this.card = card;
   }
 
 }

@@ -81,6 +81,31 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return instance
 
 
+class ChangePasswordSerializer(serializers.ModelSerializer):
+    new_password1 = serializers.CharField(write_only=True, required=True)
+    new_password2 = serializers.CharField(write_only=True, required=True)
+    old_password = serializers.CharField(write_only=True, required=True)
+
+    class Meta:
+        model = User
+        fields = ('id','old_password', 'new_password1', 'new_password2', 'is_superuser')
+        read_only_fields = ('id', 'is_superuser')
+
+    def save(self, instance):
+        user = User.objects.get(id=instance.id)
+
+        if not user.check_password(self.validated_data['old_password']):
+            raise serializers.ValidationError({'old_password': 'Invalid old password!'})
+
+        if self.validated_data['new_password1'] != self.validated_data['new_password2']:
+            raise serializers.ValidationError({'new_password2': 'Invalid password repeat!'})
+
+        instance.set_password(self.validated_data['new_password1'])
+        instance.save()
+
+        return instance
+
+
 class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client

@@ -16,7 +16,7 @@ from django_filters import rest_framework as filters
 from app.filters import ProductFilter
 from app.models import Developer, Product, Client, Reviews, Purchase, Category
 from app.serializers import DeveloperSerializer, ClientSerializer, UserSerializer, ProductSerializer, ReviewsSerializer, \
-    PurchaseSerializer, CategorySerializer, UserProfileSerializer
+    PurchaseSerializer, CategorySerializer, UserProfileSerializer, ChangePasswordSerializer
 
 
 # TODO: Função que veja que tipo de utilizador está a efetuar determinada operação, exemplo:
@@ -144,6 +144,23 @@ def update_userInfo(request, id):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['PUT'])
+def update_usePw(request, id):
+    req_user = check_request_user(request)
+    try:
+        user = User.objects.get(id=id)
+        if req_user == 'Client' and not check_client_permission(request, user):
+            return Response({'error_message': "You're not allowed to do this Request!"},
+                            status=status.HTTP_403_FORBIDDEN)
+        serializer = ChangePasswordSerializer(user, request.data)
+        if serializer.is_valid():
+            serializer.save(user)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
 
 
 

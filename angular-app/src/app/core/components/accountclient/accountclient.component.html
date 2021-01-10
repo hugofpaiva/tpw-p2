@@ -31,49 +31,19 @@
       <div class="row no-gutters row-bordered row-border-light">
         <div class="col-md-3 pt-0">
           <div class="list-group list-group-flush account-settings-links">
-            <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">General</a>
-            <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Change password</a>
+            <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general" (click)="showCard('general')">General</a>
+            <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password" (click)="showCard('pw')">Change password</a>
             <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-favourites">Favourites</a>
             <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-avail_purchases">My Apps</a>
             <a *ngIf="client.user.is_superuser" class="list-group-item list-group-item-action" routerLink="admin/purchases">Admin</a>
           </div>
         </div>
-        <app-clientgen class="col-md-9"></app-clientgen>
-        <!--
+        <div class="col-md-9">
+            <app-clientgen *ngIf="card == 'general'"></app-clientgen>
+            <app-clientpw *ngIf="card == 'pw'"></app-clientpw>
+        </div>
 
-            <div class="tab-pane fade" id="accountadmin-change-password">
-              <div class="card-body pb-2">
 
-                <form method="post">
-                  {% csrf_token %}
-                  <p>
-                    {{ form_pw.old_password.label_tag }}
-                    <br>
-                  <div class="form-group">{{ form_pw.old_password }}</div>
-                  <p style="color: red">{{ form_pw.old_password.errors}}</p>
-                  </p>
-                  <p>
-                    New Password:
-                    <br>
-                  <div class="form-group">{{ form_pw.new_password1 }}</div>
-                  <p style="color: red">{{ form_pw.new_password1.errors}}</p>
-                  </p>
-                  <p>
-                    Repeat New Password:
-                    <br>
-                  <div class="form-group">{{ form_pw.new_password2 }}</div>
-                  <p style="color: red">{{ form_pw.new_password2.errors}}</p>
-                  </p>
-                  <div class="text-right mt-3" style="margin-bottom: 25px">
-                    <button type="submit" class="site-btn">Save changes</button>&nbsp;
-
-                  </div>
-
-                </form>
-
-              </div>
-            </div>
-            -->
         <!--<div class="tab-pane fade" id="account-favourites">
           <div class="card-body pb-2">
             <ng-container *ngIf="client.favorites; else noFavorites">
