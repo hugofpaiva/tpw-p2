@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {Client} from "../../models/client";
 
@@ -10,9 +10,8 @@ import {Client} from "../../models/client";
   providedIn: 'root'
 })
 export class ClientService {
-
+  public currentUserSubject = new BehaviorSubject<any>(null);
   constructor(private http: HttpClient) { }
-
   getUser(id: number): Observable<Client>{
     const url = environment.baseURL + 'client/' + id;
     return this.http.get<Client>(url);
@@ -32,4 +31,5 @@ export class ClientService {
     const url = environment.baseURL + 'client?page=';
     return this.http.get<Client[]>(url);
   }
+
 }

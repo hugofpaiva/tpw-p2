@@ -12,7 +12,7 @@ import {Subscription} from 'rxjs';
 })
 export class NavbarComponent implements OnInit, AfterViewInit {
 
-  client?: Client = undefined;
+  public  client?: Client = undefined;
   logoutInEventSubscription: Subscription;
 
   constructor(private clientService: ClientService, private authService: AuthService, private sharedService: SharedService) {

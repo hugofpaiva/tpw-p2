@@ -21,6 +21,7 @@ import { AccountadminComponent } from './core/components/accountadmin/accountadm
 import { DisplayReviewsComponent } from './core/components/show-reviews/display-reviews.component';
 import { AccountclientComponent } from './core/components/accountclient/accountclient.component';
 import { ClientgenComponent } from './core/components/accountclient/clientgen/clientgen.component';
+import { AddreviewComponent } from './core/components/add-review/addreview/addreview.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { ClientgenComponent } from './core/components/accountclient/clientgen/cl
     DisplayReviewsComponent,
     AccountclientComponent,
     ClientgenComponent,
+    AddreviewComponent,
   ],
   imports: [
     BrowserModule,

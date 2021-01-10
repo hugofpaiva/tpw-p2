@@ -1,6 +1,11 @@
-import {Component, Input, OnInit, OnChanges, EventEmitter, Output} from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import {Product} from '../../models/product';
 import {Review} from '../../models/review';
+import {Client} from '../../models/client';
 
 @Component({
   selector: 'app-display-reviews',
@@ -8,12 +13,16 @@ import {Review} from '../../models/review';
   styleUrls: ['./display-reviews.component.css']
 })
 export class DisplayReviewsComponent implements OnInit {
-  constructor() { }
   /*
    Child Component used in the Product Page to show it's Reviews
    */
-   @Input() reviews: Review [] = [];
-   p: number = Number(1);  // pagination variable
+
+  @Input() reviews: Review [] = []; // reviews for the specific product
+  // tslint:disable-next-line:variable-name
+  @Input() has_review: boolean =  Boolean();
+  p: number = Number(1);  // pagination variable
+  constructor() {
+  }
 
 
   ngOnInit(): void {

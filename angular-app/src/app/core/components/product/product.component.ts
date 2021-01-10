@@ -5,6 +5,8 @@ import { Product } from '../../models/product';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Review} from '../../models/review';
 import {ReviewService} from '../../services/review/review.service';
+import {ClientService} from '../../services/client/client.service';
+import {Client} from '../../models/client';
 
 @Component({
   selector: 'app-product',
@@ -12,17 +14,34 @@ import {ReviewService} from '../../services/review/review.service';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-  product: Product  ;
+  client: Client ;
+  product: Product;
   reviews: Review [] = [];
+  has_review: boolean;
   constructor(
     private productService: ProductService,
     private reviewService: ReviewService,
+    private clientService: ClientService,
     private router: Router,
-    private activeroute: ActivatedRoute) { }
+    private activeroute: ActivatedRoute) {
+    this.has_review = false;
+  }
 
   ngOnInit(): void {
-    this.getProduct();
-    this.getReview(); // data will be passed to the child component show-review
+    if ( this.getClient()){
+      this.getProduct();
+      // data will be passed to the child component show-review
+      this.getReviews();
+    }
+  }
+  getClient(): boolean  {
+    this.clientService.getActualUser().subscribe(client => {
+      this.client = client;
+    }, err => {
+        console.log(err);
+        return false;
+    });
+    return true;
   }
   getProduct(): void {
     const id = this.activeroute.snapshot.paramMap.get('id');
@@ -39,12 +58,19 @@ export class ProductComponent implements OnInit {
               // this.router
         });
   }
-  getReview(): void {
+  getReviews(): void {
     const id = this.activeroute.snapshot.paramMap.get('id');
     this.reviewService.getReviews(Number(id))
       .subscribe(
         reviews => {
           this.reviews = reviews;
+          for (const rev  of reviews){
+            console.log(rev.author.user.username + ' - ' + this.client.user.username );
+            if (rev.author.user.username === this.client.user.username){
+              this.has_review = true;
+              break;
+            }
+          }
           console.log('-->' + this.reviews);
         }
         , (err: HttpErrorResponse) => {
@@ -54,5 +80,8 @@ export class ProductComponent implements OnInit {
         }
       );
   }
+
+
+
 
 }
