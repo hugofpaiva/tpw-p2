@@ -6,6 +6,7 @@ import {ProductService} from '../../services/product/product.service';
 import {CategoryService} from '../../services/category/category.service';
 import {DeveloperService} from '../../services/developer/developer.service';
 import {DynamicScriptLoaderService} from '../../services/scripts/dynamic-script-loader-service.service';
+import {min} from 'rxjs/operators';
 
 @Component({
   selector: 'app-store',
@@ -73,21 +74,25 @@ export class StoreComponent implements OnInit, AfterViewInit {
     this.getProducts();
   }
 
-  selectMinPrice(price: number): void{
-    if (price === this.minPrice){
-      this.minPrice = undefined;
-    }else{
-      this.minPrice = price;
+  selectPrices(minPrice: number, maxPrice?: number): void{
+    console.log(minPrice);
+    console.log(maxPrice);
+    if (minPrice !==  null) {
+      if (minPrice === this.minPrice) {
+        this.minPrice = undefined;
+      } else {
+        this.minPrice = minPrice;
+      }
     }
-    this.getProducts();
-  }
 
-  selectMaxPrice(price: number): void{
-    if (price === this.maxPrice){
-      this.maxPrice = undefined;
-    }else{
-      this.maxPrice = price;
+    if (maxPrice !==  null) {
+      if (maxPrice === this.maxPrice) {
+        this.maxPrice = undefined;
+      } else {
+        this.maxPrice = maxPrice;
+      }
     }
+
     this.getProducts();
   }
 
