@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   constructor(private clientService: ClientService, private authService: AuthService, private sharedService: SharedService) {
     this.logoutInEventSubscription = this.sharedService.getUserEvent().subscribe(() => {
-      this.getUserInfo();
+      this.getUserInfo(true);
     });
   }
 
@@ -25,11 +25,18 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.getUserInfo();
+    this.getUserInfo(false);
   }
 
-  getUserInfo(): void {
-    this.clientService.getActualUser().subscribe(client => this.client = client);
+  getUserInfo(fromEvent: boolean): void {
+    this.clientService.getActualUser().subscribe(client => {
+      this.client = client;
+    }, error => {
+      this.client = undefined;
+      if (!fromEvent){
+        this.sharedService.sendUserEvent();
+      }
+    });
   }
 
   logout(): void {

@@ -1,7 +1,9 @@
 
 <head>
-  <link rel="stylesheet" href="assets/css/clientdetails.css">
+  <link rel="stylesheet" href="/assets/css/clientdetails.css">
 </head>
+
+<ng-container *ngIf="client">
 
 <div class="container light-style flex-grow-1 container-p-y" style="max-width: 1500px">
 
@@ -33,13 +35,14 @@
           <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Change password</a>
           <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-favourites">Favourites</a>
           <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-avail_purchases">My Apps</a>
-
-          <a *ngIf="client.user.is_superuser" class="list-group-item list-group-item-action" routerLink="admin/purchases">Admin</a>
+            <a *ngIf="client.user.is_superuser" class="list-group-item list-group-item-action" routerLink="admin/purchases">Admin</a>
         </div>
       </div>
+      <!--
       <div class="col-md-9">
         <div class="tab-content">
           <div class="tab-pane fade active show" id="account-general">
+
 
 
             <hr class="border-light m-0">
@@ -111,6 +114,7 @@
 
             </div>
           </div>
+          -->
           <div class="tab-pane fade" id="account-favourites">
             <div class="card-body pb-2">
               <ng-container *ngIf="client.favorites; else noFavorites">
@@ -163,6 +167,8 @@
               </ng-template>
             </div>
           </div>
+
+      <!--
           <div class="tab-pane fade" id="account-avail_purchases">
             <div class="card-body pb-2">
               {% if client_purch %}
@@ -208,9 +214,13 @@
               {% endif %}
             </div>
           </div>
+          -->
 
         </div>
       </div>
     </div>
+</ng-container>
+<!--
   </div>
 </div>
+-->

@@ -20,20 +20,23 @@ export class AccountComponent implements OnInit {
   constructor(private clientService: ClientService, private authService: AuthService, private sharedService: SharedService,
               private router: Router) {
     this.logoutInEventSubscription = this.sharedService.getUserEvent().subscribe(() => {
-      this.getUserInfo();
+      this.getUserInfo(true);
     });
   }
 
   ngOnInit(): void {
-    this.getUserInfo();
+    this.getUserInfo(false);
   }
 
-  getUserInfo(): void {
+  getUserInfo(fromEvent: boolean): void {
     this.clientService.getActualUser().subscribe(client => {
       this.client = client;
-      if (this.client === undefined){
-        this.router.navigate(['/']);
+    }, error => {
+      this.client = undefined;
+      if (!fromEvent){
+        this.sharedService.sendUserEvent();
       }
+      this.router.navigate(['/']);
     });
   }
 
