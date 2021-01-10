@@ -53,6 +53,8 @@ urlpatterns = [
     path('ws/register', views.register),
     path('ws/clients', views.get_clients),
     path('ws/client/<int:id>', views.get_client),
+    path('ws/userupd/<int:id>',views.update_userInfo),
+    path('ws/clientupd/<int:id>',views.update_client),
 
     path('ws/developer/<int:id>', views.get_dev),
     path('ws/developers', views.get_devs),

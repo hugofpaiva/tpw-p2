@@ -6,7 +6,7 @@ export class Product {
   name: string;
   icon: string;
   description: string;
-  categories: Category[];
+  category: Category[];
   developer: Developer;
   price: number;
   stars: number;
@@ -17,7 +17,7 @@ export class Product {
     this.name = name;
     this.icon = icon;
     this.description = description;
-    this.categories = categories;
+    this.category = categories;
     this.developer = developer;
     this.price = price;
     this.stars = stars;

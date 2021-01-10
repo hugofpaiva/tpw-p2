@@ -6,6 +6,7 @@ import {AboutusComponent} from './core/components/aboutus/aboutus.component';
 import {LoginComponent} from './core/components/login/login.component';
 import {RegisterComponent} from './core/components/register/register.component';
 import {NotfoundComponent} from './core/components/notfound/notfound.component';
+import {ProductComponent} from './core/components/product/product.component';
 
 const routes: Routes = [
   {
@@ -15,7 +16,7 @@ const routes: Routes = [
       {path: 'shop',
         children: [
           {path: '', component: StoreComponent},
-          {path: 'product/:id', component: AboutusComponent}// Change later
+          {path: 'product/:id', component: ProductComponent}// Change later
           ]
       },
       {path: 'about_us', component: AboutusComponent},

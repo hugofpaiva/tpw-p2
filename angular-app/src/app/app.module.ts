@@ -15,6 +15,7 @@ import { NotfoundComponent } from './core/components/notfound/notfound.component
 import { BasepageComponent } from './shared/components/basepage/basepage.component';
 import {AuthHeaderInterceptor} from './core/interceptor/auth-header-interceptor';
 import {DynamicScriptLoaderService} from './core/services/scripts/dynamic-script-loader-service.service';
+import { ProductComponent } from './core/components/product/product.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import {DynamicScriptLoaderService} from './core/services/scripts/dynamic-script
     RegisterComponent,
     NotfoundComponent,
     BasepageComponent,
+    ProductComponent,
   ],
   imports: [
     BrowserModule,
