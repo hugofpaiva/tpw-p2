@@ -3,7 +3,7 @@
   <div *ngIf="topProducts" class="hero__slider owl-carousel">
     <div
       *ngFor="let prod of topProducts"
-      class="hero__items set-bg"
+      class="hero__items bg-set"
       style="background-image: url('assets/img/banner/desk.jpg')"
     >
       <div class="container">
@@ -42,9 +42,9 @@
     <div class="row">
       <div class="col-lg-12">
         <ul class="filter__controls">
-          <li class="active" data-filter="*">All Featured</li>
-          <li data-filter=".best">Best Sellers</li>
-          <li data-filter=".new">New Arrivals</li>
+          <li class="active">All Featured</li>
+          <li>Best Sellers</li>
+          <li>New Arrivals</li>
         </ul>
       </div>
     </div>
@@ -56,10 +56,10 @@
         routerLink="/shop/product/{{ prod.id }}/"
       >
         <div
-          [className]="prod.stars > 0 ? 'product__item sale' : 'product__item'"
+          class="product__item sale"
         >
           <div
-            class="product__item__pic set-bg"
+            class="product__item__pic bg-set"
             [ngStyle]="{ 'background-image': 'url(' + prod.icon + ')' }"
           ></div>
           <div class="product__item__text">
@@ -70,12 +70,14 @@
                 : prod.description
             }}</a>
             <div class="rating">
-              <ng-template>
-                <i class="fa fa-star"></i>
-              </ng-template>
-              <ng-template>
-                <i class="fa fa-star-o"></i>
-              </ng-template>
+              <i
+                *ngFor="let x of [].constructor(prod.stars)"
+                class="fa fa-star"
+              ></i>
+              <i
+                *ngFor="let x of [].constructor(5 - prod.stars)"
+                class="fa fa-star-o"
+              ></i>
             </div>
             <h5>{{ prod.price }} €</h5>
           </div>
@@ -87,10 +89,10 @@
         routerLink="/shop/product/{{ prod.id }}/"
       >
         <div
-          [className]="prod.stars > 0 ? 'product__item sale' : 'product__item'"
+          class="product__item sale"
         >
           <div
-            class="product__item__pic set-bg"
+            class="product__item__pic bg-set"
             [ngStyle]="{ 'background-image': 'url(' + prod.icon + ')' }"
           >
             <span class="label">New</span>
@@ -103,12 +105,14 @@
                 : prod.description
             }}</a>
             <div class="rating">
-              <ng-template>
-                <i class="fa fa-star"></i>
-              </ng-template>
-              <ng-template>
-                <i class="fa fa-star-o"></i>
-              </ng-template>
+              <i
+                *ngFor="let x of [].constructor(prod.stars)"
+                class="fa fa-star"
+              ></i>
+              <i
+                *ngFor="let x of [].constructor(5 - prod.stars)"
+                class="fa fa-star-o"
+              ></i>
             </div>
             <h5>{{ prod.price }} €</h5>
           </div>
