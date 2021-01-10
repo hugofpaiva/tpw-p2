@@ -1,5 +1,6 @@
-<ng-container *ngIf="reviews">
-<div *ngFor="let review of reviews" class="product__details__tab__content">
+<ng-container [ngSwitch]="reviews && reviews!= undefined ? 1 : 2 ">
+<ng-container *ngSwitchCase="'1'">
+<div *ngFor="let review of reviews | paginate: { itemsPerPage: 2, currentPage: p }" class="product__details__tab__content">
   {{ review.author }}
   <div class="product__details__tab__content__item">
     <div class="container">
@@ -37,6 +38,7 @@
     </div>
   </div>
 
+</div>
   <div class=" container text-right mt-3" style=" padding-bottom: 20px">
 
 
@@ -46,27 +48,17 @@
   </div>
 
   <div class="pagination container">
-                  <span class="step-links" style="padding-left: 41%">
-                      <span class="current" >
-                          <h5 class="text-center">Page  of Reviews </h5>
-                      </span>
-                          <a  style="padding: 10px;" href="?page=1">&laquo; first</a>
-                          <a  style="padding: 10px;" href="?page=">previous</a>
-
-
-
-                          <a style="padding: 10px;" href="?page=">next</a>
-                          <a style="padding-left: 10px" href="?page=">last &raquo;</a>
-
-                  </span>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </div>
+</ng-container>
 
-  <h4 class="text-center">There are no Reviews for this Product! Be the first to Review it! </h4>
-  <div class=" container text-center mt-3" style=" padding-bottom: 20px">
-    <a href="" type="button"    class="site-btn">Edit Review</a>
+<ng-container *ngSwitchCase="2">
+  aladls,ad
+<h4 class="text-center">There are no Reviews for this Product! Be the first to Review it! </h4>
+<div class=" container text-center mt-3" style=" padding-bottom: 20px">
+  <a href="" type="button"    class="site-btn">Edit Review</a>
 
-    <a href="" type="button" class="site-btn">Add Review</a>
-  </div>
-
+  <a href="" type="button" class="site-btn">Add Review</a>
 </div>
+</ng-container>
 </ng-container>

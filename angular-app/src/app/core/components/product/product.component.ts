@@ -3,8 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ProductService} from '../../services/product/product.service';
 import { Product } from '../../models/product';
 import {HttpErrorResponse} from '@angular/common/http';
-import {Review} from "../../models/review";
-import {ReviewService} from "../../services/review/review.service";
+import {Review} from '../../models/review';
+import {ReviewService} from '../../services/review/review.service';
 
 @Component({
   selector: 'app-product',
