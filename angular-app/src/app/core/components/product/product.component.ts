@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ProductService} from '../../services/product/product.service';
 import { Product } from '../../models/product';
 import {HttpErrorResponse} from '@angular/common/http';
+import {Review} from "../../models/review";
+import {ReviewService} from "../../services/review/review.service";
 
 @Component({
   selector: 'app-product',
@@ -11,13 +13,16 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class ProductComponent implements OnInit {
   product: Product  ;
+  review: Review;
   constructor(
     private productService: ProductService,
+    private reviewService: ReviewService,
     private router: Router,
     private activeroute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.getProduct();
+    this.getReview(); //data will be passed to the child component show-review
   }
   getProduct(): void {
     const id = this.activeroute.snapshot.paramMap.get('id');
@@ -31,4 +36,9 @@ export class ProductComponent implements OnInit {
               // this.router
         });
   }
+  getReview(): void {
+    const id = this.activeroute.snapshot.paramMap.get('id');
+    this.reviewService.getReviews()
+  }
+
 }

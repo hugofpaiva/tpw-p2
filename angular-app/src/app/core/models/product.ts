@@ -11,6 +11,8 @@ export class Product {
   price: number;
   stars: number;
 
+
+
   constructor(id: number, name: string, icon: string, description: string, category: Category[],
               developer: Developer, price: number, stars: number) {
     this.id = id;

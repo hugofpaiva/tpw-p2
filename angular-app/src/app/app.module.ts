@@ -17,6 +17,7 @@ import {AuthHeaderInterceptor} from './core/interceptor/auth-header-interceptor'
 import {DynamicScriptLoaderService} from './core/services/scripts/dynamic-script-loader-service.service';
 import { ProductComponent } from './core/components/product/product.component';
 import { AccountComponent } from './core/components/account/account.component';
+import { DisplayReviewsComponent } from './core/components/show-reviews/display-reviews.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { AccountComponent } from './core/components/account/account.component';
     BasepageComponent,
     ProductComponent,
     AccountComponent,
+    DisplayReviewsComponent,
   ],
   imports: [
     BrowserModule,

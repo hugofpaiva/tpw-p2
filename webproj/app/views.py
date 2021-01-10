@@ -407,9 +407,13 @@ def delete_product(request, id):
 
 @api_view(['GET'])
 def get_reviews(request):
-    revs = Reviews.objects.all()
+    if 'product' in request.GET:
+        prod_id = int(request.GET['num'])
+        revs = Reviews.objects.filter(product=prod_id)
+    else:
+        revs = Reviews.objects.all()
+
     if 'num' in request.GET:
-        print("fds")
         num = int(request.GET(['num']))
         revs = revs[:num]
     serializer = ReviewsSerializer(revs, many=True)

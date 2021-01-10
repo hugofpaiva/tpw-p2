@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {environment} from '../../../environments/environment';
+import {environment} from '../../../../environments/environment';
 import {Review} from '../../models/review';
 
 @Injectable({
@@ -18,8 +18,11 @@ export class ReviewService {
     return this.http.get<Review>(url);
   }
 
-  getReviews(): Observable<Review[]>{
-    const url = environment.baseURL + 'reviews';
+  getReviews(productId?: number): Observable<Review[]>{
+    let url = environment.baseURL + 'reviews';
+    if (productId){
+      url += '?product=' + productId;
+    }
     return this.http.get<Review[]>(url);
   }
 
