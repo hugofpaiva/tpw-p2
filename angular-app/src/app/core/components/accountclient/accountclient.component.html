@@ -38,7 +38,7 @@
             <a *ngIf="client.user.is_superuser" class="list-group-item list-group-item-action" routerLink="admin/purchases">Admin</a>
           </div>
         </div>
-        <app-clientgen></app-clientgen>
+        <app-clientgen class="col-md-9"></app-clientgen>
         <!--
 
             <div class="tab-pane fade" id="accountadmin-change-password">
@@ -74,7 +74,7 @@
               </div>
             </div>
             -->
-        <div class="tab-pane fade" id="account-favourites">
+        <!--<div class="tab-pane fade" id="account-favourites">
           <div class="card-body pb-2">
             <ng-container *ngIf="client.favorites; else noFavorites">
               <table class="table" width="100%" align="center">
@@ -106,6 +106,7 @@
                 </ng-container>
                 </tbody>
               </table>
+              -->
               <!-- //TODO Paginação
             <div class="col-lg-12" style="margin-bottom: 25px">
               <div class="product__pagination">
@@ -120,12 +121,14 @@
               </div>
             </div>
             -->
+        <!--
             </ng-container>
             <ng-template #noFavorites>
               <h4 class="text-center"> You have no Favorites! </h4>
             </ng-template>
           </div>
         </div>
+        -->
 
         <!--
             <div class="tab-pane fade" id="accountadmin-avail_purchases">
