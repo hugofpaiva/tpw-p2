@@ -17,28 +17,34 @@ export class ProductService {
   }
 
   getProductsParams(categoryId: number|undefined, developerId: number|undefined, rating: number|undefined, search: string,
-              minPrice: number|undefined, maxPrice: number|undefined): Observable<Product[]>{
+                    minPrice: number|undefined, maxPrice: number|undefined): Observable<Product[]>{
     const url = environment.baseURL + 'products';
-    const params = new HttpParams();
+    const paramsDict: { [name: string]: string} = {};
     if (categoryId !== undefined) {
-      params.set('category', String(categoryId));
+      paramsDict.category = String(categoryId);
     }
     if (developerId !== undefined) {
-      params.set('developer', String(developerId));
+      paramsDict.developer = String(developerId);
     }
     if (rating !== undefined) {
-      params.set('rating', String(developerId));
+      paramsDict.rate = String(rating);
     }
     if (search !== '') {
-      params.set('name', String(search));
+      paramsDict.name = search;
     }
     if (minPrice !== undefined) {
-      params.set('min_price', String(minPrice));
+      paramsDict.min_price = String(minPrice);
     }
     if (maxPrice !== undefined) {
-      params.set('max_price', String(maxPrice));
+      paramsDict.max_price = String(maxPrice);
     }
 
+    console.log(paramsDict);
+
+    let params = new HttpParams();
+    Object.keys(paramsDict).forEach(p => {
+      params = params.append(p.toString(), paramsDict[p].toString());
+    });
     return this.http.get<Product[]>(url, {params});
   }
 

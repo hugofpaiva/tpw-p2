@@ -16,7 +16,7 @@ const routes: Routes = [
       {path: 'shop',
         children: [
           {path: '', component: StoreComponent},
-          {path: 'product/:id', component: ProductComponent}// Change later
+          {path: 'product/:id', component: ProductComponent}
           ]
       },
       {path: 'about_us', component: AboutusComponent},

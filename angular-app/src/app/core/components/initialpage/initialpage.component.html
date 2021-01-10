@@ -1,8 +1,11 @@
 <!-- Hero Section Begin -->
 <section class="hero">
   <div *ngIf="topProducts" class="hero__slider owl-carousel">
-
-    <div *ngFor="let prod of topProducts"  class="hero__items set-bg" data-setbg="assets/img/banner/desk.jpg">
+    <div
+      *ngFor="let prod of topProducts"
+      class="hero__items set-bg"
+      style="background-image: url('assets/img/banner/desk.jpg')"
+    >
       <div class="container">
         <div class="row -flex justify-content-between">
           <div class="col-xl-5 col-lg-6 col-md-6">
@@ -11,22 +14,19 @@
               <h2>{{ prod.name }}</h2>
               <p>{{ prod.description }}</p>
               <a routerLink="/shop/product/{{ prod.id }}/" class="primary-btn"
-              >Shop now <span class="arrow_right"></span
+                >Shop now <span class="arrow_right"></span
               ></a>
-
             </div>
           </div>
 
-          <div
-            class="col-xl-5 col-lg-6 col-md-6 d-flex justify-content-center"
-          >
+          <div class="col-xl-5 col-lg-6 col-md-6 d-flex justify-content-center">
             <img
               height="300px"
               style="border-radius: 15px; margin-right: 15px"
               src="{{ prod.icon }}"
               alt=""
             />
-         </div>
+          </div>
         </div>
       </div>
     </div>
@@ -37,7 +37,6 @@
 <div style="height: 50px"></div>
 
 <!-- Product Section Begin -->
-<hr>
 <section class="product spad">
   <div class="container">
     <div class="row">
@@ -49,63 +48,63 @@
         </ul>
       </div>
     </div>
-    <div class="row product__filter">
 
+    <div class="row product__filter">
       <div
         *ngFor="let prod of topProducts"
         class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix best"
         routerLink="/shop/product/{{ prod.id }}/"
       >
-
-        <div [className]="prod.stars > 0 ? 'product__item sale' : 'product__item'">
-
-            <div
-              class="product__item__pic set-bg"
-              data-setbg="assets/img/banner/desk.jpg"
-            >
-
+        <div
+          [className]="prod.stars > 0 ? 'product__item sale' : 'product__item'"
+        >
+          <div
+            class="product__item__pic set-bg"
+            [ngStyle]="{ 'background-image': 'url(' + prod.icon + ')' }"
+          ></div>
+          <div class="product__item__text">
+            <h6>{{ prod.name }}</h6>
+            <a class="add-cart">{{
+              prod.description.length > 20
+                ? (prod.description | slice: 0:6) + ".."
+                : prod.description
+            }}</a>
+            <div class="rating">
+              <ng-template>
+                <i class="fa fa-star"></i>
+              </ng-template>
+              <ng-template>
+                <i class="fa fa-star-o"></i>
+              </ng-template>
             </div>
-            <div class="product__item__text" >
-              <h6>{{ prod.name }}</h6>
-              <a class="add-cart">{{ (prod.description.length>20)? (prod.description | slice:0:6)+'..':(prod.description) }}</a>
-              <div class="rating">
-                  <ng-template>
-                  <i  class="fa fa-star"></i>
-                  </ng-template>
-                  <ng-template >
-                    <i class="fa fa-star-o"></i>
-                  </ng-template>
-              </div>
-              <h5>{{ prod.price }} €</h5>
-            </div>
+            <h5>{{ prod.price }} €</h5>
           </div>
         </div>
       </div>
-
-
-
-    <div
-      *ngFor="let prod of newProducts" class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new"
-      routerLink="/shop/product/{{ prod.id }}/"
-    >
-
-      <div [className]="prod.stars > 0 ? 'product__item sale' : 'product__item'">
-
-
+      <div
+        *ngFor="let prod of newProducts"
+        class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new"
+        routerLink="/shop/product/{{ prod.id }}/"
+      >
+        <div
+          [className]="prod.stars > 0 ? 'product__item sale' : 'product__item'"
+        >
           <div
             class="product__item__pic set-bg"
-            data-setbg="assets/img/banner/desk.jpg"
+            [ngStyle]="{ 'background-image': 'url(' + prod.icon + ')' }"
           >
-
             <span class="label">New</span>
-
           </div>
-          <div class="product__item__text" >
+          <div class="product__item__text">
             <h6>{{ prod.name }}</h6>
-            <a class="add-cart">{{ (prod.description.length>20)? (prod.description | slice:0:6)+'..':(prod.description) }}</a>
+            <a class="add-cart">{{
+              prod.description.length > 20
+                ? (prod.description | slice: 0:6) + ".."
+                : prod.description
+            }}</a>
             <div class="rating">
               <ng-template>
-                <i  class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
               </ng-template>
               <ng-template>
                 <i class="fa fa-star-o"></i>
@@ -116,12 +115,11 @@
         </div>
       </div>
     </div>
-
+  </div>
 </section>
-
 
 <!-- Product Section End -->
 
-<br>
-<br>
-<br>
+<br />
+<br />
+<br />

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {Product} from '../../models/product';
 import {Developer} from '../../models/developer';
 import {Category} from '../../models/category';
@@ -19,7 +19,7 @@ export class StoreComponent implements OnInit, AfterViewInit {
   categoryId?: number = undefined;
   developerId?: number = undefined;
   rating?: number = undefined;
-  search: string = String();
+  search = '';
   minPrice?: number = undefined;
   maxPrice?: number = undefined;
 
@@ -41,7 +41,54 @@ export class StoreComponent implements OnInit, AfterViewInit {
 
   getProducts(): void {
     this.productService.getProductsParams(this.categoryId, this.developerId, this.rating, this.search,
-      this.minPrice, this.maxPrice).subscribe(products => this.products = products);
+      this.minPrice, this.maxPrice).subscribe(products => {this.products = products;
+                                                           console.log(products);
+      });
+  }
+
+  selectCategory(cat: Category): void{
+    if (cat.id === this.categoryId){
+      this.categoryId = undefined;
+    }else{
+      this.categoryId = cat.id;
+    }
+    this.getProducts();
+  }
+
+  selectDeveloper(dev: Developer): void{
+    if (dev.id === this.developerId){
+      this.developerId = undefined;
+    }else{
+      this.developerId = dev.id;
+    }
+    this.getProducts();
+  }
+
+  selectRate(rate: number): void{
+    if (rate === this.rating){
+      this.rating = undefined;
+    }else{
+      this.rating = rate;
+    }
+    this.getProducts();
+  }
+
+  selectMinPrice(price: number): void{
+    if (price === this.minPrice){
+      this.minPrice = undefined;
+    }else{
+      this.minPrice = price;
+    }
+    this.getProducts();
+  }
+
+  selectMaxPrice(price: number): void{
+    if (price === this.maxPrice){
+      this.maxPrice = undefined;
+    }else{
+      this.maxPrice = price;
+    }
+    this.getProducts();
   }
 
   getCategories(): void {

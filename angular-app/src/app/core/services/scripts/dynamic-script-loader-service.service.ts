@@ -6,9 +6,6 @@ interface Scripts {
 }
 // Based on: https://medium.com/better-programming/angular-load-external-javascript-file-dynamically-3d14dde815cb
 export const ScriptStore: Scripts[] = [
-  { name: 'jquery-nice-select', src: '../../../assets/js/jquery.nice-select.min.js' },
-  { name: 'jquery-magnific-popup', src: '../../../assets/js/jquery.magnific-popup.min.js' },
-  { name: 'mixitup', src: '../../../assets/js/mixitup.min.js' },
   { name: 'main', src: '../../../assets/js/main.js' },
 ];
 

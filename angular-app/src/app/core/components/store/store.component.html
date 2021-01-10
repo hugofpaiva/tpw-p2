@@ -5,10 +5,13 @@
       <div class="col-lg-3">
         <div class="shop__sidebar">
           <div class="shop__sidebar__search">
-
-              <input [(ngModel)]="search" id="search" placeholder="Search..." (keyup)="getProducts()" type="text" />
-
-
+            <input
+              [(ngModel)]="search"
+              id="search"
+              placeholder="Search..."
+              (keyup)="getProducts()"
+              type="text"
+            />
           </div>
           <div class="shop__sidebar__accordion">
             <div class="accordion" id="accordionExample">
@@ -28,7 +31,7 @@
                       <ul class="nice-scroll">
                         <a *ngFor="let category of categories">
                           <li>
-                            <a>{{ category.title }}</a>
+                            <a [ngStyle]=" categoryId === category.id ? {'color': '#111111'} : {}" (click)="selectCategory(category)" >{{ category.title }}</a>
                           </li>
                         </a>
                       </ul>
@@ -52,7 +55,7 @@
                       <ul>
                         <a *ngFor="let developer of developers">
                           <li>
-                            <a>{{ developer.name }}</a>
+                            <a [ngStyle]=" developerId === developer.id ? {'color': '#111111'} : {}" (click)="selectDeveloper(developer)">{{ developer.name }}</a>
                           </li>
                         </a>
                       </ul>
@@ -75,22 +78,22 @@
                     <div class="shop__sidebar__price">
                       <ul>
                         <li>
-                          <a>0€ - 10€</a>
+                          <a [ngStyle]=" maxPrice === 10 ? {'color': '#111111'} : {}" (click)="selectMaxPrice(10)">0€ - 10€</a>
                         </li>
                         <li>
-                          <a>10€ - 25€</a>
+                          <a [ngStyle]=" minPrice === 10 && maxPrice === 25 ? {'color': '#111111'} : {}" (click)="selectMinPrice(10); selectMaxPrice(25)">10€ - 25€</a>
                         </li>
                         <li>
-                          <a>25€ - 50€</a>
+                          <a [ngStyle]=" minPrice === 25 && maxPrice === 50 ? {'color': '#111111'} : {}" (click)="selectMinPrice(25); selectMaxPrice(50)">25€ - 50€</a>
                         </li>
                         <li>
-                          <a>50€ - 100€</a>
+                          <a [ngStyle]=" minPrice === 50 && maxPrice === 100 ? {'color': '#111111'} : {}" (click)="selectMinPrice(50); selectMaxPrice(100)">50€ - 100€</a>
                         </li>
                         <li>
-                          <a>100€ - 200€</a>
+                          <a [ngStyle]=" minPrice === 100 && maxPrice === 200 ? {'color': '#111111'} : {}" (click)="selectMinPrice(100); selectMaxPrice(200)">100€ - 200€</a>
                         </li>
                         <li>
-                          <a>250€ +</a>
+                          <a [ngStyle]=" maxPrice === 250 ? {'color': '#111111'} : {}" (click)="selectMinPrice(250)">250€ +</a>
                         </li>
                       </ul>
                     </div>
@@ -110,25 +113,20 @@
                 >
                   <div class="card-body">
                     <div class="shop__sidebar__size">
-                      <label class="active" for="xs"
+                      <label [className]=" rating === 1 ? 'active' : ''" (click)="selectRate(1)" for="xs"
                         >⭐️
-                        <input id="1*" type="radio" />
                       </label>
-                      <label class="active" for="sm"
+                      <label [className]=" rating === 2 ? 'active' : ''" (click)="selectRate(2)" for="sm"
                         >⭐️⭐️
-                        <input id="2*" type="radio" />
                       </label>
-                      <label class="active" for="md"
+                      <label [className]=" rating === 3 ? 'active' : ''" (click)="selectRate(3)" for="md"
                         >⭐️⭐️⭐️
-                        <input id="3*" type="radio" />
                       </label>
-                      <label class="active" for="xl"
+                      <label [className]=" rating === 4 ? 'active' : ''" (click)="selectRate(4)" for="xl"
                         >⭐️⭐️⭐️⭐️
-                        <input id="4*" type="radio" />
                       </label>
-                      <label class="active" for="2xl"
+                      <label [className]=" rating === 5 ? 'active' : ''" (click)="selectRate(5)" for="2xl"
                         >⭐️⭐️⭐️⭐️⭐️
-                        <input id="5*" type="radio" />
                       </label>
                     </div>
                   </div>
@@ -138,9 +136,10 @@
           </div>
         </div>
       </div>
-      <p>safdas</p>
 
-      <ng-template *ngIf="products.length>0; else noProduct">
+      <ng-container *ngIf="products.length>0; else noprod">
+
+
         <div class="col-lg-9">
           <div class="shop__product__option">
             <div class="row">
@@ -166,48 +165,46 @@
             </div>
           </div>
           <div class="groups row">
-            <div>
-              <div
-                *ngFor="let product of products"
-                class="col-lg-4 col-md-6 col-sm-6 product"
-                style="display: inline-block"
-              >
-                <div class="product__item sale">
-                  <div class="product__item__pic set-bg">
-                    <img src="{{ product.icon }}" />
-                  </div>
 
-                  <p>{{ product.name }}</p>
-
-                  <div class="product__item__text">
-                    <h6>{{ product.name }}</h6>
-                    <a class="add-cart">{{
-                      product.description | slice: 0:3
-                    }}</a>
-                    <div class="rating">
-                      <div
-                        style="
-                          display: flex;
-                          flex-wrap: wrap;
-                          justify-content: space-between;
-                          width: 65px;
-                        "
-                      >
-                        <i
-                          *ngFor="let x of [].constructor(product.stars)"
-                          class="fa fa-star"
-                        ></i>
-                        <i
-                          *ngFor="let x of [].constructor(5 - product.stars)"
-                          class="fa fa-star-o"
-                        ></i>
-                      </div>
+                <div
+                  *ngFor="let product of products"
+                  class="col-lg-4 col-md-6 col-sm-6 product"
+                  style="display: inline-block"
+                  routerLink="product/{{product.id}}"
+                >
+                  <div class="product__item sale">
+                    <div class="product__item__pic set-bg">
+                      <img src="{{ product.icon }}" />
                     </div>
-                    <h5>{{ product.price }} €</h5>
+                    <div class="product__item__text">
+                      <h6>{{ product.name }}</h6>
+                      <a class="add-cart">{{
+                        product.description | slice: 0:3
+                      }}</a>
+                      <div class="rating">
+                        <div
+                          style="
+                            display: flex;
+                            flex-wrap: wrap;
+                            justify-content: space-between;
+                            width: 65px;
+                          "
+                        >
+                          <i
+                            *ngFor="let x of [].constructor(product.stars)"
+                            class="fa fa-star"
+                          ></i>
+                          <i
+                            *ngFor="let x of [].constructor(5 - product.stars)"
+                            class="fa fa-star-o"
+                          ></i>
+                        </div>
+                      </div>
+                      <h5>{{ product.price }} €</h5>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+
             <div class="row">
               <div class="col-lg-12">
                 <div class="product__pagination">
@@ -224,9 +221,11 @@
             </div>
           </div>
         </div>
-      </ng-template>
 
-      <ng-template #noProduct>
+      </ng-container>
+
+
+      <ng-template #noprod>
 
         <div class="col-lg-9">
           <div class="product__details__text">
@@ -234,8 +233,8 @@
           </div>
         </div>
 
-
       </ng-template>
+
 
       <!-- Shop Section End -->
     </div>

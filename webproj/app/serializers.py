@@ -11,7 +11,7 @@ from django.db.models.functions import Ceil
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ('title',)
+        fields = ('id', 'title')
 
 
 class DeveloperSerializer(serializers.ModelSerializer):
