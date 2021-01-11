@@ -13,7 +13,7 @@
 
     <div class="card overflow-hidden" style="margin-bottom: 50px">
       <div class="row no-gutters row-bordered row-border-light">
-        <div class="col-md-2 pt-0">
+        <div class="col-md-3 pt-0">
           <div class="list-group list-group-flush account-settings-links">
             <a class="list-group-item list-group-item-action active" (click)="showCard('purchases')">Purchases</a>
             <a class="list-group-item list-group-item-action" (click)="showCard('users')">Users</a>
@@ -23,14 +23,16 @@
             <a class="list-group-item list-group-item-action"  routerLink="/account">Account</a>
           </div>
         </div>
-        <div class="col-md-10">
-
+        <div class="col-md-9">
+          <div class="tab-pane">
+            <div class="card-body pb-2">
                 <app-adminpurchases *ngIf="card == 'purchases'"></app-adminpurchases>
                 <app-adminusers *ngIf="card == 'users'"></app-adminusers>
                 <app-adminapps *ngIf="card == 'apps'" ></app-adminapps>
                 <app-adminadddev *ngIf="card == 'devs'" ></app-adminadddev>
                 <app-adminaddcat *ngIf="card == 'cats'" ></app-adminaddcat>
-
+            </div>
+          </div>
         </div>
       </div>
     </div>

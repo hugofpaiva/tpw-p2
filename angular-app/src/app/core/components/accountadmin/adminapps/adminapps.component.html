@@ -1,1 +1,40 @@
-<p>adminapps works!</p>
+<ng-container *ngIf="products.length > 0; else noApps">
+  <div class="flex-row justify-content-between">
+    <a class="site-btn" style="float: right; margin-bottom: 25px; color: white" > Add Product</a>
+    <table class="table" width="100%" align="center">
+      <thead  style="background-color: black; border: 0; color: white;">
+      <tr>
+        <th scope="col" style="width: 20%">Icon</th>
+        <th scope="col" style="width: 20%">Name</th>
+        <th scope="col" style="width: 20%">Category</th>
+        <th scope="col" style="width: 20%">Developer</th>
+        <th scope="col" style="width: 20%">Edit</th>
+      </tr>
+      </thead>
+
+      <ng-container *ngFor="let product of products| paginate: { itemsPerPage: 6, currentPage: p}">
+        <tbody>
+        <tr>
+          <td scope="row"><div class="product__item__pic set-bg" style="width:50px; height:50px;"><img src="{{ product.icon }}" /></div></td>
+          <td>{{ product.name }}</td>
+          <td>
+            <ng-container *ngFor="let category of product.category">
+              {{ category.title  }}
+            </ng-container>
+          </td>
+          <td>{{ product.developer.name }}</td>
+          <td><a style="width: 50%; text-align: center; color: white" class="site-btn">Edit</a></td>
+        </tr>
+        </tbody>
+      </ng-container>
+    </table>
+
+    <div class="col-lg-12" style="margin-top: auto;margin-bottom: 25px; display: flex; justify-content: center">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #noApps>
+  <h4 class="text-center"> There are no Applications! </h4>
+</ng-template>
