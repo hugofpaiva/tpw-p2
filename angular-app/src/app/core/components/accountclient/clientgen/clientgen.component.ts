@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth/auth.service';
 import {ClientService} from '../../../services/client/client.service';
@@ -17,7 +17,7 @@ export class ClientgenComponent implements OnInit {
   updateForm: FormGroup;
   loading = false;
   submitted = false;
-  client: Client;
+  @Input() client: Client;
   constructor(
     private clientService: ClientService,
     private userService: UserService,

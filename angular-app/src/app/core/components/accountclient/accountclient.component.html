@@ -39,7 +39,7 @@
           </div>
         </div>
         <div class="col-md-9">
-            <app-clientgen *ngIf="card == 'general'"></app-clientgen>
+            <app-clientgen *ngIf="card == 'general'" [client]="client"></app-clientgen>
             <app-clientpw *ngIf="card == 'pw'"></app-clientpw>
             <app-clientfavs *ngIf="card == 'favs'" [client]="client"></app-clientfavs>
         </div>
