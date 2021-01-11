@@ -31,6 +31,7 @@ import { AdminadddevComponent } from './core/components/accountadmin/adminadddev
 import { AdminaddcatComponent } from './core/components/accountadmin/adminaddcat/adminaddcat.component';
 import { PurchaseComponent } from './core/components/purchase/purchase.component';
 import { UpdatefavoritesComponent } from './core/components/updatefavorites/updatefavorites.component';
+import { AlertComponent } from './shared/components/alert/alert.component';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { UpdatefavoritesComponent } from './core/components/updatefavorites/upda
     AdminaddcatComponent,
     PurchaseComponent,
     UpdatefavoritesComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,

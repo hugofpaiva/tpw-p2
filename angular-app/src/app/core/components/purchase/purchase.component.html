@@ -1,0 +1,55 @@
+<div *ngIf="product" class="container">
+  <div class="row d-flex justify-content-center">
+    <div class="col-lg-8">
+      <div class="product__details__text">
+        <h2><span>Check the Product's Price:</span></h2>
+        <img src="img/shop-details/details-payment.png" alt="">
+        <div class="pricing card-deck flex-column flex-md-row mb-3 ">
+
+          <div class="card card-pricing text-center px-3 mb-4">
+            <span class="primary-btn w-60 mx-auto rounded-bottom px-4 py-1"  style="background: #c82333;font-size: 12px">One Time Payment</span>
+            <div class="bg-transparent card-header pt-4 border-0">
+              <h1 class="h1 font-weight-normal text-primary text-center mb-0" data-pricing-value="60">$<span class="price"> {{ product.price  }}</span><span class="h6 text-muted ml-2"></span></h1>
+            </div>
+            <div class="card-body pt-0">
+              <ul class="list-unstyled mb-4">
+                <li></li>
+              </ul>
+              <a  href="#" class="primary-btn" data-toggle="modal" data-target="#myModal" >Order now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Purchase Confirmation</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <form id="myForm" name="myFormName" method="post" action=".">
+
+        <div class="modal-body">
+          Are you Sure you want to buy this product?.
+          It will cost you <strong>{{ product.price}}$</strong>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="site-btn" data-dismiss="modal">Cancel</button>
+          <button type="button" (click)="confirmPurchase()" class="site-btn" data-dismiss="modal">Confirm Purchase</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,6 @@
+<div *ngIf="product" class="product__details__btns__option">
+    <a *ngIf="!isfavourite else isfavtemplate" (click)="submitChanges()" type="button"><i class="fa fa-heart"></i> Add to Favorites</a>
+</div>
+<ng-template #isfavtemplate>
+  <a type="button" (click)="submitChanges()"><i class="fa fa-heart"></i> Remove from Favorites </a>
+</ng-template>

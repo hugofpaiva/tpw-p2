@@ -47,7 +47,7 @@ def check_client_permission(request, entity):
         return request_username == entity.client.user.username
     elif isinstance(entity, Client):
         return request_username == entity.user.username
-    elif isinstance(entity,User):
+    elif isinstance(entity, User):
         return request_username == entity.username
     elif isinstance(entity, Reviews):
         return request_username == entity.author.user.username
@@ -69,12 +69,11 @@ def register(request):
 
         if client.is_valid():
 
-
             client.save()
             print(client)
-            #Token.objects.create(user=user)
+            # Token.objects.create(user=user)
             data['response'] = 'succesfully  registered a new user'
-            #data['token'] = Token.objects.get(user=user).key
+            # data['token'] = Token.objects.get(user=user).key
             st = status.HTTP_201_CREATED
         else:
             data = serializer.errors
@@ -101,7 +100,7 @@ def get_client(request, id):
     user = check_request_user(request)
     try:
         client = Client.objects.get(id=id)
-        if user == 'Client' and not check_client_permission(request,client):
+        if user == 'Client' and not check_client_permission(request, client):
             return Response({'error_message': "You're not allowed to do this Request!"},
                             status=status.HTTP_403_FORBIDDEN)
 
@@ -109,6 +108,7 @@ def get_client(request, id):
         return Response(status=status.HTTP_404_NOT_FOUND)
     serializer = ClientSerializer(client)
     return Response(serializer.data)
+
 
 @api_view(['GET'])
 def get_actual_client(request):
@@ -127,9 +127,9 @@ def update_userInfo(request, id):
     req_user = check_request_user(request)
     try:
         user = User.objects.get(id=id)
-        if req_user == 'Client' and  not check_client_permission(request, user):
-                return Response({'error_message': "You're not allowed to do this Request!"},
-                                status=status.HTTP_403_FORBIDDEN)
+        if req_user == 'Client' and not check_client_permission(request, user):
+            return Response({'error_message': "You're not allowed to do this Request!"},
+                            status=status.HTTP_403_FORBIDDEN)
         serializer = UserProfileSerializer(user, request.data)
         if serializer.is_valid():
             if 'email' not in serializer.validated_data:
@@ -141,6 +141,7 @@ def update_userInfo(request, id):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
 
 @api_view(['PUT'])
 def update_usePw(request, id):
@@ -159,10 +160,8 @@ def update_usePw(request, id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-
-
 @api_view(['PUT'])
-def update_client(request,id):
+def update_client(request, id):
     """
     The main Goal of this endpoint it to edit client's favorite applications.
     To Edit personal data like email or name it is used the User endpoint
@@ -172,16 +171,18 @@ def update_client(request,id):
     try:
         client = Client.objects.get(id=id)
         if user == 'Client':
-            if not check_client_permission(request,client):
+            if not check_client_permission(request, client):
                 return Response({'error_message': "You're not allowed to do this Request!"},
                                 status=status.HTTP_403_FORBIDDEN)
 
-        serializer = ClientSerializer(client,request.data)
+        serializer = ClientSerializer(client, request.data)
 
-        #Only Admins can Edit the Clients balance,
-        #therefore if a client tries to edit it's own balance, this request will not be Allowed
+        # Only Admins can Edit the Clients balance,
+        # therefore if a client tries to edit it's own balance, this request will not be Allowed
         if serializer.is_valid():
-            if user == 'Client' and  'balance' in serializer.validated_data:
+            if (user == 'Client'
+                    and 'balance' in serializer.validated_data
+                    and serializer.validated_data['balance'] != client.balance):
                 return Response({'error_message': "You're not allowed to edit your own Balance!."},
                                 status=status.HTTP_403_FORBIDDEN)
             serializer.save()
@@ -357,6 +358,7 @@ def get_products(request):
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
 
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def get_top_products(request):
@@ -373,6 +375,7 @@ def get_top_products(request):
 
     return Response(serializer.data)
 
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def get_new_products(request):
@@ -381,7 +384,7 @@ def get_new_products(request):
         num = int(request.GET['num'])
         prods = prods[:num]
 
-    serializer = ProductSerializer(prods,many=True)
+    serializer = ProductSerializer(prods, many=True)
 
     return Response(serializer.data)
 
@@ -457,6 +460,7 @@ def get_review(request):
     res.update(serializer.data)
     return Response(res)
 
+
 @api_view(['GET'])
 def my_reviews(request):
     """
@@ -464,11 +468,11 @@ def my_reviews(request):
     to identify the client it is used the authentication token.
     Only authenticated Users will be able to see this endpoint.
     """
-    user =check_request_user(request)
+    user = check_request_user(request)
     if user:
         if 'product' in request.GET:
             prod_id = int(request.GET['product'])
-            revs = Reviews.objects.filter(author__user__username=request.user.username,product=prod_id)
+            revs = Reviews.objects.filter(author__user__username=request.user.username, product=prod_id)
         else:
             revs = Reviews.objects.filter(author__user__username=request.user.username)
         serializer = ReviewsSerializer(revs, many=True)
@@ -488,24 +492,26 @@ def get_purchases(request):
         return Response(serializer.data)
     return Response({'error_message': "You're not allowed to do this Request!"}, status=status.HTTP_403_FORBIDDEN)
 
+
 @api_view(['POST'])
 def create_purchases(request):
     serializer = PurchaseSerializer(data=request.data)
     if serializer.is_valid():
-        client=serializer.validated_data['client']
+        client = serializer.validated_data['client']
         product = serializer.validated_data['product']
         print(client.balance)
-        if Purchase.objects.filter(client=client.id,product=product.id).exists():
+        if Purchase.objects.filter(client=client.id, product=product.id).exists():
             return Response({'error_message': "Client already has this product!"},
                             status=status.HTTP_400_BAD_REQUEST)
 
         if client.balance < product.price:
             return Response({'error_message': "Client does not have enough balance!"},
                             status=status.HTTP_400_BAD_REQUEST)
+        client.balance-=product.price;
+        client.save()
         serializer.save()
-        return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 @api_view(['GET'])
@@ -526,7 +532,7 @@ def get_purchase(request, id):
 
 @api_view(['POST'])
 def create_review(request):
-    #in order to make things easier on FrontEnd side
+    # in order to make things easier on FrontEnd side
     user = check_request_user(request)
     if user == 'Client' and 'author' not in request.GET:
         client = Client.objects.get(user=request.user.id)
@@ -535,7 +541,7 @@ def create_review(request):
     if serializer.is_valid():
         author = serializer.validated_data['author']
         product = serializer.validated_data['product']
-        if Reviews.objects.filter(author=author.id,product=product.id).exists():
+        if Reviews.objects.filter(author=author.id, product=product.id).exists():
             return Response({'error_message': "Cannot Add more than one Review to a Product by more than one client"},
                             status=status.HTTP_400_BAD_REQUEST)
         serializer.save()
@@ -548,9 +554,9 @@ def update_review(request, id):
     user = check_request_user(request)
     try:
         rev = Reviews.objects.get(id=id)
-        if user == "Client" and not check_client_permission(request,rev):
+        if user == "Client" and not check_client_permission(request, rev):
             return Response({'error_message': "You're not allowed to do this Request! Can only Update Your Reviews"},
-                     status=status.HTTP_403_FORBIDDEN)
+                            status=status.HTTP_403_FORBIDDEN)
     except Reviews.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 

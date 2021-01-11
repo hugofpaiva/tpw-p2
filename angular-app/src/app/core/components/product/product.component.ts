@@ -50,7 +50,6 @@ export class ProductComponent implements OnInit {
       .subscribe(
         product => {
           this.product = product;
-          console.log(this.product.stars);
         }
         , (err: HttpErrorResponse) => {
           console.log(
@@ -66,13 +65,11 @@ export class ProductComponent implements OnInit {
         reviews => {
           this.reviews = reviews;
           for (const rev  of reviews){
-            console.log(rev.author.user.username + ' - ' + this.client.user.username );
             if (rev.author.user.username === this.client.user.username){
               this.has_review = true;
               break;
             }
           }
-          console.log('-->' + this.reviews);
         }
         , (err: HttpErrorResponse) => {
           console.log(
