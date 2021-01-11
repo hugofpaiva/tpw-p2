@@ -5,6 +5,7 @@ import {ClientService} from '../../../services/client/client.service';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Client} from '../../../models/client';
+import {UserService} from '../../../services/user/user.service';
 
 @Component({
   selector: 'app-clientgen',
@@ -19,6 +20,7 @@ export class ClientgenComponent implements OnInit {
   client: Client;
   constructor(
     private clientService: ClientService,
+    private userService: UserService,
     private formBuilder: FormBuilder,
     private router: Router
   ) {
@@ -46,7 +48,7 @@ export class ClientgenComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.clientService.updateClient(username, email, first_name, last_name, this.client.user.id)
+    this.userService.updateUser(username, email, first_name, last_name, this.client.user.id)
       .subscribe(res => {
           this.router.navigate(['/']);
         },

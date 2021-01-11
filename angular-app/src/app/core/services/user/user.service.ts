@@ -25,4 +25,13 @@ export class UserService {
     const url = environment.baseURL + 'users?page=';
     return this.http.get<User[]>(url);
   }
+  updateUser(username: string, email: string, first_name: string, last_name: string, id: number): Observable<any>  {
+    const url = environment.baseURL + 'userupd/' + id;
+    return this.http.put<any>(url, {username, email, first_name, last_name, id}, environment.httpOptions);
+  }
+
+  updateUserPw(old_password: string, new_password1: string, new_password2: string, id: number): Observable<any>  {
+    const url = environment.baseURL + 'userupdpw/' + id;
+    return this.http.put<any>(url, {old_password, new_password1, new_password2, id}, environment.httpOptions);
+  }
 }

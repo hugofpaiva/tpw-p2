@@ -4,6 +4,7 @@ import {Client} from '../../../models/client';
 import {ClientService} from '../../../services/client/client.service';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
+import {UserService} from "../../../services/user/user.service";
 
 @Component({
   selector: 'app-clientpw',
@@ -18,6 +19,7 @@ export class ClientpwComponent implements OnInit {
   client: Client;
   constructor(
     private clientService: ClientService,
+    private userService: UserService,
     private formBuilder: FormBuilder,
     private router: Router
   ) {
@@ -44,7 +46,7 @@ export class ClientpwComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.clientService.updateClientPw(old_password, new_password1, new_password2, this.client.user.id)
+    this.userService.updateUserPw(old_password, new_password1, new_password2, this.client.user.id)
       .subscribe(res => {
           this.router.navigate(['/']);
         },

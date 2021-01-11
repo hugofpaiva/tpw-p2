@@ -22,7 +22,7 @@ export class PurchaseService {
     const url = environment.baseURL + 'purchases';
     return this.http.get<Purchase[]>(url);
   }
-  createPurchase(purch: Purchase): Observable<any> {
+  createPurchase(purch: {}): Observable<any> {
     const url = environment.baseURL + 'purchasecre';
     return this.http.post(url, purch, environment.httpOptions);
   }

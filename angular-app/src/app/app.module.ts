@@ -29,6 +29,8 @@ import { AdminusersComponent } from './core/components/accountadmin/adminusers/a
 import { AdminappsComponent } from './core/components/accountadmin/adminapps/adminapps.component';
 import { AdminadddevComponent } from './core/components/accountadmin/adminadddev/adminadddev.component';
 import { AdminaddcatComponent } from './core/components/accountadmin/adminaddcat/adminaddcat.component';
+import { PurchaseComponent } from './core/components/purchase/purchase.component';
+import { UpdatefavoritesComponent } from './core/components/updatefavorites/updatefavorites.component';
 
 
 @NgModule({
@@ -56,6 +58,8 @@ import { AdminaddcatComponent } from './core/components/accountadmin/adminaddcat
     AdminappsComponent,
     AdminadddevComponent,
     AdminaddcatComponent,
+    PurchaseComponent,
+    UpdatefavoritesComponent,
   ],
   imports: [
     BrowserModule,
