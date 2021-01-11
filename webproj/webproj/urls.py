@@ -78,7 +78,8 @@ urlpatterns = [
     path('ws/new_products', views.get_new_products),
 
     path('ws/reviews', views.get_reviews),
-    path('ws/review/<int:id>', views.get_review),
+    path('ws/myreviews',views.my_reviews),
+    path('ws/review', views.get_review),
     path('ws/reviewcre', views.create_review),
     path('ws/reviewupd/<int:id>', views.update_review),
     path('ws/reviewdel/<int:id>',views.delete_review),

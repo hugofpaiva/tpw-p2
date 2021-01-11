@@ -7,7 +7,9 @@ import {LoginComponent} from './core/components/login/login.component';
 import {RegisterComponent} from './core/components/register/register.component';
 import {NotfoundComponent} from './core/components/notfound/notfound.component';
 import {ProductComponent} from './core/components/product/product.component';
-import {AccountComponent} from './core/components/account/account.component';
+import {AccountadminComponent} from './core/components/accountadmin/accountadmin.component';
+import {AccountclientComponent} from './core/components/accountclient/accountclient.component';
+import {AddreviewComponent} from './core/components/add-review/addreview/addreview.component';
 
 const routes: Routes = [
   {
@@ -17,10 +19,17 @@ const routes: Routes = [
       {path: 'shop',
         children: [
           {path: '', component: StoreComponent},
-          {path: 'product/:id', component: ProductComponent}
-          ]
+          {path: 'product/:id',
+            children: [
+              {path: '', component: ProductComponent},
+              // component used to add/Edit Review
+              {path: 'review', component: AddreviewComponent}
+            ]
+          },
+        ]
       },
-      {path: 'account', component: AccountComponent},
+      {path: 'accountclient', component: AccountclientComponent},
+      {path: 'accountadmin', component: AccountadminComponent},
       {path: 'admin',
         children: [
           {path: 'purchases', component: StoreComponent},//TODO AdminPurchasesComponent

@@ -42,82 +42,87 @@
     <div class="row">
       <div class="col-lg-12">
         <ul class="filter__controls">
-          <li class="active">All Featured</li>
-          <li>Best Sellers</li>
-          <li>New Arrivals</li>
+          <li [className]=" selected === 0 ? 'active' : ''" (click)="changeSelect(0)">All Featured</li>
+          <li [className]=" selected === 1 ? 'active' : ''" (click)="changeSelect(1)">Best Sellers</li>
+          <li [className]=" selected === 2 ? 'active' : ''" (click)="changeSelect(2)">New Arrivals</li>
         </ul>
       </div>
     </div>
 
     <div class="row product__filter">
-      <div
-        *ngFor="let prod of topProducts"
-        class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix best"
-        routerLink="/shop/product/{{ prod.id }}/"
-      >
+      <ng-container *ngIf="selected === 0 || selected===1">
         <div
-          class="product__item sale"
+          *ngFor="let prod of topProducts"
+          class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix best"
+          routerLink="/shop/product/{{ prod.id }}/"
         >
           <div
-            class="product__item__pic bg-set"
-            [ngStyle]="{ 'background-image': 'url(' + prod.icon + ')' }"
-          ></div>
-          <div class="product__item__text">
-            <h6>{{ prod.name }}</h6>
-            <a class="add-cart">{{
-              prod.description.length > 20
-                ? (prod.description | slice: 0:6) + ".."
-                : prod.description
-            }}</a>
-            <div class="rating">
-              <i
-                *ngFor="let x of [].constructor(prod.stars)"
-                class="fa fa-star"
-              ></i>
-              <i
-                *ngFor="let x of [].constructor(5 - prod.stars)"
-                class="fa fa-star-o"
-              ></i>
-            </div>
-            <h5>{{ prod.price }} €</h5>
-          </div>
-        </div>
-      </div>
-      <div
-        *ngFor="let prod of newProducts"
-        class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new"
-        routerLink="/shop/product/{{ prod.id }}/"
-      >
-        <div
-          class="product__item sale"
-        >
-          <div
-            class="product__item__pic bg-set"
-            [ngStyle]="{ 'background-image': 'url(' + prod.icon + ')' }"
+            class="product__item sale"
           >
-            <span class="label">New</span>
-          </div>
-          <div class="product__item__text">
-            <h6>{{ prod.name }}</h6>
-            <a class="add-cart">{{
-              prod.description.length > 20
-                ? (prod.description | slice: 0:6) + ".."
-                : prod.description
-            }}</a>
-            <div class="rating">
-              <i
-                *ngFor="let x of [].constructor(prod.stars)"
-                class="fa fa-star"
-              ></i>
-              <i
-                *ngFor="let x of [].constructor(5 - prod.stars)"
-                class="fa fa-star-o"
-              ></i>
+            <div
+              class="product__item__pic bg-set"
+              [ngStyle]="{ 'background-image': 'url(' + prod.icon + ')' }"
+            ></div>
+            <div class="product__item__text">
+              <h6>{{ prod.name }}</h6>
+              <a class="add-cart">{{
+                prod.description.length > 20
+                  ? (prod.description | slice: 0:6) + ".."
+                  : prod.description
+              }}</a>
+              <div class="rating">
+                <i
+                  *ngFor="let x of [].constructor(prod.stars)"
+                  class="fa fa-star"
+                ></i>
+                <i
+                  *ngFor="let x of [].constructor(5 - prod.stars)"
+                  class="fa fa-star-o"
+                ></i>
+              </div>
+              <h5>{{ prod.price }} €</h5>
             </div>
-            <h5>{{ prod.price }} €</h5>
           </div>
         </div>
-      </div>
+      </ng-container>
+      
+      <ng-container *ngIf="selected === 0 || selected===2">
+        <div
+          *ngFor="let prod of newProducts"
+          class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new"
+          routerLink="/shop/product/{{ prod.id }}/"
+        >
+          <div
+            class="product__item sale"
+          >
+            <div
+              class="product__item__pic bg-set"
+              [ngStyle]="{ 'background-image': 'url(' + prod.icon + ')' }"
+            >
+              <span class="label">New</span>
+            </div>
+            <div class="product__item__text">
+              <h6>{{ prod.name }}</h6>
+              <a class="add-cart">{{
+                prod.description.length > 20
+                  ? (prod.description | slice: 0:6) + ".."
+                  : prod.description
+              }}</a>
+              <div class="rating">
+                <i
+                  *ngFor="let x of [].constructor(prod.stars)"
+                  class="fa fa-star"
+                ></i>
+                <i
+                  *ngFor="let x of [].constructor(5 - prod.stars)"
+                  class="fa fa-star-o"
+                ></i>
+              </div>
+              <h5>{{ prod.price }} €</h5>
+            </div>
+          </div>
+        </div>
+      </ng-container>
     </div>
   </div>
 </section>

@@ -16,7 +16,7 @@ from django_filters import rest_framework as filters
 from app.filters import ProductFilter
 from app.models import Developer, Product, Client, Reviews, Purchase, Category
 from app.serializers import DeveloperSerializer, ClientSerializer, UserSerializer, ProductSerializer, ReviewsSerializer, \
-    PurchaseSerializer, CategorySerializer
+    PurchaseSerializer, CategorySerializer, UserProfileSerializer
 
 
 # TODO: Função que veja que tipo de utilizador está a efetuar determinada operação, exemplo:
@@ -125,19 +125,22 @@ def get_actual_client(request):
 
 @api_view(['PUT'])
 def update_userInfo(request, id):
+    print(request.data)
+    print(id)
     req_user = check_request_user(request)
     try:
         user = User.objects.get(id=id)
         if req_user == 'Client' and  not check_client_permission(request, user):
                 return Response({'error_message': "You're not allowed to do this Request!"},
                                 status=status.HTTP_403_FORBIDDEN)
-        serializer = UserSerializer(user, request.data)
+        serializer = UserProfileSerializer(user, request.data)
         if serializer.is_valid():
             if 'email' not in serializer.validated_data:
                 return Response({'error_message': "Email is Required"},
                                 status=status.HTTP_400_BAD_REQUEST)
-            serializer.save()
+            serializer.save(user)
             return Response(serializer.data)
+        print("no valid")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
@@ -421,7 +424,8 @@ def get_reviews(request):
 
 
 @api_view(['GET'])
-def get_review(request, id):
+@permission_classes([AllowAny])
+def get_review(request):
     res = {}
     try:
         rev = Reviews.objects.get(id=id)
@@ -430,6 +434,24 @@ def get_review(request, id):
     serializer = ReviewsSerializer(rev)
     res.update(serializer.data)
     return Response(res)
+
+@api_view(['GET'])
+def my_reviews(request):
+    """
+    This function goal is to allow to get the Reviews of a Client,
+    to identify the client it is used the authentication token.
+    Only authenticated Users will be able to see this endpoint.
+    """
+    user =check_request_user(request)
+    if user:
+        if 'product' in request.GET:
+            prod_id = int(request.GET['product'])
+            revs = Reviews.objects.filter(author__user__username=request.user.username,product=prod_id)
+        else:
+            revs = Reviews.objects.filter(author__user__username=request.user.username)
+        serializer = ReviewsSerializer(revs, many=True)
+        return Response(serializer.data)
+    return Response({'error_message': "You're not allowed to do this Request!"}, status=status.HTTP_403_FORBIDDEN)
 
 
 @api_view(['GET'])
@@ -482,6 +504,11 @@ def get_purchase(request, id):
 
 @api_view(['POST'])
 def create_review(request):
+    #in order to make things easier on FrontEnd side
+    user = check_request_user(request)
+    if user == 'Client' and 'author' not in request.GET:
+        client = Client.objects.get(user=request.user.id)
+        request.data.update({'author': client.id})
     serializer = ReviewsSerializer(data=request.data)
     if serializer.is_valid():
         author = serializer.validated_data['author']

@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import {Observable, Subject} from 'rxjs';
+import { Client } from '../../models/client';
 
 @Injectable({
   providedIn: 'root'
 })
+/*
+Used to retrieve current User Logged in
+ */
 export class SharedService {
-  private subject = new Subject<any>();
-
+  public subject = new Subject<any>();
   constructor() { }
 
   sendUserEvent(): void {

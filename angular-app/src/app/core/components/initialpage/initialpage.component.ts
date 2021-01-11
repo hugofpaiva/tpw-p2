@@ -12,23 +12,32 @@ export class InitialpageComponent implements OnInit, AfterViewInit {
 
   topProducts: Product[] = [];
   newProducts: Product[] = [];
+  selected = 0;
 
   constructor(private productService: ProductService, private dynamicScriptLoader: DynamicScriptLoaderService) {
 
   }
 
   ngOnInit(): void {
-    this.getProducts();
+    this.getTopProducts();
+    this.getNewProducts();
   }
 
   ngAfterViewInit(): void {
     this.loadScripts();
   }
 
+  changeSelect(selected: number): void{
+    this.selected = selected;
+  }
 
-  getProducts(): void {
-    this.productService.getTopProducts().subscribe(products => { this.topProducts = products; console.log(this.topProducts);});
-    this.productService.getNewProducts().subscribe(products => { this.newProducts = products; console.log(this.newProducts);});
+
+  getTopProducts(): void {
+    this.productService.getTopProducts().subscribe(products => this.topProducts = products);
+  }
+
+  getNewProducts(): void {
+    this.productService.getNewProducts().subscribe(products => this.newProducts = products);
   }
 
   private loadScripts(): void {

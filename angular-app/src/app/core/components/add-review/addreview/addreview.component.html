@@ -1,0 +1,15 @@
+<div *ngIf="reviewForm">
+  <h2 *ngIf="new_review else edit" class="text-center">  Submit new Review to Product with id {{ productid }}</h2>
+  <div class="container">
+    <label> Rating:
+      <input [(ngModel)]="reviewForm.rating">
+    </label>
+    <label>
+      <input [(ngModel)]="reviewForm.body">
+    </label>
+  </div>
+  <a  type="button" (click)="submitReview()" class="site-btn">Add Review</a>
+</div>
+<ng-template #edit>
+  <h2 class="text-center">  Edit Review to Product with id {{ productid }}</h2>
+</ng-template>
