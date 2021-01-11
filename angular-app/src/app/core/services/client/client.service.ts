@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {Client} from "../../models/client";
+import {Purchase} from "../../models/purchase";
 
 
 
@@ -35,6 +36,11 @@ export class ClientService {
   updateClient(client: {}, id: number ): Observable<Client>{
     const url = environment.baseURL + 'clientupd/' + id;
     return this.http.put<Client>( url, client, environment.httpOptions);
+  }
+
+  getApps(id: number ): Observable<Purchase[]>{
+    const url = environment.baseURL + 'clientapps';
+    return this.http.get<Purchase[]>(url);
   }
 
 }

@@ -54,6 +54,7 @@ urlpatterns = [
     path('ws/clients', views.get_clients),
     path('ws/client/', views.get_actual_client),
     path('ws/client/<int:id>', views.get_client),
+    path('ws/clientapps', views.get_client_apps),
     path('ws/userupd/<int:id>',views.update_userInfo),
     path('ws/userupdpw/<int:id>',views.update_usePw),
     path('ws/clientupd/<int:id>',views.update_client),

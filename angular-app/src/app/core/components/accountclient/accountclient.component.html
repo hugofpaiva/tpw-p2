@@ -34,72 +34,19 @@
             <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general" (click)="showCard('general')">General</a>
             <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password" (click)="showCard('pw')">Change password</a>
             <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-favourites" (click)="showCard('favs')">Favourites</a>
-            <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-avail_purchases">My Apps</a>
+            <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-avail_purchases" (click)="showCard('apps')">My Apps</a>
             <a *ngIf="client.user.is_superuser" class="list-group-item list-group-item-action" routerLink="/admin">Admin</a>
           </div>
         </div>
         <div class="col-md-9">
-            <app-clientgen *ngIf="card == 'general'"></app-clientgen>
+            <app-clientgen *ngIf="card == 'general'" [client]="client"></app-clientgen>
             <app-clientpw *ngIf="card == 'pw'"></app-clientpw>
             <app-clientfavs *ngIf="card == 'favs'" [client]="client"></app-clientfavs>
+            <app-clientapps *ngIf="card == 'apps'" [client]="client"></app-clientapps>
         </div>
 
 
-        <!--<div class="tab-pane fade" id="account-favourites">
-          <div class="card-body pb-2">
-            <ng-container *ngIf="client.favorites; else noFavorites">
-              <table class="table" width="100%" align="center">
 
-                <thead  style="background-color: black; border: 0; color: white;">
-                <tr>
-                  <th scope="col">Icon</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Category</th><th scope="col">Developer</th>
-                  <th scope="col" >Info</th>
-                </tr>
-                </thead>
-                <tbody>
-                <ng-container *ngFor="let fav in client.favorites">
-                  <tr>
-                    <td scope="row"><div class="product__item__pic set-bg" style="width:50px; height:50px;"  [ngStyle]="{ 'background-image': 'url(' + fav.icon + ')' }"></div></td>
-                    <td>{{ fav.name }}</td>
-                    <td>
-                      <ng-container *ngFor="let p in client.favorites">
-                        {{p}}
-                      </ng-container>
-
-
-
-                    </td>
-                    <td>{{ fav.developer }}</td>
-                    <td align="center"><a routerLink="shop/product/{{fav.id}}"><button style="width: 100px;" class="site-btn">View</button></a></td>
-                  </tr>
-                </ng-container>
-                </tbody>
-              </table>
-              -->
-              <!-- //TODO Paginação
-            <div class="col-lg-12" style="margin-bottom: 25px">
-              <div class="product__pagination">
-                {% if page_fav.has_previous %}
-                <a href="javascript:insertParam({'page_fav':{{ page_fav.previous_page_number }} })">{{ page_fav.previous_page_number }}</a>
-                {% endif %}
-                <a class="active" href="">{{ page_fav.number }}</a>
-                {% if page_fav.has_next %}
-                <a href="javascript:insertParam({'page_fav':{{ page_fav.next_page_number }} })">{{ page_fav.next_page_number }}</a>
-                {% endif %}
-
-              </div>
-            </div>
-            -->
-        <!--
-            </ng-container>
-            <ng-template #noFavorites>
-              <h4 class="text-center"> You have no Favorites! </h4>
-            </ng-template>
-          </div>
-        </div>
-        -->
 
         <!--
             <div class="tab-pane fade" id="accountadmin-avail_purchases">
