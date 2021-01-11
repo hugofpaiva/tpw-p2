@@ -116,10 +116,7 @@ class ClientSerializer(serializers.ModelSerializer):
 
         data = super().to_representation(instance)
         data['user'] = UserSerializer(User.objects.get(pk=data['user'])).data
-        favs = []
-        for x in instance.favorites.all():
-            favs.append(ProductSerializer(x).data)
-        data['favorites'] = favs
+        data['favorites'] = [ProductSerializer(x).data for x in instance.favorites.all()]
         return data
 
 
