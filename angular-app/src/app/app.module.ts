@@ -23,6 +23,7 @@ import { AccountclientComponent } from './core/components/accountclient/accountc
 import { ClientgenComponent } from './core/components/accountclient/clientgen/clientgen.component';
 import { AddreviewComponent } from './core/components/add-review/addreview/addreview.component';
 import {ClientpwComponent} from './core/components/accountclient/clientpw/clientpw.component';
+import { ClientfavsComponent } from './core/components/accountclient/clientfavs/clientfavs.component';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import {ClientpwComponent} from './core/components/accountclient/clientpw/client
     ClientgenComponent,
     AddreviewComponent,
     ClientpwComponent,
+    ClientfavsComponent,
   ],
   imports: [
     BrowserModule,

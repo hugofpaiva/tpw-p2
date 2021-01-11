@@ -113,8 +113,13 @@ class ClientSerializer(serializers.ModelSerializer):
                   'balance')
 
     def to_representation(self, instance):
+
         data = super().to_representation(instance)
         data['user'] = UserSerializer(User.objects.get(pk=data['user'])).data
+        favs = []
+        for x in instance.favorites.all():
+            favs.append(ProductSerializer(x).data)
+        data['favorites'] = favs
         return data
 
 

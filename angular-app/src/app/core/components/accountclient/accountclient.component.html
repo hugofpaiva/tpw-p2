@@ -33,7 +33,7 @@
           <div class="list-group list-group-flush account-settings-links">
             <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general" (click)="showCard('general')">General</a>
             <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password" (click)="showCard('pw')">Change password</a>
-            <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-favourites">Favourites</a>
+            <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-favourites" (click)="showCard('favs')">Favourites</a>
             <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-avail_purchases">My Apps</a>
             <a *ngIf="client.user.is_superuser" class="list-group-item list-group-item-action" routerLink="admin/purchases">Admin</a>
           </div>
@@ -41,6 +41,7 @@
         <div class="col-md-9">
             <app-clientgen *ngIf="card == 'general'"></app-clientgen>
             <app-clientpw *ngIf="card == 'pw'"></app-clientpw>
+            <app-clientfavs *ngIf="card == 'favs'" [client]="client"></app-clientfavs>
         </div>
 
 
