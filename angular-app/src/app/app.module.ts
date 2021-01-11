@@ -24,6 +24,11 @@ import { ClientgenComponent } from './core/components/accountclient/clientgen/cl
 import { AddreviewComponent } from './core/components/add-review/addreview/addreview.component';
 import {ClientpwComponent} from './core/components/accountclient/clientpw/clientpw.component';
 import { ClientfavsComponent } from './core/components/accountclient/clientfavs/clientfavs.component';
+import { AdminpurchasesComponent } from './core/components/accountadmin/adminpurchases/adminpurchases.component';
+import { AdminusersComponent } from './core/components/accountadmin/adminusers/adminusers.component';
+import { AdminappsComponent } from './core/components/accountadmin/adminapps/adminapps.component';
+import { AdminadddevComponent } from './core/components/accountadmin/adminadddev/adminadddev.component';
+import { AdminaddcatComponent } from './core/components/accountadmin/adminaddcat/adminaddcat.component';
 
 
 @NgModule({
@@ -46,6 +51,11 @@ import { ClientfavsComponent } from './core/components/accountclient/clientfavs/
     AddreviewComponent,
     ClientpwComponent,
     ClientfavsComponent,
+    AdminpurchasesComponent,
+    AdminusersComponent,
+    AdminappsComponent,
+    AdminadddevComponent,
+    AdminaddcatComponent,
   ],
   imports: [
     BrowserModule,

@@ -125,7 +125,7 @@ class PurchaseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Purchase
-        fields = ('client', 'product', 'created_at')
+        fields = ('id', 'client', 'product', 'created_at')
 
     def to_representation(self, instance):
         data = super().to_representation(instance)

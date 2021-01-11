@@ -6,7 +6,6 @@ import {ProductService} from '../../services/product/product.service';
 import {CategoryService} from '../../services/category/category.service';
 import {DeveloperService} from '../../services/developer/developer.service';
 import {DynamicScriptLoaderService} from '../../services/scripts/dynamic-script-loader-service.service';
-import {min} from 'rxjs/operators';
 
 @Component({
   selector: 'app-store',
@@ -44,7 +43,6 @@ export class StoreComponent implements OnInit, AfterViewInit {
   }
 
   getProducts(): void {
-    console.log('OK');
     this.productService.getProductsParams(this.categoryId, this.developerId, this.rating, this.search,
       this.minPrice, this.maxPrice, this.order).subscribe(products => this.products = products);
   }

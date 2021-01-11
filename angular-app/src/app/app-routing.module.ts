@@ -28,22 +28,8 @@ const routes: Routes = [
           },
         ]
       },
-      {path: 'accountclient', component: AccountclientComponent},
-      {path: 'accountadmin', component: AccountadminComponent},
-      {path: 'admin',
-        children: [
-          {path: 'purchases', component: StoreComponent},//TODO AdminPurchasesComponent
-          {path: 'users', component: ProductComponent},//TODO AdminUsersComponent
-          {path: 'apps',
-            children: [
-              {path: '', component: StoreComponent},//TODO AdminAppsComponent
-              {path: 'add', component: StoreComponent},//TODO AdminAddAppComponent
-            ]
-          },
-          {path: 'developers', component: ProductComponent},//TODO AdminDeveloperComponent
-          {path: 'categories', component: ProductComponent},//TODO AdminCategoriesComponent
-        ]
-      },
+      {path: 'account', component: AccountclientComponent},
+      {path: 'admin', component: AccountadminComponent},
       {path: 'about_us', component: AboutusComponent},
       {path: 'login', component: LoginComponent},
       {path: 'sign_up', component: RegisterComponent},

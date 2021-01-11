@@ -16,6 +16,7 @@ import {SharedService} from '../../../services/shared/shared.service';
 })
 export class ClientfavsComponent implements OnInit {
   @Input() client: Client;
+  p: number = Number(1);
 
 
   constructor() {

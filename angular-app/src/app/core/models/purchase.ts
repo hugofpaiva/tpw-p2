@@ -3,7 +3,7 @@ import {Product} from './product';
 
 export class Purchase {
   id: number;
-    client: Client;
+  client: Client;
   product: Product;
   created_at: Date;
 

@@ -1,0 +1,33 @@
+<ng-container *ngIf="purchases.length > 0; else noPurchases">
+  <div class="flex-row justify-content-between">
+    <table class="table" width="100%" align="center">
+      <thead  style="background-color: black; border: 0; color: white;">
+        <tr>
+          <th scope="col">Client</th>
+          <th scope="col">Product</th>
+          <th scope="col">Price</th>
+          <th scope="col" >Date of Buy</th>
+        </tr>
+      </thead>
+
+      <ng-container *ngFor="let p of purchases| paginate: { itemsPerPage: 6, currentPage: p}">
+        <tbody>
+          <tr>
+            <td>{{ p.client.user.first_name }} {{ p.client.user.last_name }}</td>
+            <td>{{ p.product.name }}</td>
+            <td>{{ p.product.price }}€</td>
+            <td>{{ p.created_at }}</td>
+          </tr>
+        </tbody>
+      </ng-container>
+    </table>
+
+    <div class="col-lg-12" style="margin-top: auto;margin-bottom: 25px; display: flex; justify-content: center">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #noPurchases>
+  <h4 class="text-center"> There are no Purchases! </h4>
+</ng-template>

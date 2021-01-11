@@ -35,7 +35,7 @@
             <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password" (click)="showCard('pw')">Change password</a>
             <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-favourites" (click)="showCard('favs')">Favourites</a>
             <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-avail_purchases">My Apps</a>
-            <a *ngIf="client.user.is_superuser" class="list-group-item list-group-item-action" routerLink="admin/purchases">Admin</a>
+            <a *ngIf="client.user.is_superuser" class="list-group-item list-group-item-action" routerLink="/admin">Admin</a>
           </div>
         </div>
         <div class="col-md-9">

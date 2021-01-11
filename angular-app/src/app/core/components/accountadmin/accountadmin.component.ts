@@ -15,6 +15,7 @@ export class AccountadminComponent implements OnInit {
 
   client?: Client = undefined;
   logoutInEventSubscription: Subscription;
+  card = 'purchases';
 
 
   constructor(private clientService: ClientService, private authService: AuthService, private sharedService: SharedService,
@@ -28,9 +29,16 @@ export class AccountadminComponent implements OnInit {
     this.getUserInfo(false);
   }
 
+  showCard(card: string): void {
+    this.card = card;
+  }
+
   getUserInfo(fromEvent: boolean): void {
     this.clientService.getActualUser().subscribe(client => {
       this.client = client;
+      if (!this.client.user.is_superuser){
+        this.router.navigate(['/']);
+      }
     }, error => {
       this.client = undefined;
       if (!fromEvent){

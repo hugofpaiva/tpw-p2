@@ -27,22 +27,12 @@
               <div class="header__nav__option" style="display: flex;">
 
                 <ng-container *ngIf="client;else notLoggedIn">
-
-                  <ng-container *ngIf="!client.user.is_superuser; else adminAcc">
-                    <a style="font-size: 18px; color: #111111; font-weight: 600" routerLink="accountclient">{{ client.user.username }} ({{ client.balance }}€)</a>
-                  </ng-container>
-                  <ng-template #adminAcc>
-                    <a style="font-size: 18px; color: #111111; font-weight: 600" routerLink="accountadmin">{{ client.user.username }}</a>
-                  </ng-template>
-
-
+                    <a style="font-size: 18px; color: #111111; font-weight: 600" routerLink="account">{{ client.user.username }} ({{ client.balance }}€)</a>
                   <a
                     style="font-size: 18px; color: #111111; font-weight: 600"
                   (click)="logout()"
                   >Logout</a
                   >
-
-
                 </ng-container>
 
                 <ng-template #notLoggedIn>

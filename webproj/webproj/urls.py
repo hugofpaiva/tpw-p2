@@ -86,5 +86,6 @@ urlpatterns = [
     path('ws/reviewdel/<int:id>',views.delete_review),
 
 
-    path('ws/purchasecre', views.create_purchases)
+    path('ws/purchasecre', views.create_purchases),
+    path('ws/purchases', views.get_purchases)
 ]

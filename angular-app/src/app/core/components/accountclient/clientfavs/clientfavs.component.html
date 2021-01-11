@@ -13,9 +13,9 @@
         </tr>
         </thead>
         <tbody>
-        <ng-container *ngFor="let fav of client.favorites">
+        <ng-container *ngFor="let fav of client.favorites| paginate: { itemsPerPage: 6, currentPage: p}">
           <tr>
-            <td scope="row"><div class="product__item__pic set-bg" style="width:50px; height:50px;"  [ngStyle]="{ 'background-image': 'url(' + fav.icon + ')' }"></div></td>
+            <td scope="row"><div class="product__item__pic set-bg" style="width:50px; height:50px;"> <img src="{{ fav.icon }}" /></div></td>
             <td>{{ fav.name }}</td>
             <td>
               <ng-container *ngFor="let c of fav.category">
@@ -32,20 +32,10 @@
         </tbody>
       </table>
 
-<!-- //TODO Paginação
-<div class="col-lg-12" style="margin-bottom: 25px">
-<div class="product__pagination">
-  {% if page_fav.has_previous %}
-  <a href="javascript:insertParam({'page_fav':{{ page_fav.previous_page_number }} })">{{ page_fav.previous_page_number }}</a>
-  {% endif %}
-  <a class="active" href="">{{ page_fav.number }}</a>
-  {% if page_fav.has_next %}
-  <a href="javascript:insertParam({'page_fav':{{ page_fav.next_page_number }} })">{{ page_fav.next_page_number }}</a>
-  {% endif %}
+      <div class="col-lg-12" style="margin-bottom: 25px; display: flex; justify-content: center">
+           <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
 
-</div>
-</div>
--->
 
     </ng-container>
     <ng-template #noFavorites>
