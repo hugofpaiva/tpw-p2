@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../../../services/auth/auth.service';
+import {Client} from '../../../models/client';
 import {ClientService} from '../../../services/client/client.service';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
-import {Client} from '../../../models/client';
 
 @Component({
-  selector: 'app-clientgen',
-  templateUrl: './clientgen.component.html',
-  styleUrls: ['./clientgen.component.css']
+  selector: 'app-clientpw',
+  templateUrl: './clientpw.component.html',
+  styleUrls: ['./clientpw.component.css']
 })
-export class ClientgenComponent implements OnInit {
+export class ClientpwComponent implements OnInit {
   updateError = false;
-  updateForm: FormGroup;
+  updatePwForm: FormGroup;
   loading = false;
   submitted = false;
   client: Client;
@@ -22,11 +21,10 @@ export class ClientgenComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router
   ) {
-    this.updateForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(6)]],
-      email : ['', [Validators.required, Validators.email]],
-      first_name: ['', [Validators.required]],
-      last_name: ['', [Validators.required]]
+    this.updatePwForm = this.formBuilder.group({
+      old_password: ['', [Validators.required, Validators.minLength(6)]],
+      new_password1: ['', [Validators.required, Validators.minLength(6)]],
+      new_password2: ['', [Validators.required, Validators.minLength(6)]]
     });
     this.clientService.getActualUser().subscribe(client => this.client = client);
   }
@@ -38,15 +36,15 @@ export class ClientgenComponent implements OnInit {
 
   }
   // convenience getter for easy access to form fields
-  get f(): any { return this.updateForm.controls; }
+  get f(): any { return this.updatePwForm.controls; }
   // Submit Method
-  onSubmit(username: string, email: string, first_name: string, last_name: string): void {
+  onSubmit(old_password: string, new_password1: string, new_password2: string): void {
     this.submitted = true;
-    if (this.updateForm.invalid) {
+    if (this.updatePwForm.invalid) {
       return;
     }
     this.loading = true;
-    this.clientService.updateClient(username, email, first_name, last_name, this.client.user.id)
+    this.clientService.updateClientPw(old_password, new_password1, new_password2, this.client.user.id)
       .subscribe(res => {
           this.router.navigate(['/']);
         },

@@ -1,0 +1,39 @@
+<div class="col-md-12">
+  <div class="tab-content">
+    <div class="tab-pane fade active show">
+      <div class="card-body">
+      <form [formGroup]="updatePwForm" (ngSubmit)="onSubmit(old_password.value, new_password1.value, new_password2.value)">
+        <div class="form-group">
+          <label >Current Password</label>
+          <input #old_password type="password" formControlName="old_password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.old_password.errors }" />
+          <div *ngIf="submitted && f.old_password.errors" class="invalid-feedback">
+            <div *ngIf="f.old_password.errors.required">Current password is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label >New Password</label>
+          <input #new_password1 type="password" formControlName="new_password1" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.new_password1.errors }" />
+          <div *ngIf="submitted && f.new_password1.errors" class="invalid-feedback">
+            <div *ngIf="f.new_password1.errors.required">New password is Required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label >Repeat new password</label>
+          <input #new_password2 type="password" formControlName="new_password2" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.new_password2.errors }" />
+          <div *ngIf="submitted && f.new_password2.errors" class="invalid-feedback">
+            <div *ngIf="f.new_password2.errors.required">New password repeat is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="text-right mt-3" style="margin-bottom: 25px">
+            <button [disabled]="loading" class="site-btn">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              Update
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
