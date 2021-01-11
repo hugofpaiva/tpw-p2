@@ -1,0 +1,40 @@
+<div class="tab-pane fade" id="account-avail_purchases">
+  <div class="card-body pb-2">
+    <ng-container *ngIf="purchase.length > 0; else noPurchases">
+      <table class="table" width="100%" align="center">
+
+        <thead  style="background-color: black; border: 0; color: white;">
+        <tr>
+          <th scope="col">Image</th>
+          <th scope="col">Name</th>
+          <th scope="col">Price </th>
+          <th scope="col">Date Acquisition</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let purch of purchase | paginate: { itemsPerPage: 6, currentPage: p}">
+          <tr>
+            <td scope="row"><div class="product__item__pic set-bg" style="width:50px; height:50px;"> <img src="{{ purch.product.icon }}" /></div></td>
+            <td>{{ purch.product.name }}</td>
+            <td>
+                {{purch.product.price}}
+            </td>
+            <td>{{ purch.created_at }}</td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+
+      <div class="col-lg-12" style="margin-bottom: 25px; display: flex; justify-content: center">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+
+
+    </ng-container>
+    <ng-template #noPurchases>
+      <h4 class="text-center"> You have no Favorites! </h4>
+    </ng-template>
+  </div>
+</div>
+
+

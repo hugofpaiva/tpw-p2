@@ -120,6 +120,27 @@ def get_actual_client(request):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+def get_client_apps(request):
+    user = check_request_user(request)
+    try:
+        client = Client.objects.get(user_id=request.user.id)
+        if user == 'Client' and not check_client_permission(request, client):
+            return Response({'error_message': "You're not allowed to do this Request!"},
+                            status=status.HTTP_403_FORBIDDEN)
+    except Client.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    purchases = Purchase.objects.filter(client=client)
+    serializer = PurchaseSerializer(purchases, many=True)
+    print(serializer.data)
+
+    return  Response(serializer.data)
+
+
+
+
+
 @api_view(['PUT'])
 def update_userInfo(request, id):
     print(request.data)

@@ -32,6 +32,7 @@ import { AdminaddcatComponent } from './core/components/accountadmin/adminaddcat
 import { PurchaseComponent } from './core/components/purchase/purchase.component';
 import { UpdatefavoritesComponent } from './core/components/updatefavorites/updatefavorites.component';
 import { AlertComponent } from './shared/components/alert/alert.component';
+import { ClientappsComponent } from './core/components/accountclient/clientapps/clientapps.component';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { AlertComponent } from './shared/components/alert/alert.component';
     PurchaseComponent,
     UpdatefavoritesComponent,
     AlertComponent,
+    ClientappsComponent,
   ],
   imports: [
     BrowserModule,
