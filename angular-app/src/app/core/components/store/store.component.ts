@@ -44,6 +44,7 @@ export class StoreComponent implements OnInit, AfterViewInit {
   }
 
   getProducts(): void {
+    console.log('OK');
     this.productService.getProductsParams(this.categoryId, this.developerId, this.rating, this.search,
       this.minPrice, this.maxPrice, this.order).subscribe(products => this.products = products);
   }

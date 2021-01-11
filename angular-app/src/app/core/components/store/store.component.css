@@ -1,3 +1,22 @@
 .pagination ::ng-deep .ngx-pagination .current {
   background: #c82333;
 }
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: #2c3e50;
+  background-image: none;
+  padding: 0 .5em;
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+  height: 3em;
+  line-height: 3;
+  background: #2c3e50;
+  border-radius: .25em;
+}

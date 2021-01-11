@@ -32,6 +32,13 @@ class Product(models.Model):
     update_at = models.DateTimeField(auto_now=True)
     price = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
 
+    @property
+    def stars(self):
+        stars = Reviews.objects.filter(product=self).aggregate(rating__avg=Ceil(Avg('rating')))['rating__avg']
+        if stars is None:
+            stars = 0
+        return int(stars)
+
 
 
 class Client(models.Model):
