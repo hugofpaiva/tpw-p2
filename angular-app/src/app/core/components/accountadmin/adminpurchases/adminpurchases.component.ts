@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {ProductService} from '../../../services/product/product.service';
+import {Component, Input, OnInit} from '@angular/core';
 import {PurchaseService} from '../../../services/purchase/purchase.service';
 import {Purchase} from '../../../models/purchase';
 

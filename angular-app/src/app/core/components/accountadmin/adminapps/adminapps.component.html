@@ -23,7 +23,7 @@
             </ng-container>
           </td>
           <td>{{ product.developer.name }}</td>
-          <td><a style="text-align: center; color: white" class="site-btn">Edit</a></td>
+          <td><a style="text-align: center; color: white" (click)="open(product, modal)" class="site-btn">Edit</a></td>
         </tr>
         </tbody>
       </ng-container>
@@ -38,3 +38,74 @@
 <ng-template #noApps>
   <h4 class="text-center"> There are no Applications! </h4>
 </ng-template>
+
+<ng-template  #modal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Product</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="updateForm" *ngIf="selectedProduct && categories && developers" (ngSubmit)="editProduct()">
+    <div class="modal-body">
+
+      <div class="form-group">
+        <label>Name</label>
+        <input #name type="text" [(ngModel)]="selectedProduct.name" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': f.name.errors }"/>
+        <div *ngIf="f.name.errors" class="invalid-feedback">
+          <div *ngIf="f.name.errors.required">Name is required</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Icon</label>
+        <input #icon type="text" [(ngModel)]="selectedProduct.icon" formControlName="icon" class="form-control" [ngClass]="{ 'is-invalid': f.icon.errors }"/>
+        <div *ngIf="f.icon.errors" class="invalid-feedback">
+          <div *ngIf="f.icon.errors.required">Icon is required</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <input #description type="text" [(ngModel)]="selectedProduct.description" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': f.description.errors }"/>
+        <div *ngIf="f.description.errors" class="invalid-feedback">
+          <div *ngIf="f.description.errors.required">Description is required</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Category</label>
+        <select multiple #category [compareWith]="compareFn" formControlName="category" class="form-control" [(ngModel)]="selectedProduct.category" [ngClass]="{ 'is-invalid': f.category.errors }">
+          <option *ngFor="let c of categories" [ngValue]="c">{{c.title}}</option>
+        </select>
+        <div *ngIf="f.category.errors" class="invalid-feedback">
+          <div *ngIf="f.category.errors.required">Category is required</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Developer</label>
+        <select #developer [compareWith]="compareFn" formControlName="developer" class="form-control" [(ngModel)]="selectedProduct.developer" [ngClass]="{ 'is-invalid': f.developer.errors }">
+          <option *ngFor="let d of developers" [ngValue]="d">{{d.name}}</option>
+        </select>
+        <div *ngIf="f.developer.errors" class="invalid-feedback">
+          <div *ngIf="f.developer.errors.required">Developer is required</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Price</label>
+        <input #price type="number" [(ngModel)]="selectedProduct.price" step=".01" formControlName="price" class="form-control" [ngClass]="{ 'is-invalid': f.price.errors }"/>
+        <div *ngIf="f.price.errors" class="invalid-feedback">
+          <div *ngIf="f.price.errors.required">Price is required</div>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="modal-footer">
+      <button type="submit" [disabled]="loading || f.name.errors || f.icon.errors || f.description.errors || f.price.errors || f.category.errors || f.developer.errors" class="btn btn-outline-dark" (click)="modal.close('Save click'); ">Save Product</button>
+    </div>
+  </form>
+</ng-template>
+

@@ -3,6 +3,7 @@ import { environment } from './../../../../environments/environment';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Product} from '../../models/product';
+import {Client} from '../../models/client';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,11 @@ export class ProductService {
   getProduct(id: number): Observable<Product>{
     const url = environment.baseURL + 'product/' + id;
     return this.http.get<Product>(url);
+  }
+
+  updateProduct(product: {}, id: number ): Observable<Product>{
+    const url = environment.baseURL + 'productupd/' + id;
+    return this.http.put<Product>( url, product, environment.httpOptions);
   }
 
   getProductsParams(categoryId: number|undefined, developerId: number|undefined, rating: number|undefined, search: string,
