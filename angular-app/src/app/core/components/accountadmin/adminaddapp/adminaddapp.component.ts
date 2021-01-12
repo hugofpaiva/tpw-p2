@@ -6,6 +6,7 @@ import {Developer} from '../../../models/developer';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ProductService} from '../../../services/product/product.service';
 import {SharedService} from '../../../services/shared/shared.service';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-adminaddapp',
@@ -29,6 +30,7 @@ export class AdminaddappComponent implements OnInit, OnChanges {
     private formBuilder: FormBuilder,
     private productService: ProductService,
     private sharedService: SharedService,
+    private modalService: NgbModal
   ) {
     this.creationForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.maxLength(50)]],
@@ -55,11 +57,18 @@ export class AdminaddappComponent implements OnInit, OnChanges {
   get f(): any { return this.creationForm.controls; }
 
   compareFn(a: any, b: any): boolean {
-    if (b !== undefined){
+    if (b !== undefined) {
       // Handle compare logic (eg check if unique ids are the same)
       return a.id === b.id;
     }
     return false;
+  }
+
+  open(content: any): void{
+
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    }, (reason) => {
+    });
   }
 
 

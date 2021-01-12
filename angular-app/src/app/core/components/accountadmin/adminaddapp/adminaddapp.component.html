@@ -1,17 +1,13 @@
-<a  data-toggle="modal" data-target="#myModal"   class="site-btn" style="float: right; margin-bottom: 25px; color: white" > Add Product</a>
+<a  (click)="open(modal)"   class="site-btn" style="float: right; margin-bottom: 25px; color: white" > Add Product</a>
 
 
 
 <!--  Modal -->
 <ng-template  #modal let-modal>
-<div class="modal" id="myModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Create new Product</h4>
-        <button type="button" class="close"   data-dismiss="modal">&times;</button>
+        <button type="button" class="close"  (click)="modal.dismiss('Cross click')" >&times;</button>
       </div>
 
       <!-- Modal body -->
@@ -21,6 +17,7 @@
           <div class="form-group">
             <label>Name</label>
             <input #name type="text" [(ngModel)]="newproduct.name" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': f.name.errors }"/>
+            {{ f.name.errors}}
             <div *ngIf=" !submitted && f.name.errors" class="invalid-feedback">
               <div *ngIf=" !submitted && f.name.errors.required">Name is required</div>
             </div>
@@ -79,7 +76,4 @@
         </div>
       </form>
 
-    </div>
-  </div>
-</div>
 </ng-template>

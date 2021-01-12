@@ -29,6 +29,7 @@ import { AdminusersComponent } from './core/components/accountadmin/adminusers/a
 import { AdminappsComponent } from './core/components/accountadmin/adminapps/adminapps.component';
 import { AdminadddevComponent } from './core/components/accountadmin/adminadddev/adminadddev.component';
 import { AdminaddcatComponent } from './core/components/accountadmin/adminaddcat/adminaddcat.component';
+import {AdminaddappComponent} from './core/components/accountadmin/adminaddapp/adminaddapp.component';
 import { PurchaseComponent } from './core/components/purchase/purchase.component';
 import { UpdatefavoritesComponent } from './core/components/updatefavorites/updatefavorites.component';
 import { AlertComponent } from './shared/components/alert/alert.component';
@@ -65,6 +66,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     UpdatefavoritesComponent,
     AlertComponent,
     ClientappsComponent,
+    AdminaddappComponent,
   ],
   imports: [
     BrowserModule,
