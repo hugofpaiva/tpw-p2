@@ -33,6 +33,7 @@ import { PurchaseComponent } from './core/components/purchase/purchase.component
 import { UpdatefavoritesComponent } from './core/components/updatefavorites/updatefavorites.component';
 import { AlertComponent } from './shared/components/alert/alert.component';
 import { ClientappsComponent } from './core/components/accountclient/clientapps/clientapps.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import { ClientappsComponent } from './core/components/accountclient/clientapps/
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgbModule
   ],
   providers: [
     {

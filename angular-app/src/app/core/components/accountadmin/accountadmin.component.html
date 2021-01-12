@@ -15,11 +15,11 @@
       <div class="row no-gutters row-bordered row-border-light">
         <div class="col-md-3 pt-0">
           <div class="list-group list-group-flush account-settings-links">
-            <a class="list-group-item list-group-item-action active" (click)="showCard('purchases')">Purchases</a>
-            <a class="list-group-item list-group-item-action" (click)="showCard('users')">Users</a>
-            <a class="list-group-item list-group-item-action" (click)="showCard('apps')">Applications</a>
-            <a class="list-group-item list-group-item-action" (click)="showCard('devs')">Add Developer</a>
-            <a class="list-group-item list-group-item-action" (click)="showCard('cats')">Add Category</a>
+            <a class="list-group-item list-group-item-action" [ngClass]=" card == 'purchases' ? 'active' : ''" (click)="showCard('purchases')">Purchases</a>
+            <a class="list-group-item list-group-item-action" [ngClass]=" card == 'users' ? 'active' : ''" (click)="showCard('users')">Users</a>
+            <a class="list-group-item list-group-item-action" [ngClass]=" card == 'apps' ? 'active' : ''" (click)="showCard('apps')">Applications</a>
+            <a class="list-group-item list-group-item-action" [ngClass]=" card == 'devs' ? 'active' : ''" (click)="showCard('devs')">Add Developer</a>
+            <a class="list-group-item list-group-item-action" [ngClass]=" card == 'cats' ? 'active' : ''" (click)="showCard('cats')">Add Category</a>
             <a class="list-group-item list-group-item-action"  routerLink="/account">Account</a>
           </div>
         </div>

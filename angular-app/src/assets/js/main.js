@@ -25,6 +25,7 @@
     /*-----------------------
         Hero Slider
     ------------------------*/
+
     $(".hero__slider").owlCarousel({
         loop: true,
         margin: 0,
@@ -38,6 +39,7 @@
         autoHeight: false,
         autoplay: false
     });
+
 
     /*--------------------------
         Select

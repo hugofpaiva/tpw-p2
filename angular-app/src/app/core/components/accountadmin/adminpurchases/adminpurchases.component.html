@@ -16,7 +16,7 @@
             <td>{{ p.client.user.first_name }} {{ p.client.user.last_name }}</td>
             <td>{{ p.product.name }}</td>
             <td>{{ p.product.price }}€</td>
-            <td>{{ p.created_at }}</td>
+            <td>{{ p.created_at | date:'medium' }}</td>
           </tr>
         </tbody>
       </ng-container>

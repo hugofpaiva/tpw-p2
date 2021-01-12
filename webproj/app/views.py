@@ -210,7 +210,8 @@ def update_client(request, id):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     except Client.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response({'error_message': "User not found!"},
+                        status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(['GET'])

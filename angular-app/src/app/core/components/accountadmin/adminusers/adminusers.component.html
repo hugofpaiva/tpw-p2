@@ -16,9 +16,9 @@
         <tr>
           <td>{{ client.user.first_name }} {{ client.user.last_name }}</td>
           <td>{{ client.user.email }}</td>
-          <td>{{ client.created_at }}</td>
+          <td>{{ client.created_at | date:'medium' }}</td>
           <td>{{ client.balance }}€</td>
-          <td align="center"><a style="color: white" class="site-btn">Add balance</a></td>
+          <td align="center"><a style="color: white" class="site-btn" (click)="open(client, modal)">Add balance</a></td>
         </tr>
         </tbody>
       </ng-container>
@@ -34,44 +34,29 @@
   <h4 class="text-center"> There are no Users! </h4>
 </ng-template>
 
-<!--
-<div class="modal" id="modalAddForm">
-  <div class="modal-dialog">
-    <div class="modal-content">
 
+<ng-template  #modal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add Balance</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="updateForm" *ngIf="selectedClient" (ngSubmit)="addBalance()">
+  <div class="modal-body">
 
-      <div class="modal-header">
-        <h4 class="modal-title">Add Balance</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <div class="form-group">
+        <label >Balance</label>
+        <input #balance type="number" [(ngModel)]="selectedClient.balance" step=".01" formControlName="balance" class="form-control" [ngClass]="{ 'is-invalid': f.balance.errors }"/>
+        <div *ngIf="f.balance.errors" class="invalid-feedback">
+          <div *ngIf="f.balance.errors.required">Balance is required</div>
+        </div>
       </div>
 
-      <form id="myForm2" name="myFormName" method="post" action=".">
 
-        <div class="modal-body">
-          Enter the balance you want to add
-          <br>
-          <br>
-          {% csrf_token %}
-          {% for field in form %}
-          <p>
-            {{ field.label_tag }}
-          <div>{{ field| add_class:'form-control' }}</div>
-          {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-          {% endfor %}
-          </p>
-          {% endfor %}
-
-
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="site-btn" data-dismiss="modal">Cancel</button>
-          <button type="button"  onclick="adding()" class="site-btn" data-dismiss="modal">Confirm</button>
-        </div>
-      </form>
-
-    </div>
   </div>
-</div>
--->
+  <div class="modal-footer">
+    <button type="submit" [disabled]="loading" class="btn btn-outline-dark" (click)="modal.close('Save click'); ">Save Balance</button>
+  </div>
+  </form>
+</ng-template>

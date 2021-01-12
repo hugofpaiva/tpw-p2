@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router, private sharedService: SharedService) { }
 
   ngOnInit(): void {
+    this.authService.logout();
+    this.sharedService.sendUserEvent();
   }
 
   onSubmit(userName: string, password: string): void{

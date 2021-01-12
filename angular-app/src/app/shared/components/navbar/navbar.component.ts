@@ -17,7 +17,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   constructor(private clientService: ClientService, private authService: AuthService, private sharedService: SharedService) {
     this.logoutInEventSubscription = this.sharedService.getUserEvent().subscribe(() => {
-      console.log('OK');
       this.getUserInfo(true);
     });
   }

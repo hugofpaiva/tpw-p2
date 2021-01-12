@@ -40,7 +40,7 @@ export class AlertComponent implements OnInit {
 
         // auto close alert if required
         if (alert.autoClose) {
-          setTimeout(() => this.removeAlert(alert), 1000);
+          setTimeout(() => this.removeAlert(alert), 5000);
         }
       });
 

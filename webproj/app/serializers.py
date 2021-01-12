@@ -113,7 +113,6 @@ class ClientSerializer(serializers.ModelSerializer):
                   'balance')
 
     def to_representation(self, instance):
-
         data = super().to_representation(instance)
         data['user'] = UserSerializer(User.objects.get(pk=data['user'])).data
         data['favorites'] = [ProductSerializer(x).data for x in instance.favorites.all()]
@@ -140,7 +139,6 @@ class ReviewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reviews
         fields = ('id', 'author', 'product', 'rating', 'date', 'update_at', 'body')
-
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
