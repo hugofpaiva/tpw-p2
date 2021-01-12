@@ -2,10 +2,10 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {Product} from '../../../models/product';
 import {Category} from '../../../models/category';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Developer} from "../../../models/developer";
-import {HttpErrorResponse} from "@angular/common/http";
-import {ProductService} from "../../../services/product/product.service";
-import {SharedService} from "../../../services/shared/shared.service";
+import {Developer} from '../../../models/developer';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ProductService} from '../../../services/product/product.service';
+import {SharedService} from '../../../services/shared/shared.service';
 
 @Component({
   selector: 'app-adminaddapp',
@@ -19,7 +19,7 @@ export class AdminaddappComponent implements OnInit, OnChanges {
   @Input() products: Product [] = [];  // to check if product already exists;
   @Input() categories: Category[] = [];
   @Input() developers: Developer[] = [];
-  @Input() newproduct: Product;
+  @Input() newproduct: Product = new Product();
   loading = false;
   updateForm: FormGroup;
   submitted = false;
@@ -55,8 +55,11 @@ export class AdminaddappComponent implements OnInit, OnChanges {
   get f(): any { return this.creationForm.controls; }
 
   compareFn(a: any, b: any): boolean {
-    // Handle compare logic (eg check if unique ids are the same)
-    return a.id === b.id;
+    if (b !== undefined){
+      // Handle compare logic (eg check if unique ids are the same)
+      return a.id === b.id;
+    }
+    return false;
   }
 
 
@@ -66,7 +69,26 @@ export class AdminaddappComponent implements OnInit, OnChanges {
       return;
     }
     this.loading = true;
-    console.log("VALOR" + this.creationForm.value);
+    const arr: number[] = [];
+    this.productService.createProduct({...this.newproduct,
+      developer: this.newproduct.developer.id,
+      category: this.newproduct.category.map((cat ) => cat.id)
+    }).subscribe(
+      data => {
+        console.log(data);
+        this.products.push(data);
+        this.loading = false;
+        this.creationForm.reset();
+        this.sharedService.success('Success Creating new Product!', {autoClose: true });
+      }, (err: HttpErrorResponse) => {
+      this.loading = false;
+      if (err.error.error_message !== undefined) {
+        this.sharedService.error(err.error.error_message, {autoClose: true});
+      } else{
+        this.sharedService.error('It was not possible to edit the product.', {autoClose: true});
+      }
+    });
+
   }
 
 

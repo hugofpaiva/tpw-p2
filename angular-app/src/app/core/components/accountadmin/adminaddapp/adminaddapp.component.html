@@ -1,8 +1,9 @@
-<a  data-toggle="modal" data-target="#myModal"  class="site-btn" style="float: right; margin-bottom: 25px; color: white" > Add Product</a>
+<a  data-toggle="modal" data-target="#myModal"   class="site-btn" style="float: right; margin-bottom: 25px; color: white" > Add Product</a>
 
 
 
 <!--  Modal -->
+<ng-template  #modal let-modal>
 <div class="modal" id="myModal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -10,59 +11,62 @@
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Create new Product</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close"   data-dismiss="modal">&times;</button>
       </div>
+
       <!-- Modal body -->
-      <form [formGroup]="creationForm" *ngIf="products && categories && developers" >
+      <form [formGroup]="creationForm" *ngIf=" products && categories && developers" (ngSubmit)="addProduct()" >
         <div class="modal-body">
+
           <div class="form-group">
             <label>Name</label>
-            <input #name type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': f.name.errors }"/>
-            <div *ngIf="f.name.errors" class="invalid-feedback">
-              <div *ngIf="f.name.errors.required">Name is required</div>
+            <input #name type="text" [(ngModel)]="newproduct.name" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': f.name.errors }"/>
+            <div *ngIf=" !submitted && f.name.errors" class="invalid-feedback">
+              <div *ngIf=" !submitted && f.name.errors.required">Name is required</div>
             </div>
           </div>
 
           <div class="form-group">
             <label>Icon</label>
-            <input #icon type="text"  formControlName="icon" class="form-control" [ngClass]="{ 'is-invalid': f.icon.errors }"/>
-            <div *ngIf="f.icon.errors" class="invalid-feedback">
-              <div *ngIf="f.icon.errors.required">Icon is required</div>
+            <input #icon type="text" [(ngModel)]="newproduct.icon" formControlName="icon" class="form-control" [ngClass]="{ 'is-invalid': f.icon.errors }"/>
+            <div *ngIf=" !submitted && f.icon.errors" class="invalid-feedback">
+              <div *ngIf=" !submitted && f.icon.errors.required">Icon is required</div>
             </div>
           </div>
 
           <div class="form-group">
             <label>Description</label>
-            <input #description type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': f.description.errors }"/>
-            <div *ngIf="f.description.errors" class="invalid-feedback">
-              <div *ngIf="f.description.errors.required">Description is required</div>
+            <input #description type="text" [(ngModel)]="newproduct.description" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': f.description.errors }"/>
+            <div *ngIf=" !submitted && f.description.errors" class="invalid-feedback">
+              <div *ngIf=" !submitted && f.description.errors.required">Description is required</div>
             </div>
           </div>
 
           <div class="form-group">
             <label>Category</label>
-            <select multiple #category [compareWith]="compareFn" formControlName="category" class="form-control" [(ngModel)]="f.category" [ngClass]="{ 'is-invalid': f.category.errors }">
+            <select multiple #category [compareWith]="compareFn" formControlName="category" class="form-control" [(ngModel)]="newproduct.category" [ngClass]="{ 'is-invalid': f.category.errors }">
               <option *ngFor="let c of categories" [ngValue]="c">{{c.title}}</option>
             </select>
-            <div *ngIf="f.category.errors" class="invalid-feedback">
-              <div *ngIf="f.category.errors.required">Category is required</div>
+            <div *ngIf=" !submitted && f.category.errors" class="invalid-feedback">
+              <div *ngIf=" !submitted && f.category.errors.required">Category is required</div>
             </div>
           </div>
+
           <div class="form-group">
             <label>Developer</label>
-            <select #developer [compareWith]="compareFn" formControlName="developer" class="form-control" [(ngModel)]="f.developer" [ngClass]="{ 'is-invalid': f.developer.errors }">
+            <select #developer [compareWith]="compareFn" formControlName="developer" class="form-control" [(ngModel)]="newproduct.developer" [ngClass]="{ 'is-invalid': f.developer.errors }">
               <option *ngFor="let d of developers" [ngValue]="d">{{d.name}}</option>
             </select>
-            <div *ngIf="f.developer.errors" class="invalid-feedback">
-              <div *ngIf="f.developer.errors.required">Developer is required</div>
+            <div *ngIf=" !submitted && f.name.errors" class="invalid-feedback">
+              <div *ngIf=" !submitted && f.developer.errors.required">Developer is required</div>
             </div>
           </div>
 
           <div class="form-group">
             <label>Price</label>
-            <input #price type="number" step=".01" formControlName="price" class="form-control" [ngClass]="{ 'is-invalid': f.price.errors }"/>
-            <div *ngIf="f.price.errors" class="invalid-feedback">
-              <div *ngIf="f.price.errors.required">Price is required</div>
+            <input #price type="number" [(ngModel)]="newproduct.price" step=".01" formControlName="price" class="form-control" [ngClass]="{ 'is-invalid': f.price.errors }"/>
+            <div *ngIf=" !submitted && f.price.errors" class="invalid-feedback">
+              <div *ngIf=" !submitted && f.price.errors.required">Price is required</div>
             </div>
           </div>
 
@@ -78,3 +82,4 @@
     </div>
   </div>
 </div>
+</ng-template>
