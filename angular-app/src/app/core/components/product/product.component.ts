@@ -6,7 +6,9 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {Review} from '../../models/review';
 import {ReviewService} from '../../services/review/review.service';
 import {ClientService} from '../../services/client/client.service';
+import {PurchaseService} from '../../services/purchase/purchase.service';
 import {Client} from '../../models/client';
+import {Purchase} from '../../models/purchase';
 
 @Component({
   selector: 'app-product',
@@ -18,14 +20,19 @@ export class ProductComponent implements OnInit {
   client: Client ;
   product: Product;
   reviews: Review [] = [];
+  prodid = 0;
+  totalPurch = 0;
+  count = {};
   has_review: boolean;
   constructor(
     private productService: ProductService,
     private reviewService: ReviewService,
     private clientService: ClientService,
+    private purchaseService: PurchaseService,
     private router: Router,
     private activeroute: ActivatedRoute) {
     this.has_review = false;
+    this.prodid = Number(this.activeroute.snapshot.paramMap.get('id'));
   }
 
   ngOnInit(): void {
@@ -33,6 +40,7 @@ export class ProductComponent implements OnInit {
       this.getProduct();
       // data will be passed to the child component show-review
       this.getReviews();
+      this.getTotalPurch();
     }
   }
   getClient(): boolean  {
@@ -77,6 +85,16 @@ export class ProductComponent implements OnInit {
           );
         }
       );
+  }
+
+  getTotalPurch(): void {
+    console.log('entrou');
+    this.purchaseService.getPurchasesCount(this.prodid )
+      .subscribe(
+        dic => {
+          this.count = dic;
+          this.totalPurch = dic.count;
+    });
   }
 
 

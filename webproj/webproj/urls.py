@@ -88,5 +88,6 @@ urlpatterns = [
 
 
     path('ws/purchasecre', views.create_purchases),
-    path('ws/purchases', views.get_purchases)
+    path('ws/purchases', views.get_purchases),
+    path('ws/purchasescount/<int:prodid>', views.get_purchasesCount)
 ]

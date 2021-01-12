@@ -41,6 +41,7 @@
                       <li>{{ product.developer.name }}</li>
                     <br>
                     <span>Total Purchases:</span>
+                    <li *ngIf="totalPurch">{{ totalPurch }}</li>
                   </ul>
                 </div>
                 <app-updatefavorites [client]="client" [product]="product" ></app-updatefavorites>
@@ -59,7 +60,7 @@
         <div class="product__details__tab">
           <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
-              <a  class="nav-link active"   data-toggle="tab" href="#tabs-6"
+              <a  class="nav-link active"   data-toggle="tab" href="#tabs-5"
                  role="tab">Description</a>
             </li>
             <li   class="nav-item">
