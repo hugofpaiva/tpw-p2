@@ -4,6 +4,7 @@ import {Product} from '../../models/product';
 import {environment} from '../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Category} from '../../models/category';
+import {Developer} from '../../models/developer';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,11 @@ export class CategoryService {
   getCategory(id: number): Observable<Category>{
     const url = environment.baseURL + 'category/' + id;
     return this.http.get<Category>(url);
+  }
+
+  createCategory(cat: Category): Observable<Category>{
+    const url = environment.baseURL + 'categorycre';
+    return this.http.post<Category>(url, cat);
   }
 
   getCategories(): Observable<Category[]>{

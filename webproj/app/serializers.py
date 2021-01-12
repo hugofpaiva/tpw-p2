@@ -12,12 +12,14 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ('id', 'title')
+        read_only_fields = ['id']
 
 
 class DeveloperSerializer(serializers.ModelSerializer):
     class Meta:
         model = Developer
         fields = ('id', 'name', 'created_at')
+        read_only_fields = ['id', 'created_at']
 
 
 class ProductSerializer(serializers.ModelSerializer):

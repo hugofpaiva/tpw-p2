@@ -1,23 +1,24 @@
 <div style="display: flex; justify-content: center">
-  <h3>Write the category name</h3>
-  <br>
-  <!--
-  <form [formGroup]="updateForm" *ngIf="selectedClient" (ngSubmit)="addDeveloper()">
-    <div class="modal-body">
+  <div>
+    <h3>Write the Category name</h3>
+    <br>
+    <form [formGroup]="updateForm" (ngSubmit)="newCategory()">
+      <div class="modal-body">
 
-      <div class="form-group">
-        <label >Balance</label>
-        <input #balance type="number" [(ngModel)]="selectedClient.balance" step=".01" formControlName="balance" class="form-control" [ngClass]="{ 'is-invalid': f.balance.errors }"/>
-        <div *ngIf="f.balance.errors" class="invalid-feedback">
-          <div *ngIf="f.balance.errors.required">Balance is required</div>
+        <div class="form-group">
+          <label >Name</label>
+          <input #name type="text" placeholder="Category title"  [(ngModel)]="newCat.title" formControlName="title" class="form-control" [ngClass]="{ 'is-invalid': f.title.errors }"/>
+          <div *ngIf="f.title.errors" class="invalid-feedback">
+            <div *ngIf="f.title.errors.required">Title is required</div>
+          </div>
         </div>
+
+
       </div>
+      <div class="modal-footer">
+        <button type="submit" [disabled]="loading || f.title.errors" class="btn btn-outline-dark">Add Category</button>
+      </div>
+    </form>
 
-
-    </div>
-    <div class="modal-footer">
-      <button type="submit" [disabled]="loading || f.balance.errors" class="btn btn-outline-dark" (click)="modal.close('Save click'); ">Save Balance</button>
-    </div>
-  </form>
-  -->
+  </div>
 </div>
