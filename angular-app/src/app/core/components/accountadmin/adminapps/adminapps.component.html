@@ -1,4 +1,3 @@
-<h1>{{products.length}}</h1>
 <ng-container *ngIf="products.length > 0; else noApps">
   <div class="flex-row justify-content-between">
     <app-adminaddapp [categories]="categories" [products]="products" [developers]="developers"></app-adminaddapp>

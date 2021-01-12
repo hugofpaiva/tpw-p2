@@ -48,7 +48,6 @@ export class AdminappsComponent implements OnInit {
   }
 
   open(product: Product, content: any): void{
-
     this.selectedProduct = Object.assign({}, product);
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
     }, (reason) => {
