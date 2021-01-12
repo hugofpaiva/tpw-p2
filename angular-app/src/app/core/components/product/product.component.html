@@ -41,6 +41,7 @@
                       <li>{{ product.developer.name }}</li>
                     <br>
                     <span>Total Purchases:</span>
+                    <li *ngIf="totalPurch">{{ totalPurch }}</li>
                   </ul>
                 </div>
                 <app-updatefavorites [client]="client" [product]="product" ></app-updatefavorites>

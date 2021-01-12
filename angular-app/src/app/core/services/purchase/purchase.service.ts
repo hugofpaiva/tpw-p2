@@ -34,4 +34,9 @@ export class PurchaseService {
   deletePurchase(purch: Purchase): Observable<any> {
     const url = environment.baseURL + 'purchasedel/' + purch.id;
   }
+
+  getPurchasesCount(prodid: number): Observable<any> {
+    const url = environment.baseURL + 'purchasescount' + '/' + prodid;
+    return this.http.get<any>(url);
+  }
 }

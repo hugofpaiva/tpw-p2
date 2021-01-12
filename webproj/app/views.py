@@ -515,6 +515,18 @@ def get_purchases(request):
     return Response({'error_message': "You're not allowed to do this Request!"}, status=status.HTTP_403_FORBIDDEN)
 
 
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_purchasesCount(request, prodid):
+    prod = Product.objects.get(id=prodid)
+    if prod:
+        purchs = Purchase.objects.filter(product=prod)
+        dic = {'count': len(purchs)}
+        return Response(dic)
+    else:
+        return Response({'error_message': "Product not found!"}, status=status.HTTP_404_NOT_FOUND)
+
+
 @api_view(['POST'])
 def create_purchases(request):
     serializer = PurchaseSerializer(data=request.data)
