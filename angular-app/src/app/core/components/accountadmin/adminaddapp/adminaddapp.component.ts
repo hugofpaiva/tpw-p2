@@ -6,7 +6,7 @@ import {Developer} from '../../../models/developer';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ProductService} from '../../../services/product/product.service';
 import {SharedService} from '../../../services/shared/shared.service';
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-adminaddapp',
@@ -68,6 +68,7 @@ export class AdminaddappComponent implements OnInit, OnChanges {
 
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
     }, (reason) => {
+      console.log(reason);
     });
   }
 

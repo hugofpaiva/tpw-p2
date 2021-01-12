@@ -17,7 +17,6 @@
           <div class="form-group">
             <label>Name</label>
             <input #name type="text" [(ngModel)]="newproduct.name" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': f.name.errors }"/>
-            {{ f.name.errors}}
             <div *ngIf=" !submitted && f.name.errors" class="invalid-feedback">
               <div *ngIf=" !submitted && f.name.errors.required">Name is required</div>
             </div>
@@ -70,9 +69,9 @@
 
         </div>
         <div class="modal-footer">
-          <button type="submit" [disabled]="loading
+          <button  type="submit" [disabled]="loading
       || f.name.errors || f.icon.errors || f.description.errors || f.price.errors
-      || f.category.errors || f.developer.errors" class="btn btn-outline-dark">Save Product</button>
+      || f.category.errors || f.developer.errors" (click)="modal.close('Save click')"  class="btn btn-outline-dark">Save Product</button>
         </div>
       </form>
 
