@@ -2,12 +2,14 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import {Product} from '../../models/product';
 import {ProductService} from '../../services/product/product.service';
 import {DynamicScriptLoaderService} from '../../services/scripts/dynamic-script-loader-service.service';
+import {OwlOptions} from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-initialpage',
   templateUrl: './initialpage.component.html',
   styleUrls: ['./initialpage.component.css'],
 })
+
 export class InitialpageComponent implements OnInit, AfterViewInit {
 
   topProducts: Product[] = [];
@@ -17,6 +19,24 @@ export class InitialpageComponent implements OnInit, AfterViewInit {
   constructor(private productService: ProductService, private dynamicScriptLoader: DynamicScriptLoaderService) {
 
   }
+
+  customOptions: OwlOptions = {
+    loop: true,
+    margin: 0,
+    mouseDrag: false,
+    touchDrag: false,
+    pullDrag: false,
+    autoHeight: false,
+    autoplay: true,
+    dots: false,
+    animateOut: 'fadeOut',
+    animateIn: 'fadeIn',
+    navSpeed: 1200,
+    navText: ['<span class=\'arrow_left\'><span/>', '<span class=\'arrow_right\'><span/>'],
+    items: 1,
+    nav: true,
+  };
+
 
   ngOnInit(): void {
     this.getTopProducts();

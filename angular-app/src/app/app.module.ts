@@ -34,6 +34,8 @@ import { UpdatefavoritesComponent } from './core/components/updatefavorites/upda
 import { AlertComponent } from './shared/components/alert/alert.component';
 import { ClientappsComponent } from './core/components/accountclient/clientapps/clientapps.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {CarouselModule} from 'ngx-owl-carousel-o';
 
 
 @NgModule({
@@ -73,7 +75,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     NgxPaginationModule,
-    NgbModule
+    NgbModule,
+    BrowserAnimationsModule,
+    CarouselModule
   ],
   providers: [
     {
