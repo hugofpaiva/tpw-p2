@@ -29,7 +29,7 @@
 
     <div class="card overflow-hidden" style="margin-bottom: 50px">
       <div class="row no-gutters row-bordered row-border-light">
-        <div class="col-md-3 pt-0">
+        <div class="col-md-2 pt-0">
           <div class="list-group list-group-flush account-settings-links">
             <a class="list-group-item list-group-item-action" [ngClass]=" card == 'general' ? 'active' : ''" (click)="showCard('general')">General</a>
             <a class="list-group-item list-group-item-action" [ngClass]=" card == 'pw' ? 'active' : ''" (click)="showCard('pw')">Change password</a>
@@ -38,7 +38,7 @@
             <a *ngIf="client.user.is_superuser" class="list-group-item list-group-item-action" routerLink="/admin">Admin</a>
           </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-10">
             <app-clientgen *ngIf="card == 'general'" [client]="client"></app-clientgen>
             <app-clientpw *ngIf="card == 'pw'"></app-clientpw>
             <app-clientfavs *ngIf="card == 'favs'" [client]="client"></app-clientfavs>

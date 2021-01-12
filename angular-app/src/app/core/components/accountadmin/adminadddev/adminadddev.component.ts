@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Developer} from '../../../models/developer';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {DeveloperService} from '../../../services/developer/developer.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {SharedService} from '../../../services/shared/shared.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-adminadddev',
@@ -7,9 +13,42 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminadddevComponent implements OnInit {
 
-  constructor() { }
+  @Input() newDev: Developer = new Developer();
+  loading = false;
+  updateForm: FormGroup;
+
+  constructor(private developerService: DeveloperService, private modalService: NgbModal,
+              private formBuilder: FormBuilder, private sharedService: SharedService) {
+    this.updateForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.maxLength(50)]],
+    });
+  }
 
   ngOnInit(): void {
+  }
+
+  // convenience getter for easy access to form fields
+  get f(): any { return this.updateForm.controls; }
+
+  newDeveloper(): void{
+    if (this.updateForm.invalid) {
+      return;
+    }
+    this.loading = true;
+    this.developerService.createDeveloper(this.newDev).subscribe( res => {
+        this.sharedService.success('Developer created successfully.', {autoClose: true});
+        this.loading = false;
+        this.updateForm.reset();
+        this.newDev = new Developer();
+      },
+      (err: HttpErrorResponse) => {
+        this.loading = false;
+        if (err.error.error_message !== undefined) {
+          this.sharedService.error(err.error.error_message, {autoClose: true});
+        } else{
+          this.sharedService.error('It was not possible to create the Developer.', {autoClose: true});
+        }
+      });
   }
 
 }

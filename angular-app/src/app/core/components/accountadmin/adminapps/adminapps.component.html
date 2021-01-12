@@ -59,7 +59,7 @@
 
       <div class="form-group">
         <label>Icon</label>
-        <input #icon type="text" [(ngModel)]="selectedProduct.icon" formControlName="icon" class="form-control" [ngClass]="{ 'is-invalid': f.icon.errors }"/>
+        <input #icon type="url" [(ngModel)]="selectedProduct.icon" formControlName="icon" class="form-control" [ngClass]="{ 'is-invalid': f.icon.errors }"/>
         <div *ngIf="f.icon.errors" class="invalid-feedback">
           <div *ngIf="f.icon.errors.required">Icon is required</div>
         </div>

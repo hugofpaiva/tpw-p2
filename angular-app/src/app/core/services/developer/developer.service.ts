@@ -12,6 +12,11 @@ export class DeveloperService {
 
   constructor(private http: HttpClient) { }
 
+  createDeveloper(dev: Developer): Observable<Developer>{
+    const url = environment.baseURL + 'developercre';
+    return this.http.post<Developer>(url, dev);
+  }
+
   getDeveloper(id: number): Observable<Developer>{
     const url = environment.baseURL + 'developer/' + id;
     return this.http.get<Developer>(url);
