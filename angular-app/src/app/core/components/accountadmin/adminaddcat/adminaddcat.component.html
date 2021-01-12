@@ -1,9 +1,23 @@
-<h3>Write the category name</h3>
-<br>
-<form method="post">
-  <div class="form-group">
+<div style="display: flex; justify-content: center">
+  <h3>Write the category name</h3>
+  <br>
+  <!--
+  <form [formGroup]="updateForm" *ngIf="selectedClient" (ngSubmit)="addDeveloper()">
+    <div class="modal-body">
 
-  </div>
-  <button type="submit" class="site-btn">Add category</button>&nbsp;
+      <div class="form-group">
+        <label >Balance</label>
+        <input #balance type="number" [(ngModel)]="selectedClient.balance" step=".01" formControlName="balance" class="form-control" [ngClass]="{ 'is-invalid': f.balance.errors }"/>
+        <div *ngIf="f.balance.errors" class="invalid-feedback">
+          <div *ngIf="f.balance.errors.required">Balance is required</div>
+        </div>
+      </div>
 
-</form>
+
+    </div>
+    <div class="modal-footer">
+      <button type="submit" [disabled]="loading || f.balance.errors" class="btn btn-outline-dark" (click)="modal.close('Save click'); ">Save Balance</button>
+    </div>
+  </form>
+  -->
+</div>
