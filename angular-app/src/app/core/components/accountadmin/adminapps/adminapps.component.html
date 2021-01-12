@@ -1,6 +1,6 @@
 <ng-container *ngIf="products.length > 0; else noApps">
   <div class="flex-row justify-content-between">
-    <a class="site-btn" style="float: right; margin-bottom: 25px; color: white" > Add Product</a>
+    <app-adminaddapp [categories]="categories" [products]="products" [developers]="developers"></app-adminaddapp>
     <table class="table" width="100%" align="center">
       <thead  style="background-color: black; border: 0; color: white;">
       <tr>
@@ -104,7 +104,9 @@
 
     </div>
     <div class="modal-footer">
-      <button type="submit" [disabled]="loading || f.name.errors || f.icon.errors || f.description.errors || f.price.errors || f.category.errors || f.developer.errors" class="btn btn-outline-dark" (click)="modal.close('Save click'); ">Save Product</button>
+      <button type="submit" [disabled]="loading
+      || f.name.errors || f.icon.errors || f.description.errors || f.price.errors
+      || f.category.errors || f.developer.errors" class="btn btn-outline-dark" (click)="modal.close('Save click'); ">Save Product</button>
     </div>
   </form>
 </ng-template>
