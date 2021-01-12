@@ -95,12 +95,24 @@ export class AdminaddappComponent implements OnInit, OnChanges {
       if (err.error.error_message !== undefined) {
         this.sharedService.error(err.error.error_message, {autoClose: true});
       } else{
-        this.sharedService.error('It was not possible to edit the product.', {autoClose: true});
+        this.sharedService.error('It was not possible to edit the product:\n' + this.getErrors(err) , {autoClose: true});
       }
     });
 
   }
 
+  getErrors(err: HttpErrorResponse): string{
+    let error = '';
+    for ( const k of Object.keys(err.error) ){
+      error += '<ul>' + k;
+      // tslint:disable-next-line:no-shadowed-variable
+      for (const v of Array(err.error[k])){
+        error += '<li >' + String(v) + '</li>';
+      }
+      error += '</ul>';
+    }
+    return error;
+  }
 
 
 }

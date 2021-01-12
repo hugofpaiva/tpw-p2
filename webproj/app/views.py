@@ -9,6 +9,7 @@ from rest_framework import status
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, authentication_classes, permission_classes, renderer_classes
+from rest_framework.exceptions import ErrorDetail
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 from django_filters import rest_framework as filters
@@ -301,6 +302,7 @@ def get_cat(request, id):
         return Response(status=status.HTTP_404_NOT_FOUND)
     serializer = CategorySerializer(cat)
     return Response(serializer.data)
+
 
 
 @api_view(['POST'])
