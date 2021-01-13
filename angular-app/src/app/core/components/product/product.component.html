@@ -81,7 +81,7 @@
               </div>
             </div>
             <div class="tab-pane " id="tabs-6" role="tabpanel">
-              <app-display-reviews [has_review]="has_review" [reviews]="reviews" ></app-display-reviews>
+              <app-display-reviews (deleteReviewEvent)="updateReviewList($event)" [has_review]="has_review" [reviews]="reviews" ></app-display-reviews>
             </div>
           </div>
           <br>

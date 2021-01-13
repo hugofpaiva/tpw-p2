@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProductService} from '../../services/product/product.service';
 import { Product } from '../../models/product';
@@ -15,7 +15,7 @@ import {Purchase} from '../../models/purchase';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit, OnChanges {
 
   client: Client ;
   product: Product;
@@ -23,7 +23,8 @@ export class ProductComponent implements OnInit {
   prodid = 0;
   totalPurch = 0;
   count = {};
-  has_review: boolean;
+  has_review: any;
+
   constructor(
     private productService: ProductService,
     private reviewService: ReviewService,
@@ -31,7 +32,6 @@ export class ProductComponent implements OnInit {
     private purchaseService: PurchaseService,
     private router: Router,
     private activeroute: ActivatedRoute) {
-    this.has_review = false;
     this.prodid = Number(this.activeroute.snapshot.paramMap.get('id'));
   }
 
@@ -42,6 +42,10 @@ export class ProductComponent implements OnInit {
       this.getReviews();
       this.getTotalPurch();
     }
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("CHANGES");
+    console.log(changes);
   }
   getClient(): boolean  {
     this.clientService.getActualUser().subscribe(client => {
@@ -74,7 +78,7 @@ export class ProductComponent implements OnInit {
           this.reviews = reviews;
           for (const rev  of reviews){
             if (rev.author.user.username === this.client.user.username){
-              this.has_review = true;
+              this.has_review = rev;
               break;
             }
           }
@@ -88,7 +92,6 @@ export class ProductComponent implements OnInit {
   }
 
   getTotalPurch(): void {
-    console.log('entrou');
     this.purchaseService.getPurchasesCount(this.prodid )
       .subscribe(
         dic => {
@@ -97,7 +100,12 @@ export class ProductComponent implements OnInit {
     });
   }
 
-
+  updateReviewList(data: any): void{
+    this.reviews = data;
+    //
+    this.has_review = undefined; // probably there are better ways..
+    console.log('Received from grandchild');
+  }
 
 
 }

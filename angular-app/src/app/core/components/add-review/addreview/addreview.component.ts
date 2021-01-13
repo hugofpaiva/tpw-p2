@@ -3,6 +3,7 @@ import {ActivatedRoute, Route} from '@angular/router';
 import {ReviewService} from '../../../services/review/review.service';
 import {Review} from '../../../models/review';
 import {Location} from '@angular/common';
+import {SharedService} from "../../../services/shared/shared.service";
 
 @Component({
   selector: 'app-addreview',
@@ -17,6 +18,7 @@ export class AddreviewComponent implements OnInit {
   constructor(
     private  location: Location,
     private activerouter: ActivatedRoute,
+    private alertService: SharedService,
     private reviewService: ReviewService) {
     this.new_review = true;
   }
@@ -48,15 +50,31 @@ export class AddreviewComponent implements OnInit {
     if (this.new_review) {
       this.reviewService.registerReview(dict).subscribe(data => {
         console.log(data);
+        this.alertService.success('Sucess Inserting new Review !',{ keepAfterRouteChange: true});
         this.location.back();
-      }, error => console.log(error));
+      }, error => {
+        console.log(error);
+        if (error.error.errormessage){
+          this.alertService.error(error.error.errormessage, { autoClose: true});
+        }
+        else{
+          this.alertService.error('Something went wrong. Could not add your Review!', {autoClose: true,fade: true});
+        }
+      });
     }
     else{
       dict.author = this.reviewForm.author.id;
       this.reviewService.updateReview(dict, this.reviewForm.id).subscribe( data  => {
-        console.log(data);
         this.location.back();
-      }, error => console.log(error));
+      }, error => {
+        console.log(error);
+        if (error.error.errormessage){
+          this.alertService.error(error.error.errormessage, { autoClose: true});
+        }
+        else{
+          this.alertService.error('Could not edit your Review!', {autoClose: true});
+        }
+      });
     }
 
   }

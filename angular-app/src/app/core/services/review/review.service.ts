@@ -42,5 +42,9 @@ export class ReviewService {
     const url = environment.baseURL + 'reviewupd/' + id;
     return this.http.put<any>(url, rev, environment.httpOptions);
   }
+  deleteReview(id: number): Observable<any> {
+    const url = environment.baseURL + 'reviewdel/' + id;
+    return  this.http.delete<any>(url, environment.httpOptions);
+  }
 
 }

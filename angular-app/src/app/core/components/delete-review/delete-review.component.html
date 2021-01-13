@@ -1,0 +1,29 @@
+<ng-container *ngIf="clientReview!=undefined">
+<a  type="button"  data-toggle="modal" data-target="#deleteModal" class="site-btn delete-btn">Delete Review</a>
+
+<!--  Modal -->
+<div class="modal" id="deleteModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Delete Review Confirmation</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+        <div style="text-align: center" class="modal-body">
+          <p>Are you Sure you want to Delete your Review?</p>
+        </div>
+        <!-- Modal footer -->
+        <div  class="modal-footer">
+          <button   type="button" class="site-btn" data-dismiss="modal">Cancel</button>
+          <button type="button" (click)="confirmDelete()" class="site-btn" data-dismiss="modal">Confirm Deletion</button>
+        </div>
+
+    </div>
+  </div>
+</div>
+</ng-container>
+

@@ -35,6 +35,7 @@ import { UpdatefavoritesComponent } from './core/components/updatefavorites/upda
 import { AlertComponent } from './shared/components/alert/alert.component';
 import { ClientappsComponent } from './core/components/accountclient/clientapps/clientapps.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DeleteReviewComponent } from './core/components/delete-review/delete-review.component';
 
 
 @NgModule({
@@ -67,6 +68,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AlertComponent,
     ClientappsComponent,
     AdminaddappComponent,
+    DeleteReviewComponent,
   ],
   imports: [
     BrowserModule,

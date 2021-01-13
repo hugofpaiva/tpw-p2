@@ -1,7 +1,7 @@
 import {
-  Component,
-  Input,
-  OnInit,
+  Component, EventEmitter,
+  Input, OnChanges,
+  OnInit, Output,
 } from '@angular/core';
 import {Product} from '../../models/product';
 import {Review} from '../../models/review';
@@ -19,14 +19,23 @@ export class DisplayReviewsComponent implements OnInit {
 
   @Input() reviews: Review [] = []; // reviews for the specific product
   // tslint:disable-next-line:variable-name
-  @Input() has_review: boolean =  Boolean();
+  @Input() has_review: Review;
   p: number = Number(1);  // pagination variable
   constructor() {
   }
-
+  // pass event from DisplayReviewsComponent's child to it's Father, ProductComponent
+  @Output() deleteReviewEvent: EventEmitter<any> = new EventEmitter<any>();
 
   ngOnInit(): void {
-    console.log('child' + this.reviews);
-    console.log(this.reviews);
+  }
+
+  // in Case a Review was deleted
+  updateReviewList(data: Review): void{
+    if (data){
+      this.reviews.forEach( (item, index) => {
+        if (item.id === data.id) { this.reviews.splice(index, 1); }
+      }); // remove element from array
+      this.deleteReviewEvent.emit(this.reviews);
+    }
   }
 }
