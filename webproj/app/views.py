@@ -462,6 +462,9 @@ def get_reviews(request):
     if 'product' in request.GET:
         prod_id = int(request.GET['product'])
         revs = Reviews.objects.filter(product=prod_id)
+    elif 'client' in request.GET:
+        client = Client.objects.get(id=int(request.GET['client']))
+        revs = Reviews.objects.filter(client=client)
     else:
         revs = Reviews.objects.all()
 

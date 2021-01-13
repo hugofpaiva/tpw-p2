@@ -36,6 +36,7 @@ import { AlertComponent } from './shared/components/alert/alert.component';
 import { ClientappsComponent } from './core/components/accountclient/clientapps/clientapps.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DeleteReviewComponent } from './core/components/delete-review/delete-review.component';
+import { ClientrevsComponent } from './core/components/accountclient/clientrevs/clientrevs.component';
 
 
 @NgModule({
@@ -69,6 +70,7 @@ import { DeleteReviewComponent } from './core/components/delete-review/delete-re
     ClientappsComponent,
     AdminaddappComponent,
     DeleteReviewComponent,
+    ClientrevsComponent,
   ],
   imports: [
     BrowserModule,
