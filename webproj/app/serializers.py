@@ -18,7 +18,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class DeveloperSerializer(serializers.ModelSerializer):
     class Meta:
         model = Developer
-        fields = ('id', 'name', 'created_at')
+        fields = ('id', 'name', 'address', 'email', 'created_at')
         read_only_fields = ['id', 'created_at']
 
 

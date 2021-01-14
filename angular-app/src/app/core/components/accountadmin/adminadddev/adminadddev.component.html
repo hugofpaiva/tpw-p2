@@ -12,6 +12,20 @@
             <div *ngIf="f.name.errors.required">Name is required</div>
           </div>
         </div>
+        <div class="form-group">
+          <label >Address</label>
+          <input #address type="text" placeholder="Address"  [(ngModel)]="newDev.address" formControlName="address" class="form-control" [ngClass]="{ 'is-invalid': f.address.errors }"/>
+          <div *ngIf="f.address.errors" class="invalid-feedback">
+            <div *ngIf="f.address.errors.required">Address is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label >Email</label>
+          <input #email type="text" placeholder="Email name"  [(ngModel)]="newDev.email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': f.email.errors }"/>
+          <div *ngIf="f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Email is required</div>
+          </div>
+        </div>
 
 
       </div>

@@ -21,6 +21,8 @@ export class AdminadddevComponent implements OnInit {
               private formBuilder: FormBuilder, private sharedService: SharedService) {
     this.updateForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.maxLength(50)]],
+      address: ['', [Validators.required, Validators.maxLength(200)]],
+      email: ['', [Validators.required, Validators.maxLength(200)]]
     });
   }
 
