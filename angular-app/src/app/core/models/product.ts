@@ -10,5 +10,6 @@ export class Product {
   developer: Developer;
   price: number;
   stars: number;
-
+  // tslint:disable-next-line:variable-name
+  n_of_purchases: number;
 }

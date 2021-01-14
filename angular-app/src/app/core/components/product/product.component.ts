@@ -40,7 +40,7 @@ export class ProductComponent implements OnInit, OnChanges {
       this.getProduct();
       // data will be passed to the child component show-review
       this.getReviews();
-      this.getTotalPurch();
+     // this.getTotalPurch();
     }
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -90,7 +90,7 @@ export class ProductComponent implements OnInit, OnChanges {
         }
       );
   }
-
+  /*
   getTotalPurch(): void {
     this.purchaseService.getPurchasesCount(this.prodid )
       .subscribe(
@@ -99,7 +99,7 @@ export class ProductComponent implements OnInit, OnChanges {
           this.totalPurch = dic.count;
     });
   }
-
+  */
   updateReviewList(data: any): void{
     this.reviews = data;
     //

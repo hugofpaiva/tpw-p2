@@ -36,8 +36,7 @@ export class DeleteReviewComponent implements OnInit, OnChanges {
       this.reviewService.deleteReview(this.clientReview.id).subscribe(
         data => {
           console.log(data);
-          console.log(this.clientReview);
-          this.alertService.success('Sucess Deleting Review',{ autoClose: true, fade: true});
+          this.alertService.success('Sucess Deleting Review');
           this.deleteReviewEvent.emit(this.clientReview);
         }, error => {
           console.log(error);

@@ -1,4 +1,4 @@
-<section *ngIf="product" class="shop-details">
+<section  *ngIf="product" class="shop-details">
   <div class="product__details__pic"  style="padding-top:0px;padding-bottom: 0px">
     <div class="container" >
       <div class="row">
@@ -7,7 +7,7 @@
             <div class="tab-pane active" id="tabs-1" role="tabpanel">
               <div class="product__details__pic__item">
 
-                <img *ngIf="product " [src] ="product.icon" alt="">
+                <img [src] ="product.icon" alt="">
 
               </div>
             </div>
@@ -46,7 +46,7 @@
                       </li>
                     <br>
                     <span>Total Purchases:</span>
-                    <li *ngIf="totalPurch">{{ totalPurch }}</li>
+                    <li>{{ product.n_of_purchases }}</li>
                   </ul>
                 </div>
                 <app-updatefavorites [client]="client" [product]="product" ></app-updatefavorites>
@@ -130,3 +130,4 @@
     </div>
   </div>
 </div>
+
