@@ -39,9 +39,8 @@
                       <li *ngFor="let cat of product.category"> {{ cat.title }}</li>
                     <span *ngIf="product.developer">Developed by: </span>
                       <li style="display: flex;">
-                        {{product.developer.name}}
+                        <a routerLink="/shop/dev/{{product.developer.id}}">{{product.developer.name}}  </a>
                         <div style="margin-left: 10px; display: flex;">
-                          <a routerLink="dev/{{product.developer.id}}"  href="" type="button" class="site-btn">Developer details</a>
                         </div>
                       </li>
                     <br>

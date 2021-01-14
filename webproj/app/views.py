@@ -576,6 +576,10 @@ def create_review(request):
     if user == 'Client' and 'author' not in request.GET:
         client = Client.objects.get(user=request.user.id)
         request.data.update({'author': client.id})
+    elif user == 'Admin':
+        return Response({'error_message': "Only Client Accounts are allowed to do Reviews!"},
+                        status=status.HTTP_400_BAD_REQUEST)
+
     serializer = ReviewsSerializer(data=request.data)
     if serializer.is_valid():
         author = serializer.validated_data['author']

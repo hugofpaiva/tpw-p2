@@ -20,11 +20,11 @@ const routes: Routes = [
       {path: 'shop',
         children: [
           {path: '', component: StoreComponent},
+          // component used to show developer, available on product page
+          {path: 'dev/:id', component: ShowDeveloperComponent},
           {path: 'product/:id',
             children: [
               {path: '', component: ProductComponent},
-              // component used to show developer
-              {path: 'dev/:id', component: ShowDeveloperComponent},
               // component used to add/Edit Review
               {path: 'review', component: AddreviewComponent}
             ]
