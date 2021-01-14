@@ -37,6 +37,7 @@ import { ClientappsComponent } from './core/components/accountclient/clientapps/
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DeleteReviewComponent } from './core/components/delete-review/delete-review.component';
 import { ClientrevsComponent } from './core/components/accountclient/clientrevs/clientrevs.component';
+import { ShowDeveloperComponent } from './core/components/show-developer/show-developer.component';
 
 
 @NgModule({
@@ -71,6 +72,7 @@ import { ClientrevsComponent } from './core/components/accountclient/clientrevs/
     AdminaddappComponent,
     DeleteReviewComponent,
     ClientrevsComponent,
+    ShowDeveloperComponent,
   ],
   imports: [
     BrowserModule,

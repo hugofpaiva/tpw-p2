@@ -10,6 +10,7 @@ import {ProductComponent} from './core/components/product/product.component';
 import {AccountadminComponent} from './core/components/accountadmin/accountadmin.component';
 import {AccountclientComponent} from './core/components/accountclient/accountclient.component';
 import {AddreviewComponent} from './core/components/add-review/addreview/addreview.component';
+import {ShowDeveloperComponent} from './core/components/show-developer/show-developer.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,8 @@ const routes: Routes = [
           {path: 'product/:id',
             children: [
               {path: '', component: ProductComponent},
+              // component used to show developer
+              {path: 'dev/:id', component: ShowDeveloperComponent},
               // component used to add/Edit Review
               {path: 'review', component: AddreviewComponent}
             ]
