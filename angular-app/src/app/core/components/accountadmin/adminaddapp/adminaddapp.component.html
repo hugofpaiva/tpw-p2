@@ -71,7 +71,9 @@
         <div class="modal-footer">
           <button  type="submit" [disabled]="loading
       || f.name.errors || f.icon.errors || f.description.errors || f.price.errors
-      || f.category.errors || f.developer.errors" (click)="modal.close('Save click')"  class="btn btn-outline-dark">Save Product</button>
+      || f.category.errors || f.developer.errors" (click)="modal.close('Save click')"  class="btn btn-outline-dark">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Save Product</button>
         </div>
       </form>
 

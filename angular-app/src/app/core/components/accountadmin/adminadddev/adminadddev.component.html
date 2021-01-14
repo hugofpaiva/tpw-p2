@@ -30,7 +30,10 @@
 
       </div>
       <div class="modal-footer">
-        <button type="submit" [disabled]="loading || f.name.errors" class="btn btn-outline-dark">Add Developer</button>
+        <button type="submit" [disabled]="loading
+        || f.name.errors || f.email.errors || f.address.errors" class="btn btn-outline-dark">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          Add Developer</button>
       </div>
     </form>
 

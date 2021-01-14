@@ -16,7 +16,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="submit" [disabled]="loading || f.title.errors" class="btn btn-outline-dark">Add Category</button>
+        <button type="submit" [disabled]="loading || f.title.errors" class="btn btn-outline-dark"><span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Add Category</button>
       </div>
     </form>
 
