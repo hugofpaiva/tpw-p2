@@ -24,6 +24,7 @@
     "animate.css": "^4.1.1",
     "bootstrap": "^4.5.0",
     "ngx-owl-carousel-o": "^5.0.0",
+    "ng-bootstrap": "^1.6.3",
     "ngx-pagination": "^5.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

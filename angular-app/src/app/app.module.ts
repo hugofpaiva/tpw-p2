@@ -29,6 +29,7 @@ import { AdminusersComponent } from './core/components/accountadmin/adminusers/a
 import { AdminappsComponent } from './core/components/accountadmin/adminapps/adminapps.component';
 import { AdminadddevComponent } from './core/components/accountadmin/adminadddev/adminadddev.component';
 import { AdminaddcatComponent } from './core/components/accountadmin/adminaddcat/adminaddcat.component';
+import {AdminaddappComponent} from './core/components/accountadmin/adminaddapp/adminaddapp.component';
 import { PurchaseComponent } from './core/components/purchase/purchase.component';
 import { UpdatefavoritesComponent } from './core/components/updatefavorites/updatefavorites.component';
 import { AlertComponent } from './shared/components/alert/alert.component';
@@ -36,6 +37,9 @@ import { ClientappsComponent } from './core/components/accountclient/clientapps/
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CarouselModule} from 'ngx-owl-carousel-o';
+import { DeleteReviewComponent } from './core/components/delete-review/delete-review.component';
+import { ClientrevsComponent } from './core/components/accountclient/clientrevs/clientrevs.component';
+import { ShowDeveloperComponent } from './core/components/show-developer/show-developer.component';
 
 
 @NgModule({
@@ -67,6 +71,10 @@ import {CarouselModule} from 'ngx-owl-carousel-o';
     UpdatefavoritesComponent,
     AlertComponent,
     ClientappsComponent,
+    AdminaddappComponent,
+    DeleteReviewComponent,
+    ClientrevsComponent,
+    ShowDeveloperComponent,
   ],
   imports: [
     BrowserModule,

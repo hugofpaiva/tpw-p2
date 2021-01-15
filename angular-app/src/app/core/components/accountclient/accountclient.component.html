@@ -33,8 +33,9 @@
           <div class="list-group list-group-flush account-settings-links">
             <a class="list-group-item list-group-item-action" [ngClass]=" card == 'general' ? 'active' : ''" (click)="showCard('general')">General</a>
             <a class="list-group-item list-group-item-action" [ngClass]=" card == 'pw' ? 'active' : ''" (click)="showCard('pw')">Change password</a>
-            <a class="list-group-item list-group-item-action" [ngClass]=" card == 'favs' ? 'active' : ''" (click)="showCard('favs')">Favourites</a>
-            <a class="list-group-item list-group-item-action" [ngClass]=" card == 'apps' ? 'active' : ''" (click)="showCard('apps')">My Apps</a>
+            <a *ngIf="!client.user.is_superuser" class="list-group-item list-group-item-action" [ngClass]=" card == 'favs' ? 'active' : ''" (click)="showCard('favs')">Favourites</a>
+            <a *ngIf="!client.user.is_superuser" class="list-group-item list-group-item-action" [ngClass]=" card == 'apps' ? 'active' : ''" (click)="showCard('apps')">My Apps</a>
+            <a *ngIf="!client.user.is_superuser" class="list-group-item list-group-item-action" [ngClass]=" card == 'revs' ? 'active' : ''" (click)="showCard('revs')">My Reviews</a>
             <a *ngIf="client.user.is_superuser" class="list-group-item list-group-item-action" routerLink="/admin">Admin</a>
           </div>
         </div>
@@ -43,6 +44,7 @@
             <app-clientpw *ngIf="card == 'pw'"></app-clientpw>
             <app-clientfavs *ngIf="card == 'favs'" [client]="client"></app-clientfavs>
             <app-clientapps *ngIf="card == 'apps'" [client]="client"></app-clientapps>
+            <app-clientrevs *ngIf="card == 'revs'" [client]="client"></app-clientrevs>
         </div>
 
 

@@ -22,11 +22,9 @@ export class PurchaseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('Product-->' + this.product);
   }
 
   confirmPurchase(): void {
-    console.log('Proceeding to checkout ... ');
     if (this.product && this.client){
       let  purchaseObj : any = {};
       purchaseObj.client = this.client.id;
@@ -36,8 +34,11 @@ export class PurchaseComponent implements OnInit {
       );
       this.purchaseService.createPurchase(purchaseObj).subscribe(
         data => {
-          console.log(data);
           this.sharedService.success('Purchase Completed with Sucess!');
+          console.log(this.product.n_of_purchases);
+          this.product.n_of_purchases = data.product.n_of_purchases;
+          console.log(data);
+          console.log(this.product.n_of_purchases);
         }, error => {
           console.log(error.error.error_message);
           if ( error.error.error_message !== undefined) {

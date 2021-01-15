@@ -9,6 +9,7 @@ from rest_framework import status
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, authentication_classes, permission_classes, renderer_classes
+from rest_framework.exceptions import ErrorDetail
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 from django_filters import rest_framework as filters
@@ -303,6 +304,7 @@ def get_cat(request, id):
     return Response(serializer.data)
 
 
+
 @api_view(['POST'])
 def create_cat(request):
     user = check_request_user(request)
@@ -460,6 +462,9 @@ def get_reviews(request):
     if 'product' in request.GET:
         prod_id = int(request.GET['product'])
         revs = Reviews.objects.filter(product=prod_id)
+    elif 'client' in request.GET:
+        client = Client.objects.get(id=int(request.GET['client']))
+        revs = Reviews.objects.filter(client=client)
     else:
         revs = Reviews.objects.all()
 
@@ -515,6 +520,18 @@ def get_purchases(request):
     return Response({'error_message': "You're not allowed to do this Request!"}, status=status.HTTP_403_FORBIDDEN)
 
 
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_purchasesCount(request, prodid):
+    prod = Product.objects.get(id=prodid)
+    if prod:
+        purchs = Purchase.objects.filter(product=prod)
+        dic = {'count': len(purchs)}
+        return Response(dic)
+    else:
+        return Response({'error_message': "Product not found!"}, status=status.HTTP_404_NOT_FOUND)
+
+
 @api_view(['POST'])
 def create_purchases(request):
     serializer = PurchaseSerializer(data=request.data)
@@ -559,6 +576,10 @@ def create_review(request):
     if user == 'Client' and 'author' not in request.GET:
         client = Client.objects.get(user=request.user.id)
         request.data.update({'author': client.id})
+    elif user == 'Admin':
+        return Response({'error_message': "Only Client Accounts are allowed to do Reviews!"},
+                        status=status.HTTP_400_BAD_REQUEST)
+
     serializer = ReviewsSerializer(data=request.data)
     if serializer.is_valid():
         author = serializer.validated_data['author']

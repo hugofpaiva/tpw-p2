@@ -22,6 +22,10 @@ export class ProductService {
     return this.http.put<Product>( url, product, environment.httpOptions);
   }
 
+  createProduct(product: {}): Observable<Product>{
+    const url = environment.baseURL + 'productcre';
+    return this.http.post<Product>( url, product, environment.httpOptions);
+  }
   getProductsParams(categoryId: number|undefined, developerId: number|undefined, rating: number|undefined, search: string,
                     minPrice: number|undefined, maxPrice: number|undefined, order: string): Observable<Product[]>{
     const url = environment.baseURL + 'products';

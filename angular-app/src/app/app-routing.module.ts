@@ -10,6 +10,7 @@ import {ProductComponent} from './core/components/product/product.component';
 import {AccountadminComponent} from './core/components/accountadmin/accountadmin.component';
 import {AccountclientComponent} from './core/components/accountclient/accountclient.component';
 import {AddreviewComponent} from './core/components/add-review/addreview/addreview.component';
+import {ShowDeveloperComponent} from './core/components/show-developer/show-developer.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,8 @@ const routes: Routes = [
       {path: 'shop',
         children: [
           {path: '', component: StoreComponent},
+          // component used to show developer, available on product page
+          {path: 'dev/:id', component: ShowDeveloperComponent},
           {path: 'product/:id',
             children: [
               {path: '', component: ProductComponent},

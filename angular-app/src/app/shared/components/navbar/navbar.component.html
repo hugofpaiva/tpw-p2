@@ -28,11 +28,7 @@
 
                 <ng-container *ngIf="client;else notLoggedIn">
                     <a style="font-size: 18px; color: #111111; font-weight: 600" routerLink="account">{{ client.user.username }} ({{ client.balance }}€)</a>
-                  <a
-                    style="font-size: 18px; color: #111111; font-weight: 600"
-                  (click)="logout()"
-                  >Logout</a
-                  >
+                  <a style="font-size: 18px; color: #111111; font-weight: 600" (click)="logout()">Logout</a>
                 </ng-container>
 
                 <ng-template #notLoggedIn>

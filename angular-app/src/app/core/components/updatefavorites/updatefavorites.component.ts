@@ -2,14 +2,14 @@ import {AfterContentInit, Component, Input, OnChanges, OnInit, SimpleChanges} fr
 import {Client} from '../../models/client';
 import {Product} from '../../models/product';
 import {ClientService} from '../../services/client/client.service';
-import {SharedService} from "../../services/shared/shared.service";
+import {SharedService} from '../../services/shared/shared.service';
 
 @Component({
   selector: 'app-updatefavorites',
   templateUrl: './updatefavorites.component.html',
   styleUrls: ['./updatefavorites.component.css']
 })
-export class UpdatefavoritesComponent implements OnInit,OnChanges {
+export class UpdatefavoritesComponent implements OnInit, OnChanges {
 
   /*
     Child Component of the Product Component, used in order to add/Remove

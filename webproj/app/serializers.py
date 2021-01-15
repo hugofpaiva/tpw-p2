@@ -18,7 +18,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class DeveloperSerializer(serializers.ModelSerializer):
     class Meta:
         model = Developer
-        fields = ('id', 'name', 'created_at')
+        fields = ('id', 'name', 'address', 'email', 'created_at')
         read_only_fields = ['id', 'created_at']
 
 
@@ -26,17 +26,22 @@ class ProductSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(read_only=True)
     update_at = serializers.DateTimeField(read_only=True)
     stars = serializers.SerializerMethodField(read_only=True)
-
+    n_of_purchases= serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Product
         fields = ('id', 'name', 'icon', 'description',
-                  'category', 'developer', 'created_at', 'update_at', 'price', 'stars')
+                  'category', 'developer', 'created_at',
+                  'update_at', 'price', 'stars', 'n_of_purchases')
 
     def get_stars(self, obj):
         stars = Reviews.objects.filter(product=obj).aggregate(rating__avg=Ceil(Avg('rating')))['rating__avg']
         if stars is None:
             stars = 0
         return int(stars)
+
+    def get_n_of_purchases(self,obj):
+        n_purchases = Purchase.objects.filter(product=obj).count()
+        return n_purchases
 
     def to_representation(self, instance):
         data = super().to_representation(instance)

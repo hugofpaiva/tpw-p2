@@ -1,4 +1,4 @@
-<section *ngIf="product" class="shop-details">
+<section  *ngIf="product" class="shop-details">
   <div class="product__details__pic"  style="padding-top:0px;padding-bottom: 0px">
     <div class="container" >
       <div class="row">
@@ -7,7 +7,7 @@
             <div class="tab-pane active" id="tabs-1" role="tabpanel">
               <div class="product__details__pic__item">
 
-                <img *ngIf="product " [src] ="product.icon" alt="">
+                <img [src] ="product.icon" alt="">
 
               </div>
             </div>
@@ -38,9 +38,14 @@
                     <span >Categories:</span>
                       <li *ngFor="let cat of product.category"> {{ cat.title }}</li>
                     <span *ngIf="product.developer">Developed by: </span>
-                      <li>{{ product.developer.name }}</li>
+                      <li style="display: flex;">
+                        <a routerLink="/shop/dev/{{product.developer.id}}">{{product.developer.name}}  </a>
+                        <div style="margin-left: 10px; display: flex;">
+                        </div>
+                      </li>
                     <br>
                     <span>Total Purchases:</span>
+                    <li>{{ product.n_of_purchases }}</li>
                   </ul>
                 </div>
                 <app-updatefavorites [client]="client" [product]="product" ></app-updatefavorites>
@@ -59,7 +64,7 @@
         <div class="product__details__tab">
           <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
-              <a  class="nav-link active"   data-toggle="tab" href="#tabs-6"
+              <a  class="nav-link active"   data-toggle="tab" href="#tabs-5"
                  role="tab">Description</a>
             </li>
             <li   class="nav-item">
@@ -80,7 +85,7 @@
               </div>
             </div>
             <div class="tab-pane " id="tabs-6" role="tabpanel">
-              <app-display-reviews [has_review]="has_review" [reviews]="reviews" ></app-display-reviews>
+              <app-display-reviews (deleteReviewEvent)="updateReviewList($event)" [has_review]="has_review" [reviews]="reviews" ></app-display-reviews>
             </div>
           </div>
           <br>
@@ -124,3 +129,4 @@
     </div>
   </div>
 </div>
+

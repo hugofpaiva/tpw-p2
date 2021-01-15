@@ -1,19 +1,37 @@
-<div style="padding-top:50px;margin-bottom: 8%" *ngIf="reviewForm">
+<div style="padding-top:50px;margin-bottom: 8%" *ngIf="reviewObjForm">
   <h2 *ngIf="new_review else edit" class="text-lg-center">  Submit new Review to Product with id {{ productid }}</h2>
   <div class="container">
+    <form [formGroup]="revForm" (ngSubmit)="submitReview()">
     <div class="form-group" style="width: 25%">
       <label class="form-check-label"  >Rating Given: </label>
-      <input  class="form-control"  [(ngModel)]="reviewForm.rating">
+      <input  #rating  step=".1" formControlName="rating" class="form-control"  [(ngModel)]="reviewObjForm.rating" [ngClass]="{ 'is-invalid': f.rating.errors }">
+
+      <div *ngIf="f.rating.errors" class="invalid-feedback">
+        <div *ngIf="f.rating.errors.required">Rating is required</div>
+        <div *ngIf="f.rating.errors.minValue
+        || f.rating.errors.maxValue || f.rating.errors.pattern ">Rating needs to be an integer Number between 1 and 5!</div>
+      </div>
+
     </div>
     <div class="form-group">
       <label class="form-check-label"  > Review Content: </label>
-      <textarea style="width: 50%" class="form-control" [(ngModel)]="reviewForm.body">
+      <textarea #body formControlName="body" style="width: 50%" class="form-control" [(ngModel)]="reviewObjForm.body"
+                [ngClass]="{ 'is-invalid': f.body.errors }" >
       </textarea>
+      <div *ngIf="f.body.errors" class="invalid-feedback">
+        <div *ngIf="f.body.errors.required">Title is required</div>
+      </div>
     </div>
-    <button type="button" (click)="submitReview()" class="site-btn">Add Review</button>
-
+    <button [disabled]="loading || f.body.errors || f.rating.errors" type="submit" class="site-btn">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Add Review</button>
+    </form>
   </div>
 </div>
+
+
+
+
+
 <ng-template #edit>
   <h2 class="text-center">  Edit Review to Product with id {{ productid }}</h2>
 </ng-template>
