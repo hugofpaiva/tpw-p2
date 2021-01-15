@@ -18,6 +18,11 @@ export class CategoryService {
     return this.http.get<Category>(url);
   }
 
+  updateCategory(cat: {}, id: number ): Observable<Category>{
+    const url = environment.baseURL + 'categoryupd/' + id;
+    return this.http.put<Category>( url, cat, environment.httpOptions);
+  }
+
   createCategory(cat: Category): Observable<Category>{
     const url = environment.baseURL + 'categorycre';
     return this.http.post<Category>(url, cat);

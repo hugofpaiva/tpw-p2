@@ -3,6 +3,7 @@ export class Developer {
   name: string;
   address: string;
   email: string;
+  created_at: Date;
 
   constructor() {
   }

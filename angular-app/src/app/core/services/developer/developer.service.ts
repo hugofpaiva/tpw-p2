@@ -17,6 +17,11 @@ export class DeveloperService {
     return this.http.post<Developer>(url, dev);
   }
 
+  updateDeveloper(dev: {}, id: number ): Observable<Developer>{
+    const url = environment.baseURL + 'developerupd/' + id;
+    return this.http.put<Developer>( url, dev, environment.httpOptions);
+  }
+
   getDeveloper(id: number): Observable<Developer>{
     const url = environment.baseURL + 'developer/' + id;
     return this.http.get<Developer>(url);

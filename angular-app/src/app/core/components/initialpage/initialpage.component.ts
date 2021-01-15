@@ -52,14 +52,12 @@ export class InitialpageComponent implements OnInit, AfterViewInit {
 
   getTopProducts(): void {
     this.productService.getTopProducts().subscribe(products => {
-      products.filter( ( el ) => !this.newProducts.includes( el ) );
       this.topProducts = products;
     });
   }
 
   getNewProducts(): void {
     this.productService.getNewProducts().subscribe(products => {
-      products.filter( ( el ) => !this.topProducts.includes( el ) );
       this.newProducts = products;
     });
   }
