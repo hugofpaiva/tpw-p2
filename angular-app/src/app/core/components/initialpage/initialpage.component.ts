@@ -31,10 +31,8 @@ export class InitialpageComponent implements OnInit, AfterViewInit {
     dots: false,
     animateOut: 'fadeOut',
     animateIn: 'fadeIn',
-    navSpeed: 1200,
-    navText: ['<span class=\'arrow_left\'><span/>', '<span class=\'arrow_right\'><span/>'],
+    navSpeed: 800,
     items: 1,
-    nav: true,
   };
 
 
