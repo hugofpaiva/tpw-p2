@@ -35,6 +35,8 @@ import { UpdatefavoritesComponent } from './core/components/updatefavorites/upda
 import { AlertComponent } from './shared/components/alert/alert.component';
 import { ClientappsComponent } from './core/components/accountclient/clientapps/clientapps.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {CarouselModule} from 'ngx-owl-carousel-o';
 import { DeleteReviewComponent } from './core/components/delete-review/delete-review.component';
 import { ClientrevsComponent } from './core/components/accountclient/clientrevs/clientrevs.component';
 import { ShowDeveloperComponent } from './core/components/show-developer/show-developer.component';
@@ -85,7 +87,9 @@ import { AdmincatsComponent } from './core/components/accountadmin/admincats/adm
     FormsModule,
     ReactiveFormsModule,
     NgxPaginationModule,
-    NgbModule
+    NgbModule,
+    BrowserAnimationsModule,
+    CarouselModule
   ],
   providers: [
     {

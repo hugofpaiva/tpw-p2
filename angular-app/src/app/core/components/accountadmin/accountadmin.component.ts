@@ -44,6 +44,7 @@ export class AccountadminComponent implements OnInit {
       if (!fromEvent){
         this.sharedService.sendUserEvent();
       }
+      this.logoutInEventSubscription.unsubscribe();
       this.router.navigate(['/']);
     });
   }

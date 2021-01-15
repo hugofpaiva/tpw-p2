@@ -1,36 +1,41 @@
 <!-- Hero Section Begin -->
 <section class="hero">
-  <div *ngIf="topProducts" class="hero__slider owl-carousel">
-    <div
-      *ngFor="let prod of topProducts"
-      class="hero__items bg-set"
-      style="background-image: url('assets/img/banner/desk.jpg')"
-    >
-      <div class="container">
-        <div class="row -flex justify-content-between">
-          <div class="col-xl-5 col-lg-6 col-md-6">
-            <div class="hero__text" style="margin-left: 15px">
-              <h6>{{ prod.developer.name }}</h6>
-              <h2>{{ prod.name }}</h2>
-              <p>{{ prod.description }}</p>
-              <a routerLink="/shop/product/{{ prod.id }}/" class="primary-btn"
-                >Shop now <span class="arrow_right"></span
-              ></a>
+
+  <owl-carousel-o [options]="customOptions" >
+    <ng-container *ngFor="let prod of topProducts">
+      <ng-template carouselSlide>
+        <div class="hero__items"
+          style="background-image: url('assets/img/banner/desk.jpg');background-repeat: no-repeat;background-size: cover;background-position: top center;"
+        >
+          <div class="container">
+            <div class="row flex-wrap justify-content-around">
+              <div>
+                <div class="hero__text" style="margin-left: 15px">
+                  <h6>{{ prod.developer.name }}</h6>
+                  <h2>{{ prod.name }}</h2>
+                  <p>{{ prod.description }}</p>
+                  <a routerLink="/shop/product/{{ prod.id }}/" class="primary-btn"
+                  >Shop now <span class="arrow_right"></span
+                  ></a>
+                </div>
+              </div>
+
+              <div>
+                <img
+                  height="300px"
+                  style="border-radius: 15px; margin-right: 15px"
+                  src="{{ prod.icon }}"
+                  alt=""
+                />
+              </div>
             </div>
           </div>
-
-          <div class="col-xl-5 col-lg-6 col-md-6 d-flex justify-content-center">
-            <img
-              height="300px"
-              style="border-radius: 15px; margin-right: 15px"
-              src="{{ prod.icon }}"
-              alt=""
-            />
-          </div>
         </div>
-      </div>
-    </div>
-  </div>
+      </ng-template>
+    </ng-container>
+  </owl-carousel-o>
+
+
 </section>
 <!-- Hero Section End -->
 
