@@ -31,7 +31,7 @@
                       <ul class="nice-scroll">
                         <a *ngFor="let category of categories">
                           <li>
-                            <a [ngStyle]=" categoryId === category.id ? {'color': '#111111'} : {}" (click)="selectCategory(category)" >{{ category.title }}</a>
+                            <a class="shop" [ngStyle]=" categoryId === category.id ? {'color': '#111111'} : {}" (click)="selectCategory(category)" >{{ category.title }}</a>
                           </li>
                         </a>
                       </ul>
@@ -55,7 +55,7 @@
                       <ul>
                         <a *ngFor="let developer of developers">
                           <li>
-                            <a [ngStyle]=" developerId === developer.id ? {'color': '#111111'} : {}" (click)="selectDeveloper(developer)">{{ developer.name }}</a>
+                            <a class="shop" [ngStyle]=" developerId === developer.id ? {'color': '#111111'} : {}" (click)="selectDeveloper(developer)">{{ developer.name }}</a>
                           </li>
                         </a>
                       </ul>
@@ -78,22 +78,22 @@
                     <div class="shop__sidebar__price">
                       <ul>
                         <li>
-                          <a [ngStyle]=" maxPrice === 10 ? {'color': '#111111'} : {}" (click)="selectPrices(0, 10);">0€ - 10€</a>
+                          <a class="shop" [ngStyle]=" maxPrice === 10 ? {'color': '#111111'} : {}" (click)="selectPrices(0, 10);">0€ - 10€</a>
                         </li>
                         <li>
-                          <a [ngStyle]=" minPrice === 10 && maxPrice === 25 ? {'color': '#111111'} : {}" (click)="selectPrices(10, 25)">10€ - 25€</a>
+                          <a class="shop" [ngStyle]=" minPrice === 10 && maxPrice === 25 ? {'color': '#111111'} : {}" (click)="selectPrices(10, 25)">10€ - 25€</a>
                         </li>
                         <li>
-                          <a [ngStyle]=" minPrice === 25 && maxPrice === 50 ? {'color': '#111111'} : {}" (click)="selectPrices(25, 50)">25€ - 50€</a>
+                          <a class="shop" [ngStyle]=" minPrice === 25 && maxPrice === 50 ? {'color': '#111111'} : {}" (click)="selectPrices(25, 50)">25€ - 50€</a>
                         </li>
                         <li>
-                          <a [ngStyle]=" minPrice === 50 && maxPrice === 100 ? {'color': '#111111'} : {}" (click)="selectPrices(50, 100)">50€ - 100€</a>
+                          <a class="shop" [ngStyle]=" minPrice === 50 && maxPrice === 100 ? {'color': '#111111'} : {}" (click)="selectPrices(50, 100)">50€ - 100€</a>
                         </li>
                         <li>
-                          <a [ngStyle]=" minPrice === 100 && maxPrice === 200 ? {'color': '#111111'} : {}" (click)="selectPrices(100, 200)">100€ - 200€</a>
+                          <a class="shop" [ngStyle]=" minPrice === 100 && maxPrice === 200 ? {'color': '#111111'} : {}" (click)="selectPrices(100, 200)">100€ - 200€</a>
                         </li>
                         <li>
-                          <a [ngStyle]=" minPrice === 250 ? {'color': '#111111'} : {}" (click)="selectPrices(250)">250€ +</a>
+                          <a class="shop" [ngStyle]=" minPrice === 250 ? {'color': '#111111'} : {}" (click)="selectPrices(250)">250€ +</a>
                         </li>
                       </ul>
                     </div>
@@ -137,10 +137,12 @@
         </div>
       </div>
 
+      <div class="col-lg-9">
+
       <ng-container *ngIf="products.length>0; else noprod">
 
 
-        <div class="col-lg-9">
+
           <div class="shop__product__option">
             <div class="row">
               <div class="col-lg-6 col-md-6 col-sm-6">
@@ -205,7 +207,7 @@
               </div>
             </div>
 
-        </div>
+
 
       </ng-container>
 
@@ -218,7 +220,9 @@
           </div>
 
 
+
       </ng-template>
+      </div>
 
 
       <!-- Shop Section End -->

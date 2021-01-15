@@ -558,7 +558,7 @@ ol {
   opacity: 1;
 }
 
-.hero__slider.owl-carousel .owl-nav button {
+.owl-nav button {
   font-size: 36px;
   color: #333333;
   position: absolute;
@@ -568,7 +568,7 @@ ol {
   line-height: 29px;
 }
 
-.hero__slider.owl-carousel .owl-nav button.owl-next {
+.owl-nav button.owl-next {
   left: auto;
   right: 75px;
 }
