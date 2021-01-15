@@ -38,6 +38,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DeleteReviewComponent } from './core/components/delete-review/delete-review.component';
 import { ClientrevsComponent } from './core/components/accountclient/clientrevs/clientrevs.component';
 import { ShowDeveloperComponent } from './core/components/show-developer/show-developer.component';
+import { AdmindevsComponent } from './core/components/accountadmin/admindevs/admindevs.component';
+import { AdmincatsComponent } from './core/components/accountadmin/admincats/admincats.component';
 
 
 @NgModule({
@@ -73,6 +75,8 @@ import { ShowDeveloperComponent } from './core/components/show-developer/show-de
     DeleteReviewComponent,
     ClientrevsComponent,
     ShowDeveloperComponent,
+    AdmindevsComponent,
+    AdmincatsComponent,
   ],
   imports: [
     BrowserModule,

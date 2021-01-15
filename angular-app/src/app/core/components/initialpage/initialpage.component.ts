@@ -33,11 +33,17 @@ export class InitialpageComponent implements OnInit, AfterViewInit {
 
 
   getTopProducts(): void {
-    this.productService.getTopProducts().subscribe(products => this.topProducts = products);
+    this.productService.getTopProducts().subscribe(products => {
+      products.filter( ( el ) => !this.newProducts.includes( el ) );
+      this.topProducts = products;
+    });
   }
 
   getNewProducts(): void {
-    this.productService.getNewProducts().subscribe(products => this.newProducts = products);
+    this.productService.getNewProducts().subscribe(products => {
+      products.filter( ( el ) => !this.topProducts.includes( el ) );
+      this.newProducts = products;
+    });
   }
 
   private loadScripts(): void {
