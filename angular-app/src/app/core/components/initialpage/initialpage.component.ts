@@ -31,7 +31,7 @@ export class InitialpageComponent implements OnInit, AfterViewInit {
     dots: false,
     animateOut: 'fadeOut',
     animateIn: 'fadeIn',
-    navSpeed: 800,
+    navSpeed: 30000,
     items: 1,
   };
 

@@ -41,13 +41,14 @@ export class AdminappsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Ver dps as chamadas todas..
     this.getProducts();
     this.getCategories();
     this.getDevelopers();
   }
 
   open(product: Product, content: any): void{
+    this.getCategories();
+    this.getDevelopers();
     this.selectedProduct = Object.assign({}, product);
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
     }, (reason) => {
@@ -83,6 +84,9 @@ export class AdminappsComponent implements OnInit {
 
   compareFn(a: any, b: any): boolean {
     // Handle compare logic (eg check if unique ids are the same)
+    if (a === undefined || b === undefined){
+      return false;
+    }
     return a.id === b.id;
   }
 

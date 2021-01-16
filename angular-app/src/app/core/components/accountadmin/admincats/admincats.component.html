@@ -1,1 +1,57 @@
-<p>admincats works!</p>
+<ng-container *ngIf="categories.length > 0; else noCats">
+  <div class="flex-row justify-content-between">
+    <!-- <app-adminaddapp [categories]="categories" [products]="products" [developers]="developers"></app-adminaddapp> -->
+    <table class="table" width="100%" align="center">
+      <thead  style="background-color: black; border: 0; color: white;">
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col" style="text-align: right; padding-right:5%">Edit</th>
+      </tr>
+      </thead>
+
+      <ng-container *ngFor="let cat of categories| paginate: { itemsPerPage: 6, currentPage: p}">
+        <tbody>
+        <tr>
+          <td>{{ cat.title }}</td>
+          <td><a style="text-align: center; color: white; margin-left: 80%" (click)="open(cat, modal)" class="site-btn">Edit</a></td>
+        </tr>
+        </tbody>
+      </ng-container>
+    </table>
+
+    <div class="col-lg-12" style="margin-top: auto;margin-bottom: 25px; display: flex; justify-content: center">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #noCats>
+  <h4 class="text-center"> There are no Categories! </h4>
+</ng-template>
+
+<ng-template  #modal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Product</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="updateForm" *ngIf="selectedCat" (ngSubmit)="editCategory()">
+    <div class="modal-body">
+
+      <div class="form-group">
+        <label>Name</label>
+        <input #title type="text" [(ngModel)]="selectedCat.title" formControlName="title" class="form-control" [ngClass]="{ 'is-invalid': f.title.errors }"/>
+        <div *ngIf="f.title.errors" class="invalid-feedback">
+          <div *ngIf="f.title.errors.required">Title is required</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="submit" [disabled]="loading || f.title.errors" class="btn btn-outline-dark" (click)="modal.close('Save click'); ">Save Category</button>
+    </div>
+  </form>
+</ng-template>
+
+

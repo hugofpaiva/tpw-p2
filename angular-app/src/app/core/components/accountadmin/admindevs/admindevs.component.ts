@@ -25,7 +25,7 @@ export class AdmindevsComponent implements OnInit {
     this.updateForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.maxLength(50)]],
       address: ['', [Validators.required, Validators.maxLength(200)]],
-      email: ['', [Validators.required, Validators.maxLength(200)]]
+      email: ['', [Validators.required, Validators.maxLength(200), Validators.email]]
     });
   }
 
@@ -35,7 +35,6 @@ export class AdmindevsComponent implements OnInit {
 
   open(dev: Developer, content: any): void{
     this.selectedDev = Object.assign({}, dev);
-    console.log(this.selectedDev);
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
     }, (reason) => {
     });
