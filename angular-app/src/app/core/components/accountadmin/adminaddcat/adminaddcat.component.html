@@ -1,24 +1,30 @@
-<div style="display: flex; justify-content: center">
-  <div>
-    <h3>Write the Category name</h3>
-    <br>
-    <form [formGroup]="updateForm" (ngSubmit)="newCategory()">
-      <div class="modal-body">
+<a  (click)="open(modal)"   class="site-btn" style="float: right; margin-bottom: 25px; color: white" > Add Category</a>
 
-        <div class="form-group">
-          <label >Name</label>
-          <input #name type="text" placeholder="Category title"  [(ngModel)]="newCat.title" formControlName="title" class="form-control" [ngClass]="{ 'is-invalid': f.title.errors }"/>
-          <div *ngIf="f.title.errors" class="invalid-feedback">
-            <div *ngIf="f.title.errors.required">Title is required</div>
-          </div>
-        </div>
-
-
-      </div>
-      <div class="modal-footer">
-        <button type="submit" [disabled]="loading || f.title.errors" class="btn btn-outline-dark"><span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Add Category</button>
-      </div>
-    </form>
-
+<!--  Modal -->
+<ng-template  #modal let-modal>
+  <!-- Modal Header -->
+  <div class="modal-header">
+    <h4 class="modal-title">Create new Category</h4>
+    <button type="button" class="close"  (click)="modal.dismiss('Cross click')" >&times;</button>
   </div>
-</div>
+
+  <!-- Modal body -->
+  <form [formGroup]="updateForm" (ngSubmit)="newCategory()">
+    <div class="modal-body">
+
+      <div class="form-group">
+        <label >Name</label>
+        <input #name type="text" placeholder="Category title"  [(ngModel)]="newCat.title" formControlName="title" class="form-control" [ngClass]="{ 'is-invalid': f.title.errors }"/>
+        <div *ngIf="f.title.errors" class="invalid-feedback">
+          <div *ngIf="f.title.errors.required">Title is required</div>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="modal-footer">
+      <button type="submit" [disabled]="loading || f.title.errors" (click)="modal.close('Save click')" class="btn btn-outline-dark"><span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Add Category</button>
+    </div>
+  </form>
+
+</ng-template>

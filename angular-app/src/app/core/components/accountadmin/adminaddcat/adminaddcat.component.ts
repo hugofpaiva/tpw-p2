@@ -27,6 +27,13 @@ export class AdminaddcatComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  open(content: any): void{
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    }, (reason) => {
+      console.log(reason);
+    });
+  }
+
   // convenience getter for easy access to form fields
   get f(): any { return this.updateForm.controls; }
 
