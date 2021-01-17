@@ -29,7 +29,7 @@ export class SharedService {
 
   // enable subscribing to alerts observable
   onAlert(id = this.defaultId): Observable<Alert> {
-    return this.subject.asObservable().pipe(filter(x => x && x.id === id));
+    return this.subjectAlert.asObservable().pipe(filter(x => x && x.id === id));
   }
 
   // convenience methods
@@ -45,11 +45,11 @@ export class SharedService {
   // main alert method
   alert(alert: Alert): void {
     alert.id = alert.id || this.defaultId;
-    this.subject.next(alert);
+    this.subjectAlert.next(alert);
   }
 
   // clear alerts
   clear(id = this.defaultId): void {
-    this.subject.next(new Alert({id}));
+    this.subjectAlert.next(new Alert({id}));
   }
 }

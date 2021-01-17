@@ -38,7 +38,6 @@ export class ProductComponent implements OnInit {
     private activeroute: ActivatedRoute,
     private sharedService: SharedService) {
     this.logoutInEventSubscription = this.sharedService.getUserEvent().subscribe(() => {
-      alert("ERROR");
       this.logoutHappened();
     });
     this.prodid = Number(this.activeroute.snapshot.paramMap.get('id'));
