@@ -19,7 +19,7 @@
             <td>
                 {{purch.product.price}}
             </td>
-            <td>{{ purch.created_at }}</td>
+            <td>{{ purch.created_at | date:'medium'  }}</td>
           </tr>
         </ng-container>
         </tbody>

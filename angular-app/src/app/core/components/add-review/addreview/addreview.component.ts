@@ -1,10 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute, Route} from '@angular/router';
+import {ActivatedRoute, Route, Router} from '@angular/router';
 import {ReviewService} from '../../../services/review/review.service';
 import {Review} from '../../../models/review';
 import {Location} from '@angular/common';
 import {SharedService} from '../../../services/shared/shared.service';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-addreview',
@@ -17,13 +18,18 @@ export class AddreviewComponent implements OnInit {
   @Input() reviewObjForm: Review; // the Review Object to be Used in The Form
   loading = false;
   revForm: FormGroup; // the Review Form
+  logoutInEventSubscription: Subscription;
   productid: number;
   constructor(
     private  location: Location,
     private activerouter: ActivatedRoute,
     private alertService: SharedService,
     private formBuilder: FormBuilder,
-    private reviewService: ReviewService) {
+    private reviewService: ReviewService,
+    private router: Router) {
+    this.logoutInEventSubscription = this.alertService.getUserEvent().subscribe(() => {
+      this.logoutHappened();
+    });
     this.new_review = true;
     // the author will not be in the form because we are assuming the client is the Author,
     // besides that the endpoint being used of the REST API also puts as the author, the client associated
@@ -32,6 +38,11 @@ export class AddreviewComponent implements OnInit {
       rating: ['', [Validators.required, Validators.min(0), Validators.max(5), Validators.pattern('[1-5]' )]],
       body: ['', [Validators.required, Validators.maxLength(50)]]
     });
+  }
+
+  logoutHappened(): void {
+      this.logoutInEventSubscription.unsubscribe();
+      this.router.navigate(['/']);
   }
 
   ngOnInit(): void {

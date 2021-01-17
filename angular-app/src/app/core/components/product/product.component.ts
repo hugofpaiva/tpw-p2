@@ -1,5 +1,6 @@
 import {Component, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Location} from '@angular/common';
 import {ProductService} from '../../services/product/product.service';
 import { Product } from '../../models/product';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -8,18 +9,20 @@ import {ReviewService} from '../../services/review/review.service';
 import {ClientService} from '../../services/client/client.service';
 import {PurchaseService} from '../../services/purchase/purchase.service';
 import {Client} from '../../models/client';
-import {Purchase} from '../../models/purchase';
+import {SharedService} from '../../services/shared/shared.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-export class ProductComponent implements OnInit, OnChanges {
+export class ProductComponent implements OnInit {
 
   client: Client ;
   product: Product;
   reviews: Review [] = [];
+  logoutInEventSubscription: Subscription;
   prodid = 0;
   totalPurch = 0;
   count = {};
@@ -31,31 +34,41 @@ export class ProductComponent implements OnInit, OnChanges {
     private clientService: ClientService,
     private purchaseService: PurchaseService,
     private router: Router,
-    private activeroute: ActivatedRoute) {
+    private location: Location,
+    private activeroute: ActivatedRoute,
+    private sharedService: SharedService) {
+    this.logoutInEventSubscription = this.sharedService.getUserEvent().subscribe(() => {
+      alert("ERROR");
+      this.logoutHappened();
+    });
     this.prodid = Number(this.activeroute.snapshot.paramMap.get('id'));
   }
 
   ngOnInit(): void {
-    if ( this.getClient()){
-      this.getProduct();
-      // data will be passed to the child component show-review
-      this.getReviews();
-     // this.getTotalPurch();
-    }
+    this.getClient();
+
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log("CHANGES");
-    console.log(changes);
+
+  logoutHappened(): void {
+      this.logoutInEventSubscription.unsubscribe();
+      this.sharedService.error('You need to be logged in to access a product.', {keepAfterRouteChange: true, autoClose: true});
+      this.router.navigate(['/']);
   }
-  getClient(): boolean  {
+
+  getClient(): void  {
     this.clientService.getActualUser().subscribe(client => {
       this.client = client;
+      this.getProduct();
+      this.getReviews();
     }, err => {
-        console.log(err);
-        return false;
+      this.logoutInEventSubscription.unsubscribe();
+      this.sharedService.error('You need to be logged in to access a product.', {keepAfterRouteChange: true, autoClose: true});
+      this.location.back();
+      console.log(err);
     });
-    return true;
+
   }
+
   getProduct(): void {
     const id = this.activeroute.snapshot.paramMap.get('id');
     this.productService.getProduct(Number(id ))
@@ -90,16 +103,7 @@ export class ProductComponent implements OnInit, OnChanges {
         }
       );
   }
-  /*
-  getTotalPurch(): void {
-    this.purchaseService.getPurchasesCount(this.prodid )
-      .subscribe(
-        dic => {
-          this.count = dic;
-          this.totalPurch = dic.count;
-    });
-  }
-  */
+
   updateReviewList(data: any): void{
     this.reviews = data;
     //

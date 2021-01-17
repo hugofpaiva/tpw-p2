@@ -14,6 +14,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 export class AdminadddevComponent implements OnInit {
 
   @Input() newDev: Developer = new Developer();
+  @Input() developers: Developer[] = [];
   loading = false;
   updateForm: FormGroup;
 
@@ -22,7 +23,7 @@ export class AdminadddevComponent implements OnInit {
     this.updateForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.maxLength(50)]],
       address: ['', [Validators.required, Validators.maxLength(200)]],
-      email: ['', [Validators.required, Validators.maxLength(200)]]
+      email: ['', [Validators.required, Validators.maxLength(200), Validators.email]]
     });
   }
 
@@ -45,6 +46,7 @@ export class AdminadddevComponent implements OnInit {
     }
     this.loading = true;
     this.developerService.createDeveloper(this.newDev).subscribe( res => {
+        this.developers.push(res);
         this.sharedService.success('Developer created successfully.', {autoClose: true});
         this.loading = false;
         this.updateForm.reset();

@@ -45,6 +45,16 @@ export class InitialpageComponent implements OnInit, AfterViewInit {
     this.loadScripts();
   }
 
+  removeRepeated(): void {
+    this.topProducts.forEach((toprod) => {
+      this.newProducts.forEach((newprod) => {
+        if (toprod.id === newprod.id){
+          this.newProducts.splice(this.newProducts.indexOf(newprod), 1);
+        }
+      });
+    });
+  }
+
   changeSelect(selected: number): void{
     this.selected = selected;
   }
@@ -53,12 +63,14 @@ export class InitialpageComponent implements OnInit, AfterViewInit {
   getTopProducts(): void {
     this.productService.getTopProducts().subscribe(products => {
       this.topProducts = products;
+      this.removeRepeated();
     });
   }
 
   getNewProducts(): void {
     this.productService.getNewProducts().subscribe(products => {
       this.newProducts = products;
+      this.removeRepeated();
     });
   }
 

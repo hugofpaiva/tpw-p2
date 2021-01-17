@@ -1,6 +1,6 @@
 <ng-container *ngIf="categories.length > 0; else noCats">
   <div class="flex-row justify-content-between">
-    <app-adminaddcat></app-adminaddcat>
+    <app-adminaddcat [categories]="categories"></app-adminaddcat>
     <table class="table" width="100%" align="center">
       <thead  style="background-color: black; border: 0; color: white;">
       <tr>

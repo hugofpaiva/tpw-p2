@@ -1,6 +1,6 @@
 <ng-container *ngIf="developers.length > 0; else noDevs">
   <div class="flex-row justify-content-between">
-   <app-adminadddev></app-adminadddev>
+   <app-adminadddev [developers]="developers"></app-adminadddev>
     <table class="table" width="100%" align="center">
       <thead  style="background-color: black; border: 0; color: white;">
       <tr>

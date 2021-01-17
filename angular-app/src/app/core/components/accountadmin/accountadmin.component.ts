@@ -37,6 +37,7 @@ export class AccountadminComponent implements OnInit {
     this.clientService.getActualUser().subscribe(client => {
       this.client = client;
       if (!this.client.user.is_superuser){
+        this.logoutInEventSubscription.unsubscribe();
         this.router.navigate(['/']);
       }
     }, error => {

@@ -65,7 +65,8 @@ export class AdminaddappComponent implements OnInit, OnChanges {
   }
 
   open(content: any): void{
-
+    this.creationForm.reset();
+    this.newproduct = new Product();
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
     }, (reason) => {
       console.log(reason);
@@ -88,7 +89,6 @@ export class AdminaddappComponent implements OnInit, OnChanges {
         console.log(data);
         this.products.push(data);
         this.loading = false;
-        this.creationForm.reset();
         this.sharedService.success('Success Creating new Product!', {autoClose: true });
       }, (err: HttpErrorResponse) => {
       this.loading = false;

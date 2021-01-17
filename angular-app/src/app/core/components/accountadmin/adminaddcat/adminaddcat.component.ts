@@ -5,6 +5,7 @@ import {SharedService} from '../../../services/shared/shared.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {CategoryService} from '../../../services/category/category.service';
 import {Category} from '../../../models/category';
+import {Developer} from '../../../models/developer';
 
 @Component({
   selector: 'app-adminaddcat',
@@ -14,6 +15,7 @@ import {Category} from '../../../models/category';
 export class AdminaddcatComponent implements OnInit {
 
   @Input() newCat: Category = new Category();
+  @Input() categories: Category[] = [];
   loading = false;
   updateForm: FormGroup;
 
@@ -44,6 +46,7 @@ export class AdminaddcatComponent implements OnInit {
     this.loading = true;
     this.categoryService.createCategory(this.newCat).subscribe( res => {
         this.sharedService.success('Category created successfully.', {autoClose: true});
+        this.categories.push(res);
         this.loading = false;
         this.updateForm.reset();
         this.newCat = new Category();
