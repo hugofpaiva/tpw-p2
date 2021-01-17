@@ -35,12 +35,9 @@ export class PurchaseComponent implements OnInit {
       this.purchaseService.createPurchase(purchaseObj).subscribe(
         data => {
           this.sharedService.success('Purchase Completed with Sucess!');
-          console.log(this.product.n_of_purchases);
+          this.sharedService.sendUserEvent();
           this.product.n_of_purchases = data.product.n_of_purchases;
-          console.log(data);
-          console.log(this.product.n_of_purchases);
         }, error => {
-          console.log(error.error.error_message);
           if ( error.error.error_message !== undefined) {
             this.sharedService.error(String(error.error.error_message));
           }

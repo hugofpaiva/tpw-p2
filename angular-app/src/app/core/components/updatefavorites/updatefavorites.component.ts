@@ -73,10 +73,10 @@ export class UpdatefavoritesComponent implements OnInit, OnChanges {
           this.client = data;
           this.isfavourite = !this.isfavourite;
           if(this.isfavourite){
-            this.alertService.success('Sucess Adding to Favorites!');
+            this.alertService.success('Success adding to Favorites!');
           }
           else{
-            this.alertService.success('Sucses removing from Favorites');
+            this.alertService.success('Success removing from Favorites');
           }
 
         },

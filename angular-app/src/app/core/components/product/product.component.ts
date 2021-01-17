@@ -49,9 +49,7 @@ export class ProductComponent implements OnInit {
   }
 
   logoutHappened(): void {
-      this.logoutInEventSubscription.unsubscribe();
-      this.sharedService.error('You need to be logged in to access a product.', {keepAfterRouteChange: true, autoClose: true});
-      this.router.navigate(['/']);
+      this.getClient();
   }
 
   getClient(): void  {
