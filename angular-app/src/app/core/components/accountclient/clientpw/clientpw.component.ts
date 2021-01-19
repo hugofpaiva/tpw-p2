@@ -4,7 +4,7 @@ import {Client} from '../../../models/client';
 import {ClientService} from '../../../services/client/client.service';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
-import {UserService} from "../../../services/user/user.service";
+import {UserService} from '../../../services/user/user.service';
 
 @Component({
   selector: 'app-clientpw',
@@ -24,9 +24,9 @@ export class ClientpwComponent implements OnInit {
     private router: Router
   ) {
     this.updatePwForm = this.formBuilder.group({
-      old_password: ['', [Validators.required, Validators.minLength(6)]],
-      new_password1: ['', [Validators.required, Validators.minLength(6)]],
-      new_password2: ['', [Validators.required, Validators.minLength(6)]]
+      old_password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(25)]],
+      new_password1: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
+      new_password2: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]]
     });
     this.clientService.getActualUser().subscribe(client => this.client = client);
   }

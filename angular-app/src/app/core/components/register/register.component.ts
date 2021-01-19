@@ -22,11 +22,11 @@ export class RegisterComponent implements OnInit {
     private router: Router
   ) {
     this.registerForm = this.formBuilder.group({
-      username: ['', Validators.required, Validators.minLength(6)],
-      email : ['', Validators.required, Validators.email],
-      first_name: ['', Validators.required],
-      last_name: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]]}
+      username: ['', Validators.required, Validators.minLength(6), Validators.maxLength(20)],
+      email : ['', Validators.required, Validators.email, Validators.maxLength(150)],
+      first_name: ['', Validators.required, Validators.maxLength(20)],
+      last_name: ['', Validators.required, Validators.maxLength(20)],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(25)]]}
     );
   }
 
@@ -34,10 +34,11 @@ export class RegisterComponent implements OnInit {
 
 
   ngOnInit(): void {
-
   }
+
   // convenience getter for easy access to form fields
   get f(): any { return this.registerForm.controls; }
+
   // Submit Method
   onSubmit(): void {
     this.submitted = true;
