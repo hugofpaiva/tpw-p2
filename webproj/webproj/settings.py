@@ -143,5 +143,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
+# default static files settings for PythonAnywhere.
+# see https://help.pythonanywhere.com/pages/DjangoStaticFiles for more info
+MEDIA_ROOT = '/home/hugofpaiva/webproj/media'
+MEDIA_URL = '/media/'
+STATIC_ROOT = '/home/hugofpaiva/webproj/static'
 STATIC_URL = '/static/'
