@@ -20,10 +20,6 @@ from app.serializers import DeveloperSerializer, ClientSerializer, UserSerialize
     PurchaseSerializer, CategorySerializer, UserProfileSerializer, ChangePasswordSerializer
 
 
-# TODO: Função que veja que tipo de utilizador está a efetuar determinada operação, exemplo:
-#      apenas super users podem editar/adicionar/remover produtos
-
-
 def check_request_user(request):
     user = request.user
     if request.user.is_anonymous:
@@ -65,16 +61,12 @@ def register(request):
         user = serializer.save()
         st = status.HTTP_201_CREATED
         request.data['user'] = user.id
-        print(request.data)
         client = ClientSerializer(data=request.data)
 
         if client.is_valid():
 
             client.save()
-            print(client)
-            # Token.objects.create(user=user)
             data['response'] = 'succesfully  registered a new user'
-            # data['token'] = Token.objects.get(user=user).key
             st = status.HTTP_201_CREATED
         else:
             data = serializer.errors
@@ -134,7 +126,6 @@ def get_client_apps(request):
 
     purchases = Purchase.objects.filter(client=client)
     serializer = PurchaseSerializer(purchases, many=True)
-    print(serializer.data)
 
     return  Response(serializer.data)
 
@@ -144,8 +135,6 @@ def get_client_apps(request):
 
 @api_view(['PUT'])
 def update_userInfo(request, id):
-    print(request.data)
-    print(id)
     req_user = check_request_user(request)
     try:
         user = User.objects.get(id=id)
@@ -159,7 +148,6 @@ def update_userInfo(request, id):
                                 status=status.HTTP_400_BAD_REQUEST)
             serializer.save(user)
             return Response(serializer.data)
-        print("no valid")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
@@ -538,7 +526,6 @@ def create_purchases(request):
     if serializer.is_valid():
         client = serializer.validated_data['client']
         product = serializer.validated_data['product']
-        print(client.balance)
         if Purchase.objects.filter(client=client.id, product=product.id).exists():
             return Response({'error_message': "Client already has this product!"},
                             status=status.HTTP_400_BAD_REQUEST)

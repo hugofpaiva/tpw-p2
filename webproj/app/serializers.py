@@ -6,8 +6,6 @@ from django.db.models import Avg
 from django.db.models.functions import Ceil
 
 
-# TODO: ver atributos nao necessários
-
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -26,7 +24,8 @@ class ProductSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(read_only=True)
     update_at = serializers.DateTimeField(read_only=True)
     stars = serializers.SerializerMethodField(read_only=True)
-    n_of_purchases= serializers.SerializerMethodField(read_only=True)
+    n_of_purchases = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Product
         fields = ('id', 'name', 'icon', 'description',
@@ -39,7 +38,7 @@ class ProductSerializer(serializers.ModelSerializer):
             stars = 0
         return int(stars)
 
-    def get_n_of_purchases(self,obj):
+    def get_n_of_purchases(self, obj):
         n_purchases = Purchase.objects.filter(product=obj).count()
         return n_purchases
 
@@ -55,10 +54,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id','email', 'username', 'password','first_name','last_name', 'is_superuser')
+        fields = ('id', 'email', 'username', 'password', 'first_name', 'last_name', 'is_superuser')
 
     def save(self):
-        print(self.validated_data)
         user = User(email=self.validated_data['email'],
                     username=self.validated_data['username'],
                     first_name=self.validated_data['first_name'],
@@ -69,14 +67,14 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id','email', 'username', 'first_name','last_name', 'is_superuser')
+        fields = ('id', 'email', 'username', 'first_name', 'last_name', 'is_superuser')
         read_only_fields = ('id', 'is_superuser')
 
     def save(self, user):
-        print(self.validated_data)
         instance = User.objects.get(username=user.username)
         instance.username = self.validated_data['username']
         instance.email = self.validated_data['email']
@@ -95,7 +93,7 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id','old_password', 'new_password1', 'new_password2', 'is_superuser')
+        fields = ('id', 'old_password', 'new_password1', 'new_password2', 'is_superuser')
         read_only_fields = ('id', 'is_superuser')
 
     def save(self, instance):

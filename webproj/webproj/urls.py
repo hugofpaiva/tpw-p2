@@ -48,7 +48,7 @@ urlpatterns = [
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
     path('admin/', admin.site.urls),
-    # login!
+    # Login
     path('ws/token-auth/', authviews.obtain_auth_token, name='api-token-auth'),
     path('ws/register', views.register),
     path('ws/clients', views.get_clients),
