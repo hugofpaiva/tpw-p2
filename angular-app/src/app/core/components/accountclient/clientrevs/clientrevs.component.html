@@ -1,6 +1,6 @@
 <div class="tab-pane fade active show" id="account-favourites">
   <div class="card-body pb-2">
-    <ng-container *ngIf="reviews; else noRevs">
+    <ng-container *ngIf="reviews.length > 0; else noRevs">
       <table class="table" width="100%" align="center">
 
         <thead  style="background-color: black; border: 0; color: white;">
