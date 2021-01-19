@@ -22,11 +22,11 @@ export class RegisterComponent implements OnInit {
     private router: Router
   ) {
     this.registerForm = this.formBuilder.group({
-      username: ['', Validators.required, Validators.maxLength(20)],
+      username: ['', Validators.required, Validators.minLength(6), Validators.maxLength(20)],
       email : ['', Validators.required, Validators.email, Validators.maxLength(150)],
       first_name: ['', Validators.required, Validators.maxLength(20)],
       last_name: ['', Validators.required, Validators.maxLength(20)],
-      password: ['', [Validators.required, Validators.maxLength(25)]]}
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(25)]]}
     );
   }
 
