@@ -25,8 +25,8 @@ export class ClientpwComponent implements OnInit {
   ) {
     this.updatePwForm = this.formBuilder.group({
       old_password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(25)]],
-      new_password1: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
-      new_password2: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]]
+      new_password1: ['', [Validators.required, Validators.maxLength(20)]],
+      new_password2: ['', [Validators.required, Validators.maxLength(20)]]
     });
     this.clientService.getActualUser().subscribe(client => this.client = client);
   }

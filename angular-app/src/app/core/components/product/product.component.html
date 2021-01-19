@@ -17,9 +17,9 @@
           <div class="container-fluid>" style="padding-top: 40px;padding-bottom: 60px;">
             <div class="product__details__text" style=" border-left: #000000;border-left-width: 5px;
             border-left-style: outset; text-align: left;margin-left: 20%;padding-left: 18px;">
+              <h3>{{ product.name}}</h3>
               <div class="rating" style="display: flex; flex-wrap: wrap;
                           justify-content: space-between; width: 65px;">
-              <h3>{{ product.name}}</h3>
               <i
                 *ngFor="let x of [].constructor(product.stars)"
                 class="fa fa-star"
