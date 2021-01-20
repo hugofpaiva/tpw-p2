@@ -54,11 +54,8 @@ export class ReviewService {
     return this.http.delete<any>(url, environment.httpOptions);
   }
 
-  getReviewsClient(clientid?: number): Observable<Review[]> {
-    let url = environment.baseURL + 'reviews';
-    if (clientid) {
-      url += '?client=' + clientid;
-    }
+  getReviewsClient(): Observable<Review[]> {
+    const url = environment.baseURL + 'myreviews';
     return this.http.get<Review[]>(url);
   }
 }
