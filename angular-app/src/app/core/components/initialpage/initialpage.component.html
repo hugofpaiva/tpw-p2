@@ -13,7 +13,11 @@
                 <div class="hero__text" style="margin-left: 15px">
                   <h6>{{ prod.developer.name }}</h6>
                   <h2>{{ prod.name }}</h2>
-                  <p>{{ prod.description }}</p>
+                  <p>{{
+                    prod.description.length > 100
+                      ? (prod.description | slice: 0:100) + "..."
+                      : prod.description
+                    }}</p>
                   <a routerLink="/shop/product/{{ prod.id }}/" class="primary-btn"
                   >Shop now <span class="arrow_right"></span
                   ></a>
@@ -70,8 +74,8 @@
             <div class="product__item__text">
               <h6>{{ prod.name }}</h6>
               <a class="add-cart">{{
-                prod.description.length > 20
-                  ? (prod.description | slice: 0:6) + ".."
+                prod.description.length > 30
+                  ? (prod.description | slice: 0:30) + "..."
                   : prod.description
               }}</a>
               <div class="rating">

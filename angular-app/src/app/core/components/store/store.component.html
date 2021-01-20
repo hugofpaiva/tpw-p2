@@ -181,8 +181,10 @@
                     <div class="product__item__text">
                       <h6>{{ product.name }}</h6>
                       <a class="add-cart">{{
-                        product.description | slice: 0:3
-                      }}</a>
+                        product.description.length > 30
+                          ? (product.description | slice: 0:30) + "..."
+                          : product.description
+                        }}</a>
                       <div class="rating">
                           <i
                             *ngFor="let x of [].constructor(product.stars)"
